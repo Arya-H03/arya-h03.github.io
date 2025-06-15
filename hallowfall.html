@@ -88,82 +88,84 @@
 
         <div class="topicContainer">
 
-            <h2>Player Controller</h2>
+            <h2>Player Architecture</h2>
             <p>
+                To handle growing complexity around the player character, I designed a scalable, state-driven
+                architecture centered on a Finite State Machine managed by a PlayerController.
+                The system emphasized clean separation of concerns and event-driven communication, ensuring
+                that each behavior existed in an isolated state while remaining decoupled, extensible,
+                and responsive.
+            </p>
             <ul class="bulletPointList">
-                <li>Implemented a scalable player controller using the State Pattern, with each core behavior (movement,
-                    attacking, parrying, etc.) encapsulated in its own IPlayerState for modularity and
-                    ease of debugging.</li>
-                <li>Centralized PlayerController handles state transitions based on input and gameplay conditions,
-                    promoting separation of concerns and simplified maintenance.</li>
-                <li>Integrated with Unity’s InputManager and AnimatorController to ensure responsive gameplay and
-                    synchronized animation via state-specific triggers and callbacks.</li>
-                <li>Enabled animation-event-driven actions (e.g. hitboxes, sound effects) tied directly to state
-                    changes, improving combat feedback and fluidity.</li>
-                <li>Designed with extensibility in mind, new abilities or mechanics can be added by creating new states
-                    without modifying existing code.</li>
-                <li>Connected to modular systems (MovementManager, CollisionManager, PlayerCamera, etc.) to maintain
-                    clean separation of responsibilities.</li>
+                <li><b>Finite State Machine (FSM):</b> Implemented a FSM managing states such as
+                    Idle, Run, Attack, and Parry, ensuring smooth and responsive transitions.
+                    States are encapsulated in independent classes for easy extension.</li>
+
+                <li><b>Modular Components:</b> Organized the player into independent systems
+                    (Movement, Input,Ability,Animation, etc.),
+                    improving maintainability and enabling parallel developement of sysetems.</li>
+
+                <li><b>Event-Driven Communication:</b> Leveraged a centralized SignalHub
+                    to decouple interactions between systems, reducing interdependencies and simplifying debugging.</li>
+
+                <li><b>Combat & Abilities:</b> Developed extensible health, damage, and ability modules,
+                    configured via ScriptableObjects. Special abilities
+                    can be scaled or modified without altering core systems.</li>
+
+                <li><b>Animation & Feedback Integration:</b> Dedicated handlers for animations, VFX,
+                    and SFX are decoupled from gameplay
+                    logic,
+                    enabling designers and artists to iterate freely.</li>
+
+                <li><b>Extensibility & Scalability:</b> Dependency injection ensures modular initialization
+                    and reuse of components. Supports adding new states, abilities, or mechanics with
+                    minimal disruption to existing code or need to refactor.</li>
             </ul>
 
             <ul class="visualDemo">
                 <li>
                     <div>
-                        <h3>Player State Implementation</h3>
+                        <h3>Player State</h3>
+
                         <pre><code class="language-csharp">
-public interface IPlayerState
+                            
+public interface IEntityState
 {
-    void InitState(PlayerConfig config);
+    void EnterState();
 
-    void OnEnterState();
+    void ExitState();
 
-    void OnExitState();
+    void FrameUpdate();
 
-    void HandleState();
-
-    void SetOnInitializeVariables(PlayerController statesManagerRef);
+    void PhysicsUpdate();
 }
 
-
-public class PlayerBaseState : MonoBehaviour, IPlayerState
+public class PlayerState : IEntityState
 {
     protected PlayerStateEnum stateEnum;
     protected PlayerController playerController;
+    protected PlayerConfig playerConfig;
+    protected PlayerStateMachine stateMachine;
+    protected PlayerSignalHub signalHub;
 
-    public PlayerBaseState()
+    public PlayerState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerConfig playerConfig, PlayerStateEnum stateEnum)
     {
-
+        this.playerController = playerController;
+        this.stateMachine = stateMachine;
+        this.playerConfig = playerConfig;
+        this.stateEnum = stateEnum;
+        this.signalHub = playerController.PlayerSignalHub;
     }
 
-    public virtual void InitState(PlayerConfig config)
-    {
-
-    }
-
-    public virtual void Start()
-    {
-        InitState(playerController.PlayerConfig);
-    }
-    public void SetOnInitializeVariables(PlayerController statesManagerRef)
-    {
-        this.playerController = statesManagerRef;
-    }
-    public PlayerStateEnum GetStateEnum()
-    {
-        return stateEnum;
-    }
-    public virtual void OnEnterState()
-    {
-
-    }
-    public virtual void OnExitState()
-    {
-
-    }
-    public virtual void HandleState()
-    {
-
-    }
+  
+    public virtual void EnterState() { }
+    
+    public virtual void ExitState() { }
+   
+    public virtual void FrameUpdate() { }
+   
+    public virtual void PhysicsUpdate() { }
+  
 }
 
 
@@ -174,98 +176,167 @@ public class PlayerBaseState : MonoBehaviour, IPlayerState
                     <div>
                         <h3>State implementation example</h3>
                         <pre><code class="language-csharp">
-public class PlayerRunState : PlayerBaseState
+public class PlayerParryState : PlayerState
 {
-    private float runSpeed = 0;
+    private PlayerParryShield parryShield;
+    private AudioClip  [] parrySFX;
+    private float parryWindow;
 
-    private AudioSource audioSource;
-    private AudioClip[] groundRunSFX;
-    private AudioClip[] grassRunSFX;
-    private AudioClip[] stoneRunSFX;
+    private bool isParrySuccessful = false;
+    private bool canCounterParry = true;
+    private bool canParryProjectiles = false;
+    public bool CanCounterParry { get => canCounterParry; set => canCounterParry = value; }
+    public bool CanParryProjectiles { get => canParryProjectiles; set => canParryProjectiles = value; }
 
-    public float RunSpeed { get => runSpeed; set => runSpeed = value; }
-
-    public PlayerRunState()
+    public PlayerParryState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerConfig playerConfig, PlayerStateEnum stateEnum) : base(playerController, stateMachine, playerConfig, stateEnum)
     {
-        this.stateEnum = PlayerStateEnum.Run;
+        this.stateEnum = PlayerStateEnum.Parry;
+        parrySFX = playerConfig.parrySFX;
+        parryWindow = playerConfig.parryWindow;
+        parryShield = playerController.ParryShield;
+
+        signalHub.OnActivatingParryShield += ActivateParryShield;
+        signalHub.OnEnemyParried += OnSuccessfulParry;
+        signalHub.OnEnemyParried += OnSuccessfulParry;
+        signalHub.OnParryEnd += OnParryHoldAnimEnd;
     }
 
-    public override void InitState(PlayerConfig config)
+    public override void EnterState()
     {
-        runSpeed = config.runSpeed;
-        groundRunSFX = config.groundSFX;
-        grassRunSFX = config.grassSFX;
-        stoneRunSFX = config.stoneSFX;
-    }
-    private void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
+        playerController.IsParrying = true;
+        StartParry();
     }
 
-    public override void OnEnterState()
-    {
-
-        StartRunning();
+    public override void ExitState()
+    {      
+        playerController.IsParrying = false;
+        isParrySuccessful = false;
     }
 
-    public override void OnExitState()
+    private void StartParry()
     {
-        StopRunning();
+        signalHub.OnTurningToMousePos?.Invoke();
+        signalHub.OnAnimBool?.Invoke("isParrying",true);      
+        playerController.CoroutineRunner.RunCoroutine(StopParryCoroutine());
     }
 
-    public override void HandleState()
+    private IEnumerator StopParryCoroutine()
     {
-
-
+        yield return new WaitForSeconds(parryWindow);
+        OnParryHoldAnimEnd();
     }
 
-    public void PlayStepSound()
+    private void OnParryHoldAnimEnd()
     {
-
-        switch (playerController.CurrentFloorType)
+        parryShield.BoxCollider.enabled = false;
+        if (!isParrySuccessful)
         {
-            case FloorTypeEnum.Ground:
-                AudioManager.Instance.PlayRandomSFX(audioSource, groundRunSFX, 0.1f);
-                break;
-            case FloorTypeEnum.Grass:
-                AudioManager.Instance.PlayRandomSFX(audioSource, grassRunSFX, 0.1f);
-                break;
-            case FloorTypeEnum.Stone:
-                AudioManager.Instance.PlayRandomSFX(audioSource, stoneRunSFX, 0.1f);
-                break;
+            signalHub.OnAnimBool?.Invoke("isParrying", false);
+            signalHub.OnAnimBool?.Invoke("isParrySuccessful", false);
+            signalHub.OnStateTransitionBasedOnMovement?.Invoke(PlayerStateEnum.Parry);
+        }
+        else isParrySuccessful = false;
+    }
+
+    private void ActivateParryShield()
+    {
+        parryShield.BoxCollider.enabled = true;
+    }
+
+    private void OnSuccessfulParry(EnemyController enemyController, float parryDamage)
+    {        
+        parryShield.BoxCollider.enabled = false;
+        signalHub.OnPlayRandomSFX?.Invoke(parrySFX, 1f);
+        if (CanCounterParry)
+        {
+            isParrySuccessful = true;
+            signalHub.OnAnimBool?.Invoke("isParrySuccessful", true);
+         
+        }         
+    }
+}
+
+</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <h3>Player Controller</h3>
+                        <pre><code class="language-csharp">
+
+/* The section managing state initialization, dependency injection, and input callbacks,
+acting as the central hub for coordinating player systems.*/
+    
+public class PlayerController : MonoBehaviour
+{
+    private void Start()
+    {
+        InitStats();
+        InjectDependencies();
+
+        stateMachine = new PlayerStateMachine(this);
+        stateMachine.InitAllStates();
+
+        GameManager.Instance.InitSkillsFromSkillTree();
+    }
+
+    private void Update()
+    {
+        stateMachine.CurrentState?.FrameUpdate();
+        ManageTimers();
+    }
+
+    private void FixedUpdate()
+    {
+        stateMachine.CurrentState?.PhysicsUpdate();
+    }
+   
+    private void InjectDependencies()
+    {
+        playerInputHandler.Init(this);
+        playerMovementHandler.Init(this);
+        playerHealthBarHandler.Init(this);
+        playerHitHandler.Init(this);
+        playerAnimationHandler.Init(this);
+        playerSFXHandler.Init(this);
+        playerVFXHandler.Init(this);
+    }
+
+
+    //Input Callbacks
+    public void OnMoveInput(Vector2 dir)
+    {
+        playerMovementHandler.SetMovementInputDirection(dir);
+    }
+
+    public void OnSwordAttackInput()
+    {
+        signalHub.OnChangeState?.Invoke(PlayerStateEnum.SwordAttack);
+        stateMachine.PlayerSwordAttackState.TrySwordAttack();
+    }
+
+    public void OnDashInput()
+    {
+        if (CanDash)
+        {
+            signalHub.OnChangeState?.Invoke(PlayerStateEnum.Dash);
         }
     }
 
-    private void StartRunning()
+    public void OnParryInput()
     {
-        playerController.PlayerMovementManager.MoveSpeed = RunSpeed;
-        playerController.AnimationController.SetBoolForAnimations("isRunning", true);
-
-
-    }
-
-    private void StopRunning()
-    {
-        playerController.AnimationController.SetBoolForAnimations("isRunning", false);
-
-
-    }
-
-    public void PauseRunningSFX()
-    {
-        if (audioSource.isPlaying)
+        if (!isRolling && !isParrying)
         {
-            audioSource.Pause();
-
+            signalHub.OnChangeState?.Invoke(PlayerStateEnum.Parry);
         }
     }
 
-    public void ResumeRunningSFX()
+    public void OnRollInput()
     {
-        if (!audioSource.isPlaying)
+        if (!isRolling && canRoll)
         {
-            audioSource.UnPause();
-
+            signalHub.OnChangeState?.Invoke(PlayerStateEnum.Roll);
         }
     }
 }
@@ -273,14 +344,1142 @@ public class PlayerRunState : PlayerBaseState
 </code></pre>
                     </div>
                 </li>
+
                 <li>
                     <div>
-                        <h3>Simplified Player Architecture</h3><img src="./media/Hallowfall/PlayerController.png">
+                        <h3>SFXHandler Component</h3>
+                        <pre><code class="language-csharp">
+
+public class PlayerSFXHandler : MonoBehaviour, IInitializeable<PlayerController>
+{
+    private AudioManager audioManager;
+    private PlayerController playerController;
+
+    private AudioClip[] groundRunSFX;
+    private AudioClip[] grassRunSFX;
+    private AudioClip[] stoneRunSFX;
+    public void Init(PlayerController playerController)
+    {
+        this.playerController = playerController;
+        audioManager = AudioManager.Instance;
+
+        groundRunSFX = playerController.PlayerConfig.groundSFX;
+        grassRunSFX = playerController.PlayerConfig.grassSFX;
+        stoneRunSFX = playerController.PlayerConfig.stoneSFX;
+
+        playerController.PlayerSignalHub.OnPlayerStep += PlayStepSound;
+        playerController.PlayerSignalHub.OnPlaySFX += PlaySFX;
+        playerController.PlayerSignalHub.OnPlayRandomSFX += PlayRandomSFX;
+    }
+
+    private void OnDisable()
+    {
+        playerController.PlayerSignalHub.OnPlayerStep -= PlayStepSound;
+        playerController.PlayerSignalHub.OnPlaySFX -= PlaySFX;
+        playerController.PlayerSignalHub.OnPlayRandomSFX -= PlayRandomSFX;
+    }
+
+    private void PlaySFX(AudioClip audioClip, float volume)
+    {
+        audioManager.PlaySFX(audioClip, playerController.GetPlayerPos(), volume);
+    }
+
+    private void PlayRandomSFX(AudioClip []audioClip, float volume)
+    {
+        audioManager.PlaySFX(audioClip, playerController.GetPlayerPos(), volume);
+    }
+    private void PlayStepSound()
+    {
+        switch (playerController.CurrentFloorType)
+        {
+            case FloorTypeEnum.Ground:
+                PlayRandomSFX(groundRunSFX, 0.25f);
+                break;
+            case FloorTypeEnum.Grass:
+                PlayRandomSFX(grassRunSFX, 0.25f);
+                break;
+            case FloorTypeEnum.Stone:
+                PlayRandomSFX(stoneRunSFX, 0.25f);
+                break;
+        }
+    }
+}
+
+</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <h3>Simplified Architecture Diagram</h3><img src="./media/Hallowfall/PlayerController.jpg">
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="topicContainer">
+
+            <h2>Procedural World Generation System</h2>
+            <p>
+                The <b>Procedural World Generation System</b> is implemented using a dynamic
+                <span class="keyword-system">zone based architecture</span>, where the game world is
+                divided into manageable zones that are procedurally generated, activated, and deactivated
+                based on player proximity. Each zone is responsible for generating terrain, props, and
+                gameplay elements according to defined profiles and procedural rules. This system was developed
+                to optimize memory usage, ensure seamless exploration, and allow for unique, replayable game
+                environments. The core idea revolves around a
+                <span class="keyword-class">ZoneManager</span> for high-level management and a
+                <span class="keyword-class">ZoneHandler</span> for zone-specific generation.
+            </p>
+
+            <ul class="bulletPointList">
+                <li><b>Zone-Based Architecture</b>:
+                    <ul>
+                        <li>The world is split into zones, each represented as a grid of
+                            <span class="keyword-class">Cells</span>, with independent procedural generation for
+                            terrain, props, and gameplay elements.
+                        </li>
+                        <li>Zones are dynamically activated or deactivated based on player proximity to
+                            optimize memory and performance.</li>
+                    </ul>
+                </li>
+
+                <li><b>ZoneManager</b>:
+                    <ul>
+                        <li>Centralized controller for managing all zones in the world.</li>
+                        <li>Tracks player position and proximity to determine which zones to generate, expand,
+                            or deactivate.</li>
+                        <li>Implements a buffer system to pre-generate zones near the player for seamless
+                            exploration.</li>
+                        <li>Uses a dictionary (<code>GeneratedZonesDic</code>) for efficient retrieval of zone data.
+                        </li>
+                    </ul>
+                </li>
+
+                <li><b>ZoneHandler</b>:
+                    <ul>
+                        <li>Responsible for generating the internal layout of a zone, including terrain, props,
+                            and environmental details.</li>
+                        <li>Integrates with a <span class="keyword-class">CellGrid</span> system to define and
+                            partition the zone into smaller logical subzones for detailed procedural content.
+                        </li>
+                        <li>Implements <span class="keyword-concept">binary space partitioning</span> for subdividing
+                            zones into smaller regions, ensuring diverse layouts and logical prop placement.
+                        </li>
+                    </ul>
+                </li>
+
+                <li><b>Procedural Asset Placement</b>:
+                    <ul>
+                        <li>Populates zones with props (e.g., trees, structures, rocks) based on a
+                            <span class="keyword-config">ZoneLayoutProfile</span>, which defines procedural rules and
+                            tile types.
+                        </li>
+                        <li>Uses randomization and constraints (e.g., minimum block sizes) to ensure varied and logical
+                            placement of assets.</li>
+                    </ul>
+                </li>
+
+                <li><b>Dynamic Zone Expansion</b>:
+                    <ul>
+                        <li>Expands the world in all directions, including diagonals, based on player movement and
+                            proximity to zone edges.</li>
+                        <li>Zones can include custom openings and pathways to ensure connectivity.</li>
+                    </ul>
+                </li>
+
+                <li><b>Tilemap Integration</b>:
+                    <ul>
+                        <li>Generates and paints multiple layers of tilemaps (e.g., ground, props, collision) for each
+                            zone.</li>
+                        <li>Custom rule tiles are used for roads, boundaries, and terrain features.</li>
+                    </ul>
+                </li>
+
+                <li><b>Event-Driven Updates</b>:
+                    <ul>
+                        <li>The system responds to player-driven events, such as movement or interactions, to trigger
+                            zone generation or deactivation.</li>
+                    </ul>
+                </li>
+
+                <li><b>Flow Field Integration</b>:
+                    <ul>
+                        <li>Generates <span class="keyword-concept">flow fields</span> for each zone to enable
+                            dynamic AI pathfinding across the world.</li>
+                    </ul>
+                </li>
+
+                <li><b>Extensible Design</b>:
+                    <ul>
+                        <li>Zones are built using modular components, allowing easy addition of new terrain
+                            types, props, or gameplay mechanics without altering core systems.</li>
+                        <li>Supports custom procedural profiles for different biomes and zones.</li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <ul class="visualDemo">
+                <li>
+                    <div>
+                        <h3>Zone Manager</h3>
+
+                        <pre><code class="language-csharp">
+[RequireComponent(typeof(CTicker))]
+public class ZoneManager : MonoBehaviour
+{
+    public static ZoneManager Instance { get; private set; }
+
+    [SerializeField] private int zoneSize = 40;
+    [SerializeField] private int zoneCellSize = 1;
+    [SerializeField] private float zoneBuffer = 25;
+    [SerializeField] private GameObject zonePrefab;
+    [SerializeField] private GameObject mainGrid;
+    [SerializeField] private Tilemap zoneConnectingGround;
+    [SerializeField] private ZoneLayoutProfile zoneLayoutProfile;
+
+    private GameObject player;
+    private int halfZoneSize;
+    private CTicker cTicker;
+
+
+    public Tilemap ZoneConnectingGround => zoneConnectingGround;
+    public Dictionary<Vector2Int, ZoneData> GeneratedZonesDic { get => generatedZonesDic;}
+    private Dictionary<Vector2Int, ZoneData> generatedZonesDic = new();
+
+    private void OnValidate()
+    {
+        // Validate required serialized fields
+        MyUtils.ValidateFields(this, zonePrefab, nameof(zonePrefab));
+        MyUtils.ValidateFields(this, mainGrid, nameof(mainGrid));
+        MyUtils.ValidateFields(this, zoneConnectingGround, nameof(zoneConnectingGround));
+    }
+
+    private void Awake()
+    {
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
+        cTicker = GetComponent<CTicker>();
+
+        halfZoneSize = zoneSize / 2;
+    }
+
+    private void Start()
+    {
+        player = GameManager.Instance.Player;
+        
+        cTicker.CanTick = true;
+
+        TryGenerateZone(Vector2Int.zero, DirectionEnum.None);
+       
+        cTicker.OnTickEvent += CheckForPlayerEdgeProximity;
+    }
+
+    public ZoneData FindZoneDataFromWorldPos(Vector3 worldPos)
+    {
+        Vector2Int zoneCoord = new Vector2Int(Mathf.RoundToInt(worldPos.x / zoneSize), Mathf.RoundToInt(worldPos.y / zoneSize));
+        if (generatedZonesDic.TryGetValue(zoneCoord, out ZoneData zoneData)) return zoneData;
+
+        return null;
+    }
+
+    public Cell FindCurrentCellFromWorldPos(Vector3 worldPos)
+    {
+        ZoneData zoneData = FindZoneDataFromWorldPos(worldPos);
+        if(zoneData == null) return null;
+        Cell result = zoneData.ZoneHandler.CellGrid.GetCellFromWorldPos(worldPos);
+        return result;
+    }
+    
+    private void TryGenerateZone(Vector2Int centerCoord, DirectionEnum expansionDir)
+    {
+        if (generatedZonesDic.ContainsKey(centerCoord)) return;
+
+        Vector3Int newZoneWorldPos = FindZoneCenterPosition(centerCoord);
+        GameObject newZoneGO = Instantiate(zonePrefab, newZoneWorldPos, Quaternion.identity, mainGrid.transform);
+
+        var zoneData = new ZoneData(zoneCellSize, zoneSize, zoneSize, centerCoord, newZoneWorldPos, newZoneGO, expansionDir, zoneLayoutProfile);
+        generatedZonesDic.Add(centerCoord, zoneData);
+
+        var zoneHandler = newZoneGO.GetComponent<ZoneHandler>();
+        zoneHandler.Init(zoneData);
+    }
+
+    private Vector2Int GetCurrentZoneCenterCoord()
+    {
+        Vector3 pos = player.transform.position;
+        return new Vector2Int(
+            Mathf.FloorToInt((pos.x + halfZoneSize) / zoneSize),
+            Mathf.FloorToInt((pos.y + halfZoneSize) / zoneSize)
+        );
+    }
+
+    public ZoneHandler GetCurrentZoneHandler()
+    {
+        return generatedZonesDic[GetCurrentZoneCenterCoord()].ZoneHandler;
+    }
+
+    private Vector3Int FindZoneCenterPosition(Vector2Int centerCoord)
+    {
+        return new Vector3Int(centerCoord.x * zoneSize, centerCoord.y * zoneSize, 0);
+    }
+ 
+    private void CheckForPlayerEdgeProximity()
+    {
+        Vector3 playerPos = player.transform.position;
+        Vector3Int currentZoneCenter = FindZoneCenterPosition(GetCurrentZoneCenterCoord());
+
+        Vector2Int[] allDirections = MyUtils.GetAllDirectionsVectorArray();
+        Dictionary<Vector2Int, DirectionEnum> directionDic = MyUtils.GetDirectionDicWithVectorKey();
+
+        foreach (Vector2Int dir in allDirections)
+        {
+            Vector2Int nextCoord = GetCurrentZoneCenterCoord() + dir;
+            Vector3Int nextZonePos = currentZoneCenter + ((Vector3Int)dir * halfZoneSize);
+            float distSqr = (nextZonePos - playerPos).sqrMagnitude;
+            bool withinBuffer = distSqr < zoneBuffer * zoneBuffer;
+
+            if (!generatedZonesDic.ContainsKey(nextCoord))
+            {
+                if (withinBuffer && directionDic.TryGetValue(dir, out DirectionEnum dirEnum))
+                {
+                    ExpandZones(dirEnum);
+                }
+            }
+            else
+            {
+                var zone = generatedZonesDic[nextCoord];
+
+                if (!withinBuffer && zone.IsZoneFullyGenerated)
+                {
+                    zone.zoneGO.SetActive(false);
+                }
+                else
+                {
+                    zone.zoneGO.SetActive(true);
+                }
+            }
+        }
+    }
+    private void ExpandZones(DirectionEnum dirEnum)
+    {
+        Vector2Int currentCoord = GetCurrentZoneCenterCoord();
+
+        switch (dirEnum)
+        {
+            case DirectionEnum.Right:
+                TryGenerateZone(currentCoord + Vector2Int.right, DirectionEnum.Left);
+                break;
+            case DirectionEnum.Left:
+                TryGenerateZone(currentCoord + Vector2Int.left, DirectionEnum.Right);
+                break;
+            case DirectionEnum.Up:
+                TryGenerateZone(currentCoord + Vector2Int.up, DirectionEnum.Down);
+                break;
+            case DirectionEnum.Down:
+                TryGenerateZone(currentCoord + Vector2Int.down, DirectionEnum.Up);
+                break;
+            case DirectionEnum.UpRight:
+                TryGenerateZone(currentCoord + Vector2Int.up, DirectionEnum.DownLeft);
+                TryGenerateZone(currentCoord + new Vector2Int(1, 1), DirectionEnum.DownLeft);
+                break;
+            case DirectionEnum.UpLeft:
+                TryGenerateZone(currentCoord + Vector2Int.up, DirectionEnum.DownRight);
+                TryGenerateZone(currentCoord + new Vector2Int(-1, 1), DirectionEnum.DownRight);
+                break;
+            case DirectionEnum.DownRight:
+                TryGenerateZone(currentCoord + Vector2Int.down, DirectionEnum.UpLeft);
+                TryGenerateZone(currentCoord + new Vector2Int(1, -1), DirectionEnum.UpLeft);
+                break;
+            case DirectionEnum.DownLeft:
+                TryGenerateZone(currentCoord + Vector2Int.down, DirectionEnum.UpRight);
+                TryGenerateZone(currentCoord + new Vector2Int(-1, -1), DirectionEnum.UpRight);
+                break;
+        }
+    }
+}
+</code></pre>
                     </div>
                 </li>
                 <li>
                     <div>
-                        <h3>Player Animation Controller</h3><img src="./media/Hallowfall/AnimationController.png">
+                        <h3>Zone Handler</h3>
+                        <pre><code class="language-csharp">
+public class ZoneHandler : MonoBehaviour
+{
+    private ZoneData zoneData;
+    private ZoneLayoutProfile zoneLayoutProfile;
+    private int cellSize;
+    private int zoneWidth;
+    private int zoneHeight;
+
+    private CellGrid cellGrid;
+    private readonly List<BoundsInt> listOfSubzoneBounds = new();
+    private List<BoundsInt> listOfPartitionedSubzoneBounds = new();
+    private Dictionary<DirectionEnum, Vector2Int[]> zoneOpenings = new();
+
+    private Tilemap groundZeroTilemap;
+    private Tilemap groundOneTilemap;
+    private Tilemap groundTwoTilemap;
+    private Tilemap boundsTilemap;
+    private Tilemap propsWithCollisionTilemap;
+    private Tilemap propsNoCollisionTilemap;
+    [SerializeField] private Tilemap treeTilemap;
+
+    public Tilemap GroundZeroTilemap => groundZeroTilemap;
+    public Tilemap GroundOneTilemap => groundOneTilemap;
+    public Tilemap GroundTwoTilemap => groundTwoTilemap;
+    public Tilemap PropsWithCollisionTilemap => propsWithCollisionTilemap;
+    public Tilemap PropsNoCollisionTilemap => propsNoCollisionTilemap;
+    public Tilemap BoundsTilemap => boundsTilemap;
+    public Tilemap TreeTilemap => treeTilemap;
+
+    public ZoneData ZoneData { get => zoneData; set => zoneData = value; }
+    public ZoneLayoutProfile ZoneLayoutProfile { get => zoneLayoutProfile; set => zoneLayoutProfile = value; }
+    public CellGrid CellGrid { get => cellGrid; }
+
+    private void OnValidate()
+    {
+        MyUtils.ValidateFields(this, propsWithCollisionTilemap, nameof(propsWithCollisionTilemap));
+        MyUtils.ValidateFields(this, propsNoCollisionTilemap, nameof(propsNoCollisionTilemap));
+        MyUtils.ValidateFields(this, groundZeroTilemap, nameof(groundZeroTilemap));
+        MyUtils.ValidateFields(this, groundOneTilemap, nameof(groundZeroTilemap));
+        MyUtils.ValidateFields(this, groundZeroTilemap, nameof(groundZeroTilemap));
+        MyUtils.ValidateFields(this, boundsTilemap, nameof(boundsTilemap));
+        MyUtils.ValidateFields(this, TreeTilemap, nameof(TreeTilemap));
+    }
+
+    public void Init(ZoneData zoneData)
+    {
+        this.zoneData = zoneData;
+        this.zoneLayoutProfile = this.zoneData.zoneLayoutProfile;
+        this.zoneWidth = this.zoneData.zoneWidth;
+        this.zoneHeight = this.zoneData.zoneHeight;
+        this.cellSize = this.zoneData.cellSize;
+
+        cellGrid = new CellGrid(this.cellSize, this.zoneWidth, this.zoneHeight);
+        cellGrid.InitializeGridCells(this.zoneData.centerPos);
+
+        //groundOneTilemap = ZoneManager.Instance.ZoneConnectingGround;  
+
+        StartCoroutine(GenerateZoneCoroutine());
+
+    }
+    private IEnumerator GenerateZoneCoroutine()
+    {
+        //GenerateBoundsForTilemap();
+        //GenerateRoads();
+
+        PopulateZoneWithPropBlocks(CellGrid, zoneLayoutProfile);
+        AddDefaultGroundTileForZone(zoneLayoutProfile);
+        yield return null;
+        yield return StartCoroutine(CellGrid.PaintAllBlocksCoroutine());
+        yield return StartCoroutine(CellGrid.PaintAllCellsCoroutine());
+
+        FlowFieldManager.Instance.UpdateFlowFieldFromZone(zoneData);
+
+        zoneData.IsZoneFullyGenerated = true;
+    }
+
+    private void PopulateZoneWithPropBlocks(CellGrid cellGrid, ZoneLayoutProfile zoneLayoutProfile)
+    {
+        Cell startCell = cellGrid.FindNextUnpartitionedCell(new Vector2Int(0, 0));
+        CreateAllSubZoneBounds(cellGrid, startCell);
+
+        //Turns big subZones to smalle blocks 
+        listOfPartitionedSubzoneBounds = MyUtils.PerformeBinarySpacePartitioning(listOfSubzoneBounds, 8, 8);
+
+        InstantiatePropsBlocks(listOfPartitionedSubzoneBounds, zoneLayoutProfile);
+    }
+    private void CreateAllSubZoneBounds(CellGrid cellGrid, Cell startCell)
+    {
+        //Check along left edge
+        int h1 = 1;
+        for (int i = 1; i + startCell.GlobalCellCoord.y < cellGrid.CellPerCol; i++)
+        {
+            if (cellGrid.Cells[startCell.GlobalCellCoord.x, startCell.GlobalCellCoord.y + i].IsPartitioned)
+                break;
+            h1++;
+        }
+        //Check along bottom edge
+        int w1 = 1;
+        for (int i = 1; i + startCell.GlobalCellCoord.x < cellGrid.CellPerRow; i++)
+        {
+            if (cellGrid.Cells[startCell.GlobalCellCoord.x + i, startCell.GlobalCellCoord.y].IsPartitioned)
+                break;
+            w1++;
+        }
+        //Check along top edge
+        int w2 = 1;
+        for (int i = 1; i + startCell.GlobalCellCoord.x < cellGrid.CellPerRow; i++)
+        {
+            if (cellGrid.Cells[startCell.GlobalCellCoord.x + i, startCell.GlobalCellCoord.y + h1 - 1].IsPartitioned)
+                break;
+            w2++;
+        }
+
+        int width = Mathf.Min(w1, w2);
+        //Check along right edge
+        int h2 = 1;
+        for (int i = 1; i + startCell.GlobalCellCoord.y < cellGrid.CellPerCol; i++)
+        {
+            if (cellGrid.Cells[startCell.GlobalCellCoord.x + width - 1, startCell.GlobalCellCoord.y + i].IsPartitioned)
+                break;
+            h2++;
+        }
+
+        int height = Mathf.Min(h1, h2);
+
+        listOfSubzoneBounds.Add(new BoundsInt(new Vector3Int((int)startCell.GlobalCellPos.x, (int)startCell.GlobalCellPos.y, 0), new Vector3Int(width, height, 0)));
+
+
+        for (int x = startCell.GlobalCellCoord.x; x < startCell.GlobalCellCoord.x + width; x++)
+        {
+            for (int y = startCell.GlobalCellCoord.y; y < startCell.GlobalCellCoord.y + height; y++)
+            {
+                if (x >= 0 && x < cellGrid.CellPerRow && y >= 0 && y < cellGrid.CellPerCol)
+                    cellGrid.Cells[x, y].MarkAsPartitioned();
+            }
+        }
+
+        Cell nextStartCell = cellGrid.FindNextUnpartitionedCell(new Vector2Int(startCell.GlobalCellCoord.x + width, startCell.GlobalCellCoord.y));
+        if (nextStartCell != null)
+        {
+            CreateAllSubZoneBounds(cellGrid, nextStartCell);
+        }
+    }
+
+    private void InstantiatePropsBlocks(List<BoundsInt> listOfPartitionedSubzoneBounds, ZoneLayoutProfile zoneLayoutProfile)
+    {
+        foreach (BoundsInt zoneBounds in listOfPartitionedSubzoneBounds)
+        {
+            PropsBlockEnum propsBlockEnum = GetPropsBlockTypeEnum(zoneLayoutProfile, zoneBounds);
+            if (propsBlockEnum != PropsBlockEnum.none)
+            {
+                GameObject go = Instantiate(zoneLayoutProfile.spawnablePropsBlock, zoneBounds.position, Quaternion.identity);
+                go.transform.parent = this.transform;
+                PropsBlock propsBlock = AddBlockComponent(go, propsBlockEnum);
+                propsBlock.Init(this, CellGrid, zoneBounds.position, zoneBounds, zoneLayoutProfile);
+
+            }
+            else
+            {
+                GameObject go = Instantiate(zoneLayoutProfile.spawnablePropsBlock, zoneBounds.position, Quaternion.identity);
+                go.transform.parent = this.transform;
+            }
+
+        }
+    }
+    private PropsBlockEnum GetPropsBlockTypeEnum(ZoneLayoutProfile zoneLayoutProfile, BoundsInt blockBounds)
+    {
+        if (zoneLayoutProfile.propsBlocksStructList.Count < 1) return PropsBlockEnum.none;
+
+        PropsBlockEnum propsBlockEnum = PropsBlockEnum.none;
+        int maxAttempts = 100;
+        int attempts = 0;
+
+        while (propsBlockEnum == PropsBlockEnum.none && attempts < maxAttempts)
+        {
+            PropsBlockStruct propsBlock = zoneLayoutProfile.propsBlocksStructList[
+                Random.Range(1, zoneLayoutProfile.propsBlocksStructList.Count)];
+
+            if (blockBounds.size.x >= propsBlock.minBlockSize.x &&
+                blockBounds.size.y >= propsBlock.minBlockSize.y &&
+                propsBlock.propsBlockEnum != PropsBlockEnum.none)
+            {
+                propsBlockEnum = propsBlock.propsBlockEnum;
+            }
+
+            attempts++;
+        }
+        return propsBlockEnum;
+    }
+    private PropsBlock AddBlockComponent(GameObject propsBlockGO, PropsBlockEnum propsBlockEnum)
+    {
+        switch (propsBlockEnum)
+        {
+            case PropsBlockEnum.cryptCluster:
+                return propsBlockGO.AddComponent<CryptClusterBlock>();
+
+            case PropsBlockEnum.graveCluster:
+                return propsBlockGO.AddComponent<GraveClusterBlock>();
+
+            case PropsBlockEnum.treeCluster:
+                return propsBlockGO.AddComponent<TreeClusterBlock>();
+
+            case PropsBlockEnum.ritualCluster:
+                return propsBlockGO.AddComponent<RitualClusterBlock>();
+
+            default:
+                return null;
+        }
+    }
+    private void AddDefaultGroundTileForZone(ZoneLayoutProfile zoneLayoutProfile)
+    {
+
+        CellPaint tilePaint = new CellPaint { tilemap = this.GroundZeroTilemap, tileBase = zoneLayoutProfile.defaultGroundTile };
+        CellGrid.LoopOverGrid((i, j) =>
+        {
+            CellGrid.Cells[i, j].AddToCellPaint(tilePaint);
+        });
+    }
+    private void DrawStraightLineOfTiles(Vector2Int beginningCellCoord, Vector2Int endCellCoord, CellPaint[] tilePaints)
+    {
+        Vector2Int delta = endCellCoord - beginningCellCoord;
+
+        if (delta.x == 0) // Vertical road
+        {
+
+            int yMin = Mathf.Min(beginningCellCoord.y, endCellCoord.y);
+            int yMax = Mathf.Max(beginningCellCoord.y, endCellCoord.y);
+
+            for (int y = yMin; y < yMax + 1; y++)
+            {
+                Vector3Int pos = TurnCellCoordToTilePos(beginningCellCoord.x, y);
+                //tilemap.SetTile(pos, tileBase);
+                CellGrid.Cells[beginningCellCoord.x, y].MarkAsOccupied();
+                CellGrid.Cells[beginningCellCoord.x, y].MarkAsPartitioned();
+                CellGrid.Cells[beginningCellCoord.x, y].AddToCellPaint(tilePaints);
+            }
+        }
+        else if (delta.y == 0) // Horizontal road
+        {
+            int xMin = Mathf.Min(beginningCellCoord.x, endCellCoord.x);
+            int xMax = Mathf.Max(beginningCellCoord.x, endCellCoord.x);
+
+            for (int x = xMin; x < xMax + 1; x++)
+            {
+
+                Vector3Int pos = TurnCellCoordToTilePos(x, beginningCellCoord.y);
+                //tilemap.SetTile(pos, tileBase);
+                CellGrid.Cells[x, beginningCellCoord.y].MarkAsOccupied();
+                CellGrid.Cells[x, beginningCellCoord.y].MarkAsPartitioned();
+                CellGrid.Cells[x, beginningCellCoord.y].AddToCellPaint(tilePaints);
+            }
+        }
+    }
+
+    private Vector3Int TurnCellCoordToTilePos(int x, int y)
+    {
+        return (Vector3Int)CellGrid.Cells[x, y].GlobalCellPos;
+    }
+    private void GenerateBoundsForTilemap()
+    {
+        Tilemap boundsTilemap = this.BoundsTilemap;
+
+        CellPaint[] tilePaints = { new CellPaint {tilemap = this.GroundOneTilemap, tileBase = zoneLayoutProfile.grassRuletile }, new CellPaint {ilemap = this.BoundsTilemap, tileBase = zoneLayoutProfile.fenceRuleTile } };
+
+        //Down
+        DrawStraightLineOfTiles(new Vector2Int(0, 0), new Vector2Int(CellGrid.CellPerRow - 1, 0), tilePaints);
+        //Up
+        DrawStraightLineOfTiles(new Vector2Int(0, CellGrid.CellPerCol - 1), new Vector2Int(CellGrid.CellPerRow - 1, CellGrid.CellPerCol - 1), tilePaints);
+        //Left
+        DrawStraightLineOfTiles(new Vector2Int(0, 0), new Vector2Int(0, CellGrid.CellPerCol - 1), tilePaints);
+        //Right
+        DrawStraightLineOfTiles(new Vector2Int(CellGrid.CellPerRow - 1, 0), new Vector2Int(CellGrid.CellPerRow - 1, CellGrid.CellPerCol - 1), tilePaints);
+
+
+        List<DirectionEnum> dirs = MyUtils.GetAllDirectionEnumList();
+        int openingCount = Random.Range(2, 3);
+        // Always one horizontal + one vertical + one random
+        List<DirectionEnum> openingDir = new List<DirectionEnum>();
+        DirectionEnum horizontal = MyUtils.GetRandomHorizontalDirectionEnum();
+        DirectionEnum vertical = MyUtils.GetRandomVerticalDirectionEnum();
+        openingDir.Add(horizontal);
+        openingDir.Add(vertical);
+        dirs.Remove(horizontal);
+        dirs.Remove(vertical);
+        openingDir.Add(dirs[Random.Range(0, dirs.Count)]);
+
+        zoneOpenings = CreateOpeningsInZone(openingDir, CellGrid, boundsTilemap);
+    }
+    private Dictionary<DirectionEnum, Vector2Int[]> CreateOpeningsInZone(List<DirectionEnum> openingDir, CellGrid cellGrid, Tilemap tilemap)
+    {
+        Dictionary<DirectionEnum, Vector2Int[]> zoneOpenings = new Dictionary<DirectionEnum, Vector2Int[]>();
+        // Openings for each selected side
+        foreach (DirectionEnum dir in openingDir)
+        {
+            int[] openingIndices = GenerateRandomOpeningCells();
+            Vector2Int[] openings = new Vector2Int[openingIndices.Length];
+            zoneOpenings.Add(dir, openings);
+
+            for (int i = 0; i < openingIndices.Length; i++)
+            {
+                Vector2Int cellCoord = Vector2Int.zero;
+
+                switch (dir)
+                {
+                    case DirectionEnum.Down:
+                        cellCoord = new Vector2Int(openingIndices[i], 0);
+                        break;
+                    case DirectionEnum.Up:
+                        cellCoord = new Vector2Int(openingIndices[i], cellGrid.CellPerCol - 1);
+                        break;
+                    case DirectionEnum.Left:
+                        cellCoord = new Vector2Int(0, openingIndices[i]);
+                        break;
+                    case DirectionEnum.Right:
+                        cellCoord = new Vector2Int(cellGrid.CellPerRow - 1, openingIndices[i]);
+                        break;
+                }
+
+                Vector3Int pos = TurnCellCoordToTilePos(cellCoord.x, cellCoord.y);
+                zoneOpenings[dir][i] = cellCoord;
+                cellGrid.Cells[cellCoord.x, cellCoord.y].MarkAsOccupied();
+                cellGrid.Cells[cellCoord.x, cellCoord.y].RemoveCellPaints();
+            }
+        }
+
+        return zoneOpenings;
+    }
+    private void GenerateRoads()
+    {
+        var opening1 = zoneOpenings.ElementAt(0);
+        var opening2 = zoneOpenings.ElementAt(1);
+
+        ConnectAllCenterJunctionPoints(opening1.Value, opening2.Value);
+
+        // Handle third direction if it exists
+        if (zoneOpenings.Count == 3)
+        {
+            var opening3 = zoneOpenings.ElementAt(2);
+            DirectionEnum thirdDir = opening3.Key;
+
+            if (thirdDir == DirectionEnum.Up || thirdDir == DirectionEnum.Down)
+            {
+                if (zoneOpenings.ContainsKey(DirectionEnum.Left))
+                    ConnectAllCenterJunctionPoints(zoneOpenings[DirectionEnum.Left], opening3.Value);
+
+                if (zoneOpenings.ContainsKey(DirectionEnum.Right))
+                    ConnectAllCenterJunctionPoints(zoneOpenings[DirectionEnum.Right], opening3.Value);
+            }
+
+            if (thirdDir == DirectionEnum.Left || thirdDir == DirectionEnum.Right)
+            {
+                if (zoneOpenings.ContainsKey(DirectionEnum.Up))
+                    ConnectAllCenterJunctionPoints(zoneOpenings[DirectionEnum.Up], opening3.Value);
+
+                if (zoneOpenings.ContainsKey(DirectionEnum.Down))
+                    ConnectAllCenterJunctionPoints(zoneOpenings[DirectionEnum.Down], opening3.Value);
+            }
+        }
+    }
+    private void ConnectAllCenterJunctionPoints(Vector2Int[] from, Vector2Int[] to)
+    {
+        //Tilemap stoneTilemap = ZoneManager.Instance.GroundOneTilemap;
+        Tilemap stoneTilemap = GroundOneTilemap;
+        int size = from.Length;
+        for (int i = 0; i < size; i++)
+        {
+            ConnectTwoJunctionPoints(stoneTilemap, from[i], to[i]);         // Matching index
+            ConnectTwoJunctionPoints(stoneTilemap, from[i], to[2 - i]);     // Flipped index
+        }
+    }
+    private void ConnectTwoJunctionPoints(Tilemap stoneTilemap, Vector2Int p1, Vector2Int p2)
+    {
+        Vector2Int junction = GetOpeningJunctionPoint(p1, p2);
+        CellPaint[] tilePaint = { new CellPaint {/* tilemap = ZoneManager.Instance.GroundOneTilemap*/  tilemap = this.GroundOneTilemap, tileBase = zoneLayoutProfile.stoneRoadRuleTile } };
+        DrawStraightLineOfTiles(p1, junction, tilePaint);
+        DrawStraightLineOfTiles(p2, junction, tilePaint);
+    }
+    private Vector2Int GetOpeningJunctionPoint(Vector2Int p1, Vector2Int p2)
+    {
+        Vector2Int result = new Vector2Int(p1.x, p2.y);
+        if (result.x == 0 || result.y == 0 || result.x >= 39 || result.y >= 39) return new Vector2Int(p2.x, p1.y);
+        return result;
+    }
+    private int[] GenerateRandomOpeningCells()
+    {
+        int rand = Random.Range(5, 35);
+        return new int[] { rand - 1, rand, rand + 1 };
+    }
+}
+</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <h3>CellGrid</h3>
+                        <pre><code class="language-csharp">
+public class CellGrid
+{
+    protected int cellSize;
+    protected int gridWidth;
+    protected int gridHeight;
+
+    protected int cellPerRow;
+    protected int cellPerCol;
+
+    protected Cell[,] cells;
+    protected List<BlockPaint> blockPaintList = new();
+
+    public Cell[,] Cells => cells;
+    public int CellPerCol => cellPerCol;
+    public int CellPerRow => cellPerRow;
+    public int CellSize => cellSize;
+    public int GridWidth => gridWidth;
+    public int GridHeight => gridHeight;
+    public List<BlockPaint> BlockPaintList => blockPaintList;
+
+    public CellGrid(int cellSize, int gridWidth, int gridHeight)
+    {
+        this.cellSize = cellSize;
+        this.gridWidth = gridWidth;
+        this.gridHeight = gridHeight;
+
+        cellPerRow = Mathf.FloorToInt(gridWidth / cellSize);
+        cellPerCol = Mathf.FloorToInt(gridHeight / cellSize);
+
+        cells = new Cell[cellPerRow, cellPerCol];
+    }
+
+    public void InitializeGridCells(Vector3Int gridCenterWorldPos)
+    {
+        Vector3Int originWorldPos = gridCenterWorldPos - new Vector3Int(gridWidth / 2, gridHeight / 2, 0);
+
+        for (int i = 0; i < cellPerRow; i++)
+        {
+            for (int j = 0; j < cellPerCol; j++)
+            {
+                Vector2Int cellCoord = new(i, j);
+                cells[i, j] = new Cell(this, cellCoord, originWorldPos, cellSize);
+            }
+        }
+    }
+
+    public Cell FindNextUnpartitionedCell(Vector2Int startCellID)
+    {
+        for (int y = startCellID.y; y < cellPerCol; y++)
+        {
+            int xStart = (y == startCellID.y) ? startCellID.x : 0;
+            for (int x = xStart; x < cellPerRow; x++)
+            {
+                if (!cells[x, y].IsPartitioned)
+                    return cells[x, y];
+            }
+        }
+        return null;
+    }
+
+    public Cell GetCellFromWorldPos(Vector3 worldPos)
+    {
+        Vector3Int cellPosOnGrid = new Vector3Int(Mathf.FloorToInt(worldPos.x), Mathf.FloorToInt(worldPos.y), 0);
+        Vector3Int cellCoord = cellPosOnGrid - cells[0,0].GlobalCellPos;
+        return cells[cellCoord.x, cellCoord.y];
+    }
+
+    public Cell GetCenterCellOfGrid() =>
+        cells[cellPerRow / 2, cellPerCol / 2];
+
+    public void AddToBlockPaints(Tilemap tilemap, TileBase tileBase, SubCellGrid cellGrid, CellGrid parentGrid)
+    {
+        BoundsInt blockBounds = new BoundsInt(
+            (Vector3Int)cellGrid.Cells[0, 0].GlobalCellCoord - new Vector3Int(parentGrid.CellPerRow / 2, parentGrid.CellPerCol / 2, 0),
+            new Vector3Int(cellGrid.CellPerRow, cellGrid.CellPerCol, 1)
+        );
+
+        BlockPaint blockPaint = new BlockPaint
+        {
+            tilemap = tilemap,
+            tileBase = tileBase,
+            blockBounds = blockBounds
+        };
+
+        parentGrid.BlockPaintList.Add(blockPaint);
+    }
+
+    private void PaintBlock(BlockPaint blockPaint)
+    {
+        if (blockPaint.tileBase == null || blockPaint.tilemap == null)
+            return;
+
+        BoundsInt bounds = blockPaint.blockBounds;
+        int width = bounds.size.x;
+        int height = bounds.size.y;
+
+        TileBase[] tiles = new TileBase[width * height];
+        for (int i = 0; i < tiles.Length; i++)
+            tiles[i] = blockPaint.tileBase;
+
+        blockPaint.tilemap.SetTilesBlock(bounds, tiles);
+    }
+
+    public IEnumerator PaintAllBlocksCoroutine()
+    {
+        int count = 0;
+        foreach (var block in BlockPaintList)
+        {
+            PaintBlock(block);
+            count++;
+            if (count >= 5)
+            {
+                count = 0;
+                yield return null;
+                
+            }
+        } 
+    }
+
+    public IEnumerator PaintAllCellsCoroutine()
+    {
+        int count = 0;
+        for (int j = 0; j < cellPerCol; j++)
+        {
+            for (int i = 0; i < cellPerRow; i++)
+            {
+                cells[i, j].PaintCell(this);
+                count++;
+                if (count >= 200)
+                {
+                    count = 0;
+                    yield return null;
+                }
+            }
+        }
+    }
+
+    public void PaintAllCells()
+    {
+        LoopOverGrid((i, j) => cells[i, j].PaintCell(this));
+    }
+
+    public GameObject TryInstantiatePermanentGameobjectOnTile(GameObject prefab, Vector2Int localCellCoord, Quaternion rotation, bool markOccupied, Transform parent = null)
+    {
+        if (!MyUtils.IsWithinArrayBounds(cellPerRow, cellPerCol, localCellCoord)) return null;
+
+        Cell cell = cells[localCellCoord.x, localCellCoord.y];
+        if (cell.IsOccupied) return null;
+
+        Vector3 pos = (Vector3)cell.GlobalCellPos + new Vector3(0.5f, 0.5f, 0);
+        GameObject go = UnityEngine.Object.Instantiate(prefab, pos, rotation);
+        if (parent != null) go.transform.parent = parent;
+        if (markOccupied) cell.MarkAsOccupied();
+
+        return go;
+    }
+
+    public GameObject TryInstantiateTempGameobjectOnTile(GameObject prefab, Vector2Int localCellCoord, Quaternion rotation, Transform parent = null)
+    {
+        if (!MyUtils.IsWithinArrayBounds(cellPerRow, cellPerCol, localCellCoord)) return null;
+
+        Vector3 pos = (Vector3)cells[localCellCoord.x, localCellCoord.y].GlobalCellPos + new Vector3(0.5f, 0.5f, 0);
+        GameObject go = UnityEngine.Object.Instantiate(prefab, pos, rotation);
+        if (parent != null) go.transform.parent = parent;
+        return go;
+    }
+
+    public void LoopOverGrid(Action<int, int> action)
+    {
+        for (int j = 0; j < cellPerCol; j++)
+        {
+            for (int i = 0; i < cellPerRow; i++)
+            {
+                action(i, j);
+            }
+        }
+    }
+
+}
+
+</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <h3>Cell</h3>
+                        <pre><code class="language-csharp">
+public class Cell
+{
+    private CellGrid parentGrid;
+    private CellFlowData cellFlowData;
+
+    private bool isOccupied = false;
+    private bool isPartitioned = false;
+
+    private float cellSize;
+    private Vector3Int globalCellPos = Vector3Int.zero;
+    private Vector2Int globalCellCoord = Vector2Int.zero;
+    private Vector2Int localCellCoord = Vector2Int.zero;
+
+    private HashSet<CellPaint> cellPaintHashSet = new();
+
+    public bool IsOccupied => isOccupied;
+    public bool IsPartitioned => isPartitioned;
+    public bool IsWalkable => cellFlowData.isWalkable;
+
+    public float CellSize => cellSize;
+    public Vector2Int GlobalCellCoord => globalCellCoord;
+    public Vector3Int GlobalCellPos => globalCellPos;
+    public Vector2Int LocalCellCoord { get => localCellCoord; set => localCellCoord = value; }
+    public HashSet<CellPaint> TilePaints => cellPaintHashSet;
+    public CellGrid ParentGrid => parentGrid;
+
+    public Vector2 FlowVect { get => cellFlowData.flowVector; set => cellFlowData.flowVector = value; }
+    public DirectionEnum FlowDir
+    {
+        get => cellFlowData.flowDirection;
+        set 
+        {
+            cellFlowData.flowDirection = value;
+            cellFlowData.flowVector = MyUtils.GetVectorFromDir(value);
+        }   
+    }
+
+    public int TotalCost => cellFlowData.totalCost;
+    public int DynamicCost { get => cellFlowData.dynamicCost; set => cellFlowData.dynamicCost = value; }
+    public int BaseCost { get => cellFlowData.baseCost; set => cellFlowData.baseCost = value; }
+    public bool HasEnemy => cellFlowData.hasEnemy;
+
+    public Cell(CellGrid parentGrid, Vector2Int globalCellCoord, Vector3Int gridPos, int cellSize)
+    {
+        this.parentGrid = parentGrid;
+        this.globalCellCoord = globalCellCoord;
+        this.cellSize = cellSize;
+        this.globalCellPos = gridPos + new Vector3Int(globalCellCoord.x * cellSize, globalCellCoord.y * cellSize, 0);
+        this.LocalCellCoord = globalCellCoord;
+        this.cellFlowData = new CellFlowData(true, false, DirectionEnum.None, Vector2.zero, 1, 0);
+    }
+
+    public void MarkAsOccupied() => isOccupied = true;
+    public void MarkAsUnoccupied() => isOccupied = false;
+    public void MarkAsPartitioned() => isPartitioned = true;
+
+    public void MarkAsUnwalkable() => cellFlowData.isWalkable = false;
+    public void MarkAsWalkable() => cellFlowData.isWalkable = true;
+
+    public void MarkOccupiedByEnemy()
+    {
+        if (!cellFlowData.hasEnemy)
+        {
+            cellFlowData.hasEnemy = true;
+            cellFlowData.dynamicCost += (int)CellFlowCost.hasEnemy;
+        }
+       
+    }
+
+    public void MarkClearByEnemy()
+    {
+        if(cellFlowData.hasEnemy)
+        {
+            cellFlowData.hasEnemy = false;
+            cellFlowData.dynamicCost -= (int)CellFlowCost.hasEnemy;
+        }
+       
+    }
+    public void AddToCellPaint(CellPaint[] tilePaints)
+    {
+        foreach (var tilePaint in tilePaints)
+            cellPaintHashSet.Add(tilePaint);
+    }
+    public void AddToCellPaint(CellPaint tilePaint)
+    {
+        cellPaintHashSet.Add(tilePaint);
+    }
+  
+    public bool HasOccupiedNeighbor(CellGrid cellGrid)
+    {
+        foreach (var dir in MyUtils.GetAllDirectionsVectorArray())
+        {
+            Vector2Int neighborID = GlobalCellCoord + dir;
+            if (MyUtils.IsWithinArrayBounds(cellGrid.CellPerRow, cellGrid.CellPerCol, neighborID))
+            {
+                if (cellGrid.Cells[neighborID.x, neighborID.y].IsOccupied)
+                    return true;
+            }
+        }
+        return false;
+    }
+    public bool HasOccupiedCardinalNeighbor(CellGrid cellGrid)
+    {
+        foreach (var dir in MyUtils.GetCardinalDirectionsVectorArray())
+        {
+            Vector2Int neighborID = GlobalCellCoord + dir;
+            if (MyUtils.IsWithinArrayBounds(cellGrid.CellPerRow, cellGrid.CellPerCol, neighborID))
+            {
+                if (cellGrid.Cells[neighborID.x, neighborID.y].IsOccupied)
+                    return true;
+            }
+        }
+        return false;
+    }
+  
+    public void PaintCell(CellGrid parentGrid)
+    {
+        foreach (var tilePaint in cellPaintHashSet)
+        {
+            if (!tilePaint.isOnGlobalTile)
+            {
+                Vector3Int offset = new Vector3Int(parentGrid.CellPerRow / 2, parentGrid.CellPerCol / 2, 0);
+                tilePaint.tilemap.SetTile((Vector3Int)GlobalCellCoord - offset, tilePaint.tileBase);
+            }
+            else
+            {
+                tilePaint.tilemap.SetTile(globalCellPos, tilePaint.tileBase);
+            }
+        }
+    }  
+    public void PaintCell(Tilemap tilemap, TileBase tileBase, CellGrid parentGrid)
+    {
+        Vector3Int offset = new Vector3Int(parentGrid.CellPerRow / 2, parentGrid.CellPerCol / 2, 0);
+        Vector3Int tilePos = (Vector3Int)GlobalCellCoord - offset;
+        tilemap.SetTile(tilePos, tileBase);
+    }
+
+    public void RemoveCellPaints()
+    {
+        cellPaintHashSet.Clear();
+    }
+
+    public List<Cell> GetAllNeighborCells()
+    {
+        List<Cell> result = new();
+   
+        foreach (var vect in MyUtils.GetAllDirectionsVectorList())
+        {
+            Vector2Int neighborCoord = globalCellCoord + vect;
+            if (MyUtils.IsWithinArrayBounds(parentGrid.Cells, neighborCoord))
+                result.Add(parentGrid.Cells[neighborCoord.x, neighborCoord.y]);
+        }
+
+        return result;
+    }
+
+    public List<Cell> GetCardinalNeighborCells()
+    {
+        List<Cell> result = new();
+      
+
+        foreach (var vect in MyUtils.GetCardinalDirectionsVectorList())
+        {
+            Vector2Int neighborCoord = globalCellCoord + vect;
+            if (MyUtils.IsWithinArrayBounds(parentGrid.Cells, neighborCoord))
+                result.Add(parentGrid.Cells[neighborCoord.x, neighborCoord.y]);
+        }
+
+        return result;
+    }
+}
+</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <h3>Realtime World Generation Demo</h3>
+                        <video controls>
+                            <source src="./media/Hallowfall/WorldShowcase.mp4" type="video/mp4">
+                        </video>
                     </div>
                 </li>
             </ul>

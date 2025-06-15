@@ -590,3 +590,9 @@ pre {
     font-size: 12px;
     margin: 200PX 0PX;
 }
+
+.keyword-system { color: #0074e9; font-weight: 600; }   
+.keyword-class { color: #1de85a; font-weight: 600; }   
+.keyword-struct { color: #ff8c42; font-weight: 600; }
+.keyword-concept { color: #9c6cfc;}
+.keyword-config { color: #fff12e;}
