@@ -91,36 +91,60 @@
             <h2>Player Architecture</h2>
             <p>
                 To handle growing complexity around the player character, I designed a scalable, state-driven
-                architecture centered on a Finite State Machine managed by a PlayerController.
-                The system emphasized clean separation of concerns and event-driven communication, ensuring
+                architecture centered on a <span class="keyword-concept">Finite State Machine (FSM)</span> managed by a
+                <span class="keyword-class">PlayerController</span>.
+                The system emphasized clean separation of concerns and
+                <span class="keyword-system">event-driven communication</span>, ensuring
                 that each behavior existed in an isolated state while remaining decoupled, extensible,
                 and responsive.
             </p>
+
             <ul class="bulletPointList">
-                <li><b>Finite State Machine (FSM):</b> Implemented a FSM managing states such as
-                    Idle, Run, Attack, and Parry, ensuring smooth and responsive transitions.
-                    States are encapsulated in independent classes for easy extension.</li>
+                <li><b>Finite State Machine (FSM):</b> Implemented a
+                    <span class="keyword-concept">FSM</span> managing states such as
+                    Idle, Run,
+                    Attack and Parry,
+                    ensuring smooth and responsive transitions.
+                    States are encapsulated in independent classes for easy
+                    extension.
+                </li>
 
-                <li><b>Modular Components:</b> Organized the player into independent systems
-                    (Movement, Input,Ability,Animation, etc.),
-                    improving maintainability and enabling parallel developement of sysetems.</li>
+                <li><b>Modular Components:</b> Organized the player into independent
+                    systems
+                    (Movement, Input,
+                    Ability, Animation, etc.),
+                    improving maintainability and enabling parallel development of systems.
+                </li>
 
-                <li><b>Event-Driven Communication:</b> Leveraged a centralized SignalHub
-                    to decouple interactions between systems, reducing interdependencies and simplifying debugging.</li>
+                <li><b>Event-Driven Communication:</b> Leveraged a centralized
+                    <span class="keyword-class">SignalHub</span>
+                    to decouple interactions between systems, reducing
+                    interdependencies
+                    and simplifying debugging.
+                </li>
 
-                <li><b>Combat & Abilities:</b> Developed extensible health, damage, and ability modules,
-                    configured via ScriptableObjects. Special abilities
-                    can be scaled or modified without altering core systems.</li>
+                <li><b>Combat & Abilities:</b> Developed extensible
+                    health, damage,
+                    and ability modules,
+                    configured via <span class="keyword-config">ScriptableObjects</span>.
+                    Special abilities can be scaled or modified without altering core systems.
+                </li>
 
-                <li><b>Animation & Feedback Integration:</b> Dedicated handlers for animations, VFX,
+                <li><b>Animation & Feedback Integration:</b> Dedicated handlers for
+                    animations, VFX,
                     and SFX are decoupled from gameplay
-                    logic,
-                    enabling designers and artists to iterate freely.</li>
+                    logic, enabling designers and artists to iterate freely.
+                </li>
 
-                <li><b>Extensibility & Scalability:</b> Dependency injection ensures modular initialization
-                    and reuse of components. Supports adding new states, abilities, or mechanics with
-                    minimal disruption to existing code or need to refactor.</li>
+                <li><b>Extensibility & Scalability:</b>
+                    <span class="keyword-concept">Dependency injection</span> ensures modular initialization
+                    and reuse of components. Supports adding new
+                    states, abilities,
+                    or mechanics with minimal disruption to existing code
+                    or need to refactor.
+                </li>
             </ul>
+
 
             <ul class="visualDemo">
                 <li>
@@ -1488,24 +1512,58 @@ public class Cell
 
         <div class="topicContainer">
 
-            <h2>Enemy AI</h2>
+            <h2>Enemy AI System</h2>
             <p>
+                The Enemy AI System mirrors the
+                Player Architecture in its overall design, built on a foundation of
+                <span class="keyword-concept">Finite State Machine (FSM)</span> control,
+                event-driven communication,
+                modular components, and isolated systems.
+                The key difference is in the way state transitions happen: enemies react to
+                real-time data such as player proximity, health thresholds, or
+                environmental conditions,
+                rather than relying on direct input handlers like the player.
+                This makes enemy behavior responsive and adaptive.
+            </p>
+
             <ul class="bulletPointList">
-                <li>Implemented a modular enemy AI system using the State Pattern, mirroring the player's architecture
-                    for consistency and scalability.</li>
-                <li>State transitions are condition-driven (distance to player, cooldowns, etc.), enabling autonomous
-                    decision-making.
+                <li><b>Finite State Machine (FSM):</b> Implemented an
+                    <span class="keyword-concept">FSM</span> managing states such as
+                    Idle, Patrol, Chase, Attack, and Death.
+                    Transitions are driven by state-specific triggers
+                    (e.g., player detection, low health, line-of-sight checks),
+                    enabling smooth and adaptive responses.
                 </li>
-                <li>Shared base states are inherited and extended per enemy type, allowing easy variation in behavior
-                    without duplication.</li>
-                <li>Designed a reusable EnemyAttackState that supports multiple abilities per enemy, validating
-                    conditions
-                    such as range and cooldown before executing.
+
+                <li><b>Event-Driven Communication:</b> Similar to the player system, signals decouple enemy logic from
+                    external systems.
+                    Combat resolution, spawning, and environmental triggers are handled via events,
+                    reducing dependencies and improving maintainability.
                 </li>
-                <li>Enemy abilities are coded as ScriptableObjects, allowing for data driven design and quick
-                    iteration, new attacks can be added without modifying core logic.</li>
-                <li>Utilized NavMesh for dynamic pathfinding, obstacle avoidance, and responsive player pursuit in
-                    varied terrain.
+
+                <li><b>Configuration via ScriptableObjects:</b> Enemy abilities, stats, and behaviors are defined
+                    through
+                    <span class="keyword-config">ScriptableObjects</span>,
+                    allowing flexible configuration of combat styles and AI patterns.
+                    This makes it easy to create varied enemy types without modifying the core FSM logic.
+                </li>
+
+                <li><b>Pathfinding with Flow Fields:</b> Enemies navigate procedurally generated zones using
+                    <span class="keyword-concept">flow field pathfinding</span>,
+                    coordinated by the <span class="keyword-class">MovementHandler</span> Component.
+                    This allows enemies to efficiently recalculate paths and move in groups,
+                    adapting seamlessly to dynamic environments.
+                </li>
+
+                <li><b>Strategy Pattern for State Variations:</b> Enemies can be assigned different
+                    <span class="keyword-concept">state functionalities</span> of the same type
+                    (e.g., multiple attack strategies), enabling highly varied and customizable AI behaviors
+                    while reusing the same state framework.
+                </li>
+
+                <li><b>Scalability:</b> Supports simple enemy with basic AI as well as bosses with more complex
+                    behaviors.
+                    New enemy types can be created by reusing existing states and composing them with new strategies.
                 </li>
             </ul>
 
@@ -1513,20 +1571,715 @@ public class Cell
             <ul class="visualDemo">
                 <li>
                     <div>
-                        <h3>Shared AI Across Enemy Types</h3>
-                        <video controls>
-                            <source src="./media/Hallowfall/EnemyAttackShowcase.mp4" type="video/mp4">
-                        </video>
+                        <h3>Enemy Attack State</h3>
+                        <pre><code class="language-csharp">
+
+// State Manages Attacks/Abilities that are assigned to the abilityList
+
+public class EnemyAttackState : EnemyState
+{
+    private EnemySignalHub signalHub;
+    private float attackDelay;
+
+    private List<BaseEnemyAbilitySO> abilityList;
+    private List<BaseEnemyAbilitySO> availaleAbilityList;
+    private BaseEnemyAbilitySO currentAbility;
+
+    public EnemyAttackState(EnemyController enemyController, EnemyStateMachine stateMachine, EnemyStateEnum stateEnum) : base(enemyController, stateMachine, stateEnum)
+    {
+        this.enemyController = enemyController;
+        this.enemyConfig = enemyController.EnemyConfig;
+        signalHub = enemyController.SignalHub;
+
+
+        abilityList = enemyController.GetListOfAllAbilities();
+        availaleAbilityList = new List<BaseEnemyAbilitySO>(abilityList);
+        currentAbility = MyUtils.GetRandomRef<BaseEnemyAbilitySO>(availaleAbilityList);
+
+        signalHub.OnAbilityFinished += (value) => { EndAttack(); };
+        signalHub.OnAbilityStart += SetupNextAbility;
+    }
+
+    public override void EnterState()
+    {
+
+        if (enemyController.IsAttackDelayOver && availaleAbilityList.Count > 0)
+        {
+            enemyController.CanMove = false;
+            enemyController.CanAttack = false;
+            enemyController.IsAttacking = true;
+            signalHub.OnAbilityStart.Invoke(currentAbility);
+            enemyController.CoroutineRunner.RunCoroutine(PutAbilityOnCooldownCoroutine(currentAbility));
+        }
+        else stateMachine.ChangeState(EnemyStateEnum.Idle);
+    }
+
+    public override void ExitState()
+    {
+        enemyController.CanMove = true;
+        enemyController.CanAttack = true;
+        enemyController.IsAttacking = false;
+
+        currentAbility?.EndAbility(enemyController);
+    }
+    public void EndAttack()
+    {
+        signalHub.OnAbilityAnimFrame -= currentAbility.ActionOnAnimFrame;
+        signalHub.OnAbilityFinished -= currentAbility.EndAbility;
+        currentAbility = null;
+        TrySetcurrentAbiliy();
+        enemyController.CoroutineRunner.RunCoroutine(AttackDelayCoroutine());
+        stateMachine.ChangeState(EnemyStateEnum.Idle);
+    }
+
+    private void SetupNextAbility(BaseEnemyAbilitySO ability)
+    {
+        signalHub.OnAbilityAnimFrame += ability.ActionOnAnimFrame;
+        signalHub.OnAbilityFinished += ability.EndAbility;
+        ability.ExecuteAbility(enemyController);
+    }
+
+    private IEnumerator PutAbilityOnCooldownCoroutine(BaseEnemyAbilitySO ability)
+    {
+        availaleAbilityList.Remove(ability);
+        yield return new WaitForSeconds(ability.cooldown);
+        availaleAbilityList.Add(ability);
+        TrySetcurrentAbiliy();
+    }
+    private IEnumerator AttackDelayCoroutine()
+    {
+        attackDelay = Random.Range(enemyConfig.minAttackDelay, enemyConfig.maxAttackDelay + 0.1f);
+        enemyController.IsAttackDelayOver = false;
+        yield return new WaitForSeconds(attackDelay);
+        enemyController.IsAttackDelayOver = true;
+    }
+
+    private void TrySetcurrentAbiliy()
+    {
+        if (availaleAbilityList.Count > 0)
+        {
+            BaseEnemyAbilitySO abilityWithBiggestRange =  null;
+            foreach (var ability in availaleAbilityList)
+            {
+                if(abilityWithBiggestRange == null ) abilityWithBiggestRange = ability;
+                else if (ability.range > abilityWithBiggestRange.range ) abilityWithBiggestRange = ability;
+            }
+            currentAbility = abilityWithBiggestRange;
+        }
+    }
+    private bool IsEnemyInAttackRange()
+    {
+        return Vector2.Distance(enemyController.PlayerController.GetPlayerPos(), enemyController.GetEnemyPos()) <= currentAbility.range;
+    }
+
+    private bool IsEnemyAbleToAttack()
+    {
+        return (enemyController.CanAttack && !enemyController.IsAttacking && enemyController.IsAttackDelayOver);
+    }
+
+    public bool CanChangeToAttackState()
+    {
+        return IsEnemyInAttackRange() && IsEnemyAbleToAttack() && currentAbility != null;
+    }
+
+    public bool CanChasePlayerToAttack()
+    {
+        return IsEnemyAbleToAttack() && currentAbility != null;
+    }
+}
+
+</code></pre>
                     </div>
                 </li>
                 <li>
                     <div>
-                        <h3>Enemy Path Finding Example</h3>
+                        <h3>Enemy Ability Example</h3>
+                        <pre><code class="language-csharp">
+
+public class EnemyMeleeStrike : BaseEnemyAbilitySO
+{
+    public EnemyAttackZone attackZonePrefab;
+    private EnemyAttackZone attackZone;
+
+    public int strikeDamage;
+    public int parryDamage;
+
+    public override void ExecuteAbility(EnemyController enemy)
+    {
+        enemy.SignalHub.OnAnimBool?.Invoke(animCondition, true);
+        attackZone = Instantiate(attackZonePrefab,enemy.GetEnemyPos(),Quaternion.identity);
+        SetupAttackZone(attackZone.gameObject,enemy);
+        attackZone.Init(new EnemyMeleeStrikeData { owner = enemy, strikeDamage = this.strikeDamage, parryDamage = this.parryDamage });
+        enemy.SignalHub.OnPlayRandomSFX?.Invoke(abilitySFX, 0.075f);
+    }
+
+    public override void ActionOnAnimFrame(EnemyController enemy)
+    {     
+        if (attackZone != null) 
+        {
+            attackZone.TryHitTarget(enemy);            
+            attackZone = null;
+        }   
+    }
+
+    public override void EndAbility(EnemyController enemy)
+    {
+        enemy.SignalHub.OnAnimBool?.Invoke(animCondition, false);
+    }
+
+    private void SetupAttackZone(GameObject attackZoneGO, EnemyController enemyController)
+    {
+        attackZoneGO.transform.parent = enemyController.transform;
+        Vector3 dir = (enemyController.PlayerController.GetPlayerPos() - enemyController.GetEnemyPos()).normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;   
+        attackZoneGO.transform.SetPositionAndRotation(enemyController.GetEnemyPos() + (dir / 2), Quaternion.Euler(0, 0, angle + 180));
+    }
+}
+
+public struct EnemyMeleeStrikeData
+{
+    public EnemyController owner;
+    public int strikeDamage;
+    public int parryDamage;
+}
+</code></pre>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="topicContainer">
+
+            <h2>Enemy Pathfinding</h2>
+            <p>
+                The Enemy Pathfinding has evolved with the game. I felt it deserved
+                a dedicated section to explain my thoughts and efforts behind it. Initially, I used the built-in <span
+                    class="keyword-system">Unity NavMesh</span> to handle enemy pathfinding. However, after completing
+                the first iteration of the <span class="keyword-system">World Generation System</span>, I realized that
+                NavMesh would need to be baked at runtime dynamically, causing noticeable performance issues. After
+                exploring some workarounds, I developed a custom pathfinding system using <span
+                    class="keyword-concept">Flow Field Pathfinding</span>. By modifying my  <span
+                    class="keyword-class">CellGrid</span> system from the World Generation section, I successfully
+                integrated the new pathfinding solution.
+            </p>
+
+            <ul class="bulletPointList">
+                <li><b>Integration with Procedural World:</b>
+                    <ul>
+                        <li>Leverages the <span class="keyword-class">ZoneManager</span> and its generated zones to
+                            calculate flow fields for procedurally created areas.</li>
+                        <li>Dynamically updates flow fields based on the player's position and target zones.</li>
+                    </ul>
+                </li>
+
+                <li><b>Flow Field Pathfinding Algorithm:</b>
+                    <ul>
+                        <li><b>Cost Fields</b>: Calculates movement costs for each cell based on terrain, obstacles, and
+                            proximity to the target.</li>
+                        <li><b>Integration Fields</b>: Computes cumulative costs to determine the shortest path
+                            efficiently.</li>
+                        <li><b>Flow Vectors</b>: Assigns direction vectors to each cell, guiding AI agents toward their
+                            destination.</li>
+                    </ul>
+                </li>
+
+                <li><b>Dynamic Updates with Procedural Zones:</b>
+                    <ul>
+                        <li>Recalculates flow fields when the player moves to a new zone or when a new target position
+                            is set.</li>
+                        <li>Updates flow fields across all relevant zones to ensure accurate navigation in a
+                            procedurally expanding environment.</li>
+                    </ul>
+                </li>
+
+                <li><b>AI Agent Usage:</b>
+                    <ul>
+                        <li>AI queries flow vectors from the flow field to determine movement direction.</li>
+                        <li>Occupancy and dynamic cell costs allow collision avoidance and realistic movement.</li>
+                        <li>A <span class="keyword-concept">repulsion force</span> is calculated to prevent enemies from
+                            clumping or overlapping, avoiding the use of colliders which could cause performance
+                            overhead.</li>
+                    </ul>
+                </li>
+
+                <li><b>Scalability and Performance Optimization:</b>
+                    <ul>
+                        <li>Flow fields are recalculated selectively, focusing only on affected zones.</li>
+                        <li>Designed to handle multiple AI agents querying the flow field simultaneously without
+                            performance degradation.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="visualDemo">
+                <li>
+                    <div>
+                        <h3>Flow Field Generator</h3>
+                        <pre><code class="language-csharp">
+public class FlowFieldGenerator
+{
+    private const int COST_UNVISITED = (int)CellFlowCost.unVisited;
+    private const int COST_UNWALKABLE = (int)CellFlowCost.unWalkable;
+    private const int COST_TARGET = (int)CellFlowCost.target;
+
+    public void GenerateFlowFieldOnTargetZone(CellGrid cellGrid, Vector3 targetPos)
+    {
+        Queue<Cell> flowFieldCellQueue = new();
+
+        Cell currentFieldTargetCell = cellGrid.GetCellFromWorldPos(targetPos);
+
+        SetInitialBaseFlowCosts(cellGrid, currentFieldTargetCell, flowFieldCellQueue);
+
+        ApplyCostsForPlayerZone(flowFieldCellQueue, currentFieldTargetCell);
+
+        AssignFlowAllDirectionsOnPlayerZone(cellGrid);
+
+    }
+
+    public void GenerateFlowFieldOnNonePlayerZone(CellGrid cellGrid, DirectionEnum dirToPlayerZone)
+    {
+        Queue<Cell> flowFieldCellQueue = new();
+
+        FindAllEdgeCells(cellGrid, flowFieldCellQueue, dirToPlayerZone);
+
+        ApplyCostsForNonePlayerZone(flowFieldCellQueue);
+
+        AssignFlowAllDirectionsOnNonePlayerZone(cellGrid, dirToPlayerZone);
+    }
+
+
+    private void FindAllEdgeCells(CellGrid cellGrid, Queue<Cell> flowFieldCellQueue, DirectionEnum dirToPlayerZone)
+    {
+
+        cellGrid.LoopOverGrid((i, j) =>
+        {
+            Cell currentCell = cellGrid.Cells[i, j];
+            if (!currentCell.IsWalkable)
+            {
+                currentCell.BaseCost = COST_UNWALKABLE;
+            }
+            else currentCell.BaseCost = COST_UNVISITED;
+        });
+
+
+        switch (dirToPlayerZone)
+        {
+            case DirectionEnum.Right:
+                FindRightEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                break;
+            case DirectionEnum.Left:
+                FindLeftEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                break;
+            case DirectionEnum.Up:
+                FindTopEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                break;
+            case DirectionEnum.Down:
+                FindBottomEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                break;
+            case DirectionEnum.UpRight:
+                FindTopEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                FindRightEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                break;
+            case DirectionEnum.UpLeft:
+                FindTopEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                FindLeftEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                break;
+            case DirectionEnum.DownRight:
+                FindBottomEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                FindRightEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                break;
+            case DirectionEnum.DownLeft:
+                FindBottomEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                FindLeftEdgeTargetCells(cellGrid, flowFieldCellQueue);
+                break;
+        }
+    }
+
+
+    private void SetInitialBaseFlowCosts(CellGrid cellGrid, Cell targetCell, Queue<Cell> flowFieldCellQueue)
+    {
+        cellGrid.LoopOverGrid((i, j) =>
+        {
+            Cell currentCell = cellGrid.Cells[i, j];
+
+            if (!currentCell.IsWalkable)
+            {
+                currentCell.BaseCost = COST_UNWALKABLE;
+            }
+            else
+            {
+                currentCell.BaseCost = COST_UNVISITED;
+
+            }
+        }
+        );
+
+        targetCell.BaseCost = COST_TARGET;
+        flowFieldCellQueue.Enqueue(targetCell);
+    }
+
+    private void ApplyCostsForPlayerZone(Queue<Cell> flowFieldCellQueue, Cell targetCell)
+    {
+        List<Cell> neighborList = new(8);
+
+        while (flowFieldCellQueue.Count > 0)
+        {
+            Cell currentCell = flowFieldCellQueue.Dequeue();
+            neighborList.Clear();
+            neighborList.AddRange(currentCell.GetAllNeighborCells());
+            foreach (Cell neighbor in neighborList)
+            {
+                if (neighbor.IsWalkable && neighbor.BaseCost == COST_UNVISITED)
+                {
+                    Vector2 toNeighbor = (Vector3)(neighbor.GlobalCellPos - targetCell.GlobalCellPos);
+                    float angle = Mathf.Atan2(toNeighbor.y, toNeighbor.x);
+
+                    float snapped = Mathf.Round(angle / (Mathf.PI / 2)) * (Mathf.PI / 2);
+
+                    if (Mathf.Abs(angle - snapped) > Mathf.PI / 12f)
+                    {
+                        neighbor.BaseCost = currentCell.BaseCost + 2;
+                    }
+                    else
+                    {
+                        neighbor.BaseCost = currentCell.BaseCost + 1;
+                    }
+
+                    flowFieldCellQueue.Enqueue(neighbor);
+
+                }
+            }
+        }
+    }
+
+    private void ApplyCostsForNonePlayerZone(Queue<Cell> flowFieldCellQueue)
+    {
+        List<Cell> neighborList = new(4);
+
+        while (flowFieldCellQueue.Count > 0)
+        {
+            Cell currentCell = flowFieldCellQueue.Dequeue();
+            neighborList.Clear();
+            neighborList.AddRange(currentCell.GetAllNeighborCells());
+            foreach (Cell neighbor in neighborList)
+            {
+                if (neighbor.IsWalkable && neighbor.BaseCost == COST_UNVISITED)
+                {
+                    neighbor.BaseCost = currentCell.BaseCost + 1;
+                    flowFieldCellQueue.Enqueue(neighbor);
+                }
+            }
+        }
+    }
+    private void AssignFlowAllDirectionsOnPlayerZone(CellGrid cellGrid)
+    {
+        cellGrid.LoopOverGrid((i, j) =>
+        {
+            cellGrid.Cells[i, j].FlowDir = FindFlowForPlayerDirection(cellGrid.Cells[i, j]);
+        }
+        );
+    }
+
+    private void AssignFlowAllDirectionsOnNonePlayerZone(CellGrid cellGrid, DirectionEnum directionEnum)
+    {
+        cellGrid.LoopOverGrid((i, j) =>
+        {
+            cellGrid.Cells[i, j].FlowDir = FindFlowDirectionForNonePlayerZone(cellGrid.Cells[i, j], directionEnum);
+
+        }
+        );
+    }
+
+    private DirectionEnum FindFlowForPlayerDirection(Cell currentCell)
+    {
+        if (currentCell.TotalCost == COST_TARGET) return DirectionEnum.None;
+
+        List<Cell> cheapestNeighbors = new();
+        int minCost = int.MaxValue;
+
+        foreach (Cell neighbor in currentCell.GetAllNeighborCells())
+        {
+            if (!neighbor.IsWalkable) continue;
+            if (neighbor.TotalCost < minCost)
+            {
+                cheapestNeighbors.Clear();
+                minCost = neighbor.TotalCost;
+                cheapestNeighbors.Add(neighbor);
+            }
+            else if (neighbor.TotalCost == minCost)
+            {
+                cheapestNeighbors.Add(neighbor);
+            }
+        }
+
+        List<Cell> validNeighborsWithEnemy = cheapestNeighbors.Where(cell => !cell.HasEnemy).ToList();
+
+        if (cheapestNeighbors.Count == 0) return DirectionEnum.None;
+
+        Cell selected = cheapestNeighbors[/*Random.Range(0, validNeighborsWithEnemy.Count)*/ 0];
+        Vector2Int dir = selected.GlobalCellCoord - currentCell.GlobalCellCoord;
+        return MyUtils.GetDirFromVector(dir);
+    }
+
+    private DirectionEnum FindFlowDirectionForNonePlayerZone(Cell currentCell, DirectionEnum directionEnum)
+    {
+        if (currentCell.TotalCost == COST_TARGET) return directionEnum;
+
+        List<Cell> cheapestNeighbors = new();
+        int minCost = int.MaxValue;
+
+        foreach (Cell neighbor in currentCell.GetAllNeighborCells())
+        {
+            if (!neighbor.IsWalkable) continue;
+            if (neighbor.TotalCost < minCost)
+            {
+                cheapestNeighbors.Clear();
+                minCost = neighbor.TotalCost;
+                cheapestNeighbors.Add(neighbor);
+            }
+            else if (neighbor.TotalCost == minCost)
+            {
+                cheapestNeighbors.Add(neighbor);
+            }
+        }
+
+        List<Cell> validNeighborsWithEnemy = cheapestNeighbors.Where(cell => !cell.HasEnemy).ToList();
+
+        if (validNeighborsWithEnemy.Count == 0) return DirectionEnum.None;
+
+        Cell selected = validNeighborsWithEnemy[Random.Range(0, validNeighborsWithEnemy.Count)];
+        Vector2Int dir = selected.GlobalCellCoord - currentCell.GlobalCellCoord;
+        return MyUtils.GetDirFromVector(dir);
+    }
+
+    private void FindRightEdgeTargetCells(CellGrid grid, Queue<Cell> flowFieldCellQueue)
+    {
+        int x = grid.CellPerRow - 1;
+        for (int y = 0; y < grid.CellPerCol; y++)
+        {
+            if (!grid.Cells[x, y].IsWalkable) continue;
+
+            grid.Cells[x, y].BaseCost = COST_TARGET;
+            flowFieldCellQueue.Enqueue(grid.Cells[x, y]);
+        }
+    }
+    private void FindLeftEdgeTargetCells(CellGrid grid, Queue<Cell> flowFieldCellQueue)
+    {
+        int x = 0;
+        for (int y = 0; y < grid.CellPerCol; y++)
+        {
+            if (!grid.Cells[x, y].IsWalkable) continue;
+
+            grid.Cells[x, y].BaseCost = COST_TARGET;
+            flowFieldCellQueue.Enqueue(grid.Cells[x, y]);
+        }
+    }
+    private void FindTopEdgeTargetCells(CellGrid grid, Queue<Cell> flowFieldCellQueue)
+    {
+        int y = grid.CellPerCol - 1;
+        for (int x = 0; x < grid.CellPerRow; x++)
+        {
+            if (!grid.Cells[x, y].IsWalkable) continue;
+
+            grid.Cells[x, y].BaseCost = COST_TARGET;
+            flowFieldCellQueue.Enqueue(grid.Cells[x, y]);
+        }
+    }
+    private void FindBottomEdgeTargetCells(CellGrid grid, Queue<Cell> flowFieldCellQueue)
+    {
+        int y = 0;
+        for (int x = 0; x < grid.CellPerRow; x++)
+        {
+            if (!grid.Cells[x, y].IsWalkable) continue;
+
+            grid.Cells[x, y].BaseCost = COST_TARGET;
+            flowFieldCellQueue.Enqueue(grid.Cells[x, y]);
+        }
+    }
+}
+</code></pre>
+                    </div>
+                </li>
+                <li>
+                   <div>
+                        <h3>Flow Field Manager</h3>
+                        <pre><code class="language-csharp">
+public class FlowFieldManager : MonoBehaviour
+{
+    private static FlowFieldManager instance;
+    public static FlowFieldManager Instance { get { return instance; } }
+
+    private ZoneManager zoneManager;
+    private FlowFieldGenerator flowFieldGenerator;
+    private ZoneData currentTargetZoneData;
+    private ZoneHandler currentTargetZoneHandler;
+
+    private bool canVisualizeFlowField = false;
+
+    private readonly HashSet<Cell> cellsOccupiedByEnemy = new();
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(instance.gameObject);
+        }
+        instance = this;
+    }
+
+    private void Start()
+    {
+        flowFieldGenerator = new FlowFieldGenerator();
+        zoneManager = ZoneManager.Instance;
+    }
+    public Vector2 RequestNewFlowDir(Cell currentCell, Cell lastCell)
+    {
+        if (lastCell != currentCell)
+        {
+            if (cellsOccupiedByEnemy.Contains(lastCell))
+            {W             
+                cellsOccupiedByEnemy.Remove(lastCell);
+            }
+        }
+        if (!cellsOccupiedByEnemy.Contains(currentCell))
+        {
+            cellsOccupiedByEnemy.Add(currentCell);         
+        }
+
+
+        return currentCell.FlowVect.normalized;
+    }
+
+ 
+    public void UpdateFlowField(Vector3 targetPos)
+    {
+        ZoneData zoneData = zoneManager.FindZoneDataFromWorldPos(targetPos);
+        if (zoneData == null) return;
+
+        if (currentTargetZoneData != zoneData)
+        {
+            currentTargetZoneData = zoneData;
+            currentTargetZoneHandler = currentTargetZoneData.ZoneHandler;
+
+            foreach (KeyValuePair<Vector2Int, ZoneData> pair in zoneManager.GeneratedZonesDic)
+            {
+                if (pair.Value != currentTargetZoneData) UpdateFlowFieldFromZone(pair.Value);
+            }
+        }
+        flowFieldGenerator.GenerateFlowFieldOnTargetZone(currentTargetZoneHandler.CellGrid, targetPos);
+
+        if (canVisualizeFlowField) GridSystemDebugger.Instance.VisualizeCellFlowDirection(currentTargetZoneHandler.CellGrid, currentTargetZoneData.centerCoord);
+    }
+
+    public void UpdateFlowFieldFromZone(ZoneData zoneData)
+    {
+        if (currentTargetZoneData != null)
+        {
+            DirectionEnum direEnumToPlayer = MyUtils.FindDirectionEnumBetweenTwoPoints(new Vector2Int(zoneData.centerPos.x, zoneData.centerPos.y), new Vector2Int(currentTargetZoneData.centerPos.x, currentTargetZoneData.centerPos.y));
+            ZoneHandler zoneHandler = zoneData.ZoneHandler;
+            flowFieldGenerator.GenerateFlowFieldOnNonePlayerZone(zoneHandler.CellGrid, direEnumToPlayer);
+
+            if (canVisualizeFlowField) GridSystemDebugger.Instance.VisualizeCellFlowDirection(zoneHandler.CellGrid, zoneData.centerCoord);
+            
+        }
+    }
+    public void ToggleCellDebuger()
+    {
+        if (canVisualizeFlowField)
+        {
+            canVisualizeFlowField = false;
+            GridSystemDebugger.Instance.DisableAllVisuals();
+        }
+        else if (!canVisualizeFlowField)
+        {
+            canVisualizeFlowField = true;
+            GridSystemDebugger.Instance.EnableAllVisuals();
+        }
+    }
+   
+}
+</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                   <div>
+                        <h3>Using the Flow Field Direction</h3>
+                        <pre><code class="language-csharp">
+
+// This function calculates the movement direction vector for enemy
+ private void FindNextMovementDirection()
+ {
+     flowRequestTimer += Time.deltaTime;
+     if (flowRequestTimer >= flowRequestDelay || hasNotBeenOnFlow)
+     {
+         lastCell = zoneManager.FindCurrentCellFromWorldPos(lastPos);
+         currentCell = zoneManager.FindCurrentCellFromWorldPos(enemyController.transform.position);
+
+         Vector2 newDir = (flowFieldManager.RequestNewFlowDir(currentCell, lastCell) + CalculateRepulsionForce()) .normalized;
+         
+        
+         if (newDir != Vector2.zero)
+         {
+             nextMoveDir = newDir;
+             lastPos = enemyTransform.position;
+             hasNotBeenOnFlow = false;
+             flowRequestTimer = 0;
+         }
+        
+     }
+ }
+
+ //Later on this function is used to move the enemy using the calculated direction vector
+ public void Move(Vector2 movementDirection, float speed)
+{
+    Vector2 targetPos = Rb.position + (speed * Time.deltaTime * movementDirection);
+    Vector2 smoothPos = Vector2.Lerp(Rb.position, targetPos, 1f);
+    Rb.MovePosition(smoothPos);
+}
+
+</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                   <div>
+                        <h3>Repulsion Force</h3>
+                        <pre><code class="language-csharp">
+private Vector2 CalculateRepulsionForce()
+{
+    Vector2 repulsion = Vector2.zero;
+    float repulsionStrength = 0.2f;
+    float detectionRadius = 1.0f;
+
+    foreach (EnemyController otherEnemy in enemyController.Detector.DetectNearbyGenericTargetsOnParent<EnemyController>("EnemyCollider", enemyController.GetEnemyPos(), layerMask, detectionRadius))
+    {
+        if (otherEnemy == enemyController) continue;
+        Vector2 diff = (Vector2)(transform.position - otherEnemy.transform.position);   
+        float distance = diff.magnitude;
+
+        if(distance < detectionRadius && distance >0.01f)
+        {
+            repulsion += diff.normalized / distance;
+        }
+    }
+
+    return repulsion * repulsionStrength;
+}
+</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <h3>Enemy Navigation Showcase</h3>
                         <video controls>
-                            <source src="./media/Hallowfall/EnemyPathFinding.mp4" type="video/mp4">
+                            <source src="./media/Hallowfall/SkillTreeShowcase.mp4" type="video/mp4">
                         </video>
                     </div>
                 </li>
+
             </ul>
 
         </div>
