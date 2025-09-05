@@ -10,7 +10,7 @@ body{
     background-size:cover;
     background-repeat: no-repeat;
     background-position: 50%;
-    background-color: #000000e8;
+    background-color: #111116;
     background-attachment: fixed;
     color:#fff;
     
@@ -33,7 +33,7 @@ header{
     width:100%;
 	margin:auto;
 	overflow:hidden;
-    border-bottom: 4px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
 }
 
 header a{
@@ -136,97 +136,60 @@ nav img{
     width: 30%;
 }
 
-#projects{
 
-    margin: 50px 0px;
-    padding: 35px 35px;
+
+.platformImage {
+    width: 7.5%;
+    margin: 150px 0;
+    float: left;
 }
-#projects h1{
+
+
+
+
+.platformProjects {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 50px;
+}
+
+.platformProjects li {
+    width: 25%;
+    margin: 0 25px;
+    margin-left: 50px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.platformProjects h3{
 
     text-align: center;
-    margin-bottom: 50px;
-    font-size: 40px;
-}
-
-#projects div{
-
-    float: inline-end;
-}
-.platform {
-    
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 100px;
-
-    background-color: #333333b4;
-    border-radius: 25px;
-
 }
 
 
-.platformImage{
-
-    width: 5%;
-    float: left;
-    margin-top: 25px;
-    margin-left: 50px;
-    
-    
-    
+.platformProjects a:hover{
+    opacity: 0.75; 
 }
 
-.platform h2{
-
-    text-align: left;
-    margin-left: 100px;
-}
-
-.platform ul{
-
-    margin-top: 50px;
-    float: right; 
-    width: 90%;
-    margin-bottom: 50px;
-}
-
-.platform li{
-
-    display: inline-block;
-    width: 25%;
-    margin-right: 25px;
-    margin-left: 25px;
-   
-    
-}
-
-
-.platform a:hover{
-
-    opacity: 0.75;
-    
-}
-
-.projectImage{
-    
+.projectImage {
     width: 100%;
     border-radius: 25px;
-    padding: 0px;
-    
+    padding: 0;
 }
 
-.topicContainer
-{
+.topicContainer {
     font-size: 24px;
     text-align: left;
-    margin: 50px 0px;
-    background-color: #333333b4;
-    padding: 20px 35px;
-    border-radius: 25px;
+    margin: 10px 0;
+    padding: 20px 0;
+    border-bottom: 1px solid #ffffff;
+    color: #9595A1;
+    background-color: transparent;
 }
 .topicContainer h2
 {
- margin: 20px 0px;
+    margin-bottom: 20px;
     font-size: 34px;
 }
 
@@ -240,10 +203,6 @@ nav img{
     margin:15px 20px;
 
 }
-.visualBox {
-    
-   
-}
 
 .visualDemo {
     list-style: none;
@@ -251,7 +210,7 @@ nav img{
     flex-wrap: wrap;
     justify-content: center;
     padding: 0;
-    margin: 0;
+    margin: 50px;
     gap: 40px;
     
 }
@@ -278,7 +237,7 @@ nav img{
     font-size: 24px;
     text-align: left;
     margin: 50px 0px;
-    background-color: #333333b4;
+    background-color: #33333300;
     padding: 35px 35px;
     border-radius: 25px;
     
@@ -286,24 +245,31 @@ nav img{
 .projectDescription h2{
     font-size: 32px;
 }
-.projectTagBox{
+.projectTagBox {
     width: 100%;
-    margin: 0px;
+    margin: 0;
     padding: 10px;
 }
-.projectTagBox ul{
-    padding: 0px;
-    margin: 0px;
+
+.projectTagBox ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+     display: flex;
+    flex-wrap: wrap;      
+    justify-content: center;
 }
-.projectTagBox li{
+
+.projectTagBox li {
     padding: 5px 10px;
-    margin: 5px 5px;
-    display: inline-flexbox;
+    margin: 5px;
+    display: inline-flex;
     border-radius: 10px;
     border: 1px solid #ffffff;
     color: #ffffff;
     width: auto;
     background-color: #333333;
+
 }
 
 .projectTagBox h5{
@@ -314,19 +280,19 @@ nav img{
     font-weight: bold;
 }
 
-#GreenProjectTag{
+#greenTag {
 
     border-color: #1de85a;
     color: #1de85a;
 }
 
-#OrangeProjectTag{
+#orangeTag{
 
     border-color:orange;
     color: orange;
 }
 
-#PurpleProjectTag{
+#purpleTag{
 
     border-color:rgb(125, 0, 241);
     color: rgb(125, 0, 241);
@@ -345,13 +311,13 @@ nav img{
     color: snow;
 }
 
-#RedProjectTag{
+#redTag {
 
     border-color:rgb(248, 57, 57);
     color: rgb(248, 57, 57);
 }
 
-#BlueProjectTag{
+#blueTag{
 
     border-color:rgb(0, 163, 228);
     color:rgb(0, 163, 228);
@@ -362,111 +328,6 @@ nav img{
     border-color:rgb(197, 226, 68);
     color:rgb(197, 226, 68);
 }
-
-.listOfTopics li{
-    display: inline-block;
-
-    margin: 50px 0px;
-}
-
-.topicBox{
-
-    margin: 50px 0px;
-    background-color: #333333b4;
-    padding: 35px 35px;
-    border-radius: 25px;
-}
-
-.topicBox img{
-
-    border-radius: 25px;
-}
-
-.topicBox h2{
-
-    margin: 0px;
-    
-}
-
-
-.topicDescirption1{
-
-    width: 25%;
-    text-align: left;
-    float: left;
-    
-}
-
-.topicDescirption1 h2{
-
-    margin-bottom: 50px;
-    font-size: 32px;
-}
-
-.topicDescirption2 h2{
-
-    margin-bottom: 50px;
-    font-size: 32px;
-}
-
-.topicDescirption1 p{
-
-    float: left;
-    font-size: 20px;
-}
-
-.topicVisual1{
-
-    margin-top: 50px;
-    width: 70%;
-    float: right;
-}
-
-.twoImagesOnRight{
-    float: right;
-    width: 45%;
-    margin-left: 50px;
-}
-.threeImagesOnRight {
-
-    float: right;
-    width: 30%;
-    margin-left: 25px;
-}
-
-.topicDescirption2{
-
-    width: 30%;
-    text-align: left;
-    float: right;
-    font-size: 20px;
-}
-
-.topicDescirption2 p{
-
-    float: right;
-    font-size: 20px;
-}
-
-.topicVisual2{
-
-    margin-top: 50px;
-    width: 70%;
-    float: left;
-}
-
-.twoImagesOnLeft{
-    float: left;
-    width: 45%;
-    margin-right: 50px;
-}
-.threeImagesOnLeft {
-
-    float: left;
-    width: 30%;
-    margin-right: 25px;
-}
-
 
 video { 
     border-radius: 25px;
@@ -525,7 +386,6 @@ video {
 .footer{
 	
 	padding:20px;
-	background-color:#4242415e;
 	text-align:center;
 	margin-top:20px;
     width: 100%;
@@ -535,10 +395,10 @@ video {
 
 .gameBtns div
 {
-    width: 125px;
-    height: 50px;  
+    width: 200px;
+    height: 60px;  
     border-radius: 5px;
-    margin: 20px 10px;
+    margin: 40px 10px;
 }
 
 .gameBtns a{
@@ -546,7 +406,7 @@ video {
     color: #ffffff;
     font-size: 32px;
     text-align: center;
-    line-height: 50px;
+    line-height: 60px;
     font-weight: bold;
     text-decoration: none;
 }
@@ -596,3 +456,4 @@ pre {
 .keyword-struct { color: #ff8c42; font-weight: 600; }
 .keyword-concept { color: #9c6cfc;}
 .keyword-config { color: #fff12e;}
+#world-Highlight{color: #fff; font-weight:bold}

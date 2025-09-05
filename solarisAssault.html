@@ -38,7 +38,7 @@
 
         </header>
 
-      
+
         <div class="gameBtns">
 
             <ul>
@@ -62,8 +62,9 @@
 
         </div>
 
-        <div class="projectDescription">
+        <div class="topicContainer">
 
+            <h2 id="world-Highlight">Introduction</h2>
             <p> Solaris Assault is a team-based project developed with friends during my degree, built in Unity. It
                 marked a key step in my growth, introducing me to game programming and collaborative design. The
                 experience helped me strengthen my skills in Unity and C#, while pushing us to experiment with creative
@@ -71,117 +72,113 @@
 
         </div>
 
-        <ul class="listOfTopics">
+        <div class="topicContainer">
 
-            <li class="topicBox" id="SAInput">
-                <div class="topicDescirption1">
-                    <h2>Input System</h2>
-                    <p>
-                        Implemented the new Unity Input System to support flexible, scalable input handling across
-                        keyboard and mouse. This newer system allowed for clean input mapping, easier device
-                        support, and improved control responsiveness, enhancing overall player experience and
-                        future-proofing the input architecture.
-                    </p>
+            <h2 id="world-Highlight">Input System</h2>
+            <p>
+                Implemented the new Unity Input System to support flexible, scalable input handling across
+                keyboard and mouse. This newer system allowed for clean input mapping, easier device
+                support, and improved control responsiveness, enhancing overall player experience and
+                future-proofing the input architecture.
+            </p>
 
-                </div>
-
-                <div class="topicVisual1">
-
-
-
-                    <img class="twoImagesOnRight" src="./media/SolarisAssault/PlayerInput.png">
-                    <div class="videoContainer">
-
-                        <video controls>
-                            <source src="./media/SolarisAssault/PlayerShowcase.mp4" type="video/mp4">
-                        </video>
+            <ul class="visualDemo">
+                <li>
+                    <div>
+                        <img src="./media/SolarisAssault/PlayerInput.png">
                     </div>
+                </li>
+                <li>
+
+                    <video controls>
+                        <source src="./media/SolarisAssault/PlayerShowcase.mp4" type="video/mp4">
+                    </video>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="topicContainer">
+
+            <h2 id="world-Highlight">Player </h2>
+            <p>
+                Designed a set of six diverse player abilities, balancing offensive and defensive gameplay. Introduced a
+                rechargeable shield that regenerates over time to protect player health, and implemented a heat system
+                for the primary weapon to prevent overuse through an overheating mechanic.
+            </p>
 
 
+            <ul class="visualDemo">
+                <li>
+                    <video controls>
+                        <source src="./media/SolarisAssault/AbilitiesShowcase.mp4" type="video/mp4">
+                    </video>
 
-                </div>
-            </li>
-
-            <hr>
-
-            <li class="topicBox" id="SAplayer">
-                <div class="topicDescirption2">
-                    <h2>Player</h2>
-                    <p>
-                       Designed a set of six diverse player abilities, balancing offensive and defensive gameplay. Introduced a rechargeable shield that regenerates over time to protect player health, and implemented a heat system for the primary weapon to prevent overuse through an overheating mechanic.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual2">
-
-                    <div class="videoContainer">
-
-                        <video controls>
-                            <source src="./media/SolarisAssault/AbilitiesShowcase.mp4" type="video/mp4">
-                        </video>
+                </li>
+                <li>
 
 
+                    <video controls>
+                        <source src="./media/SolarisAssault/BossFightShowcase.mp4" type="video/mp4">
+                    </video>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="topicContainer">
+
+            <h2 id="world-Highlight">Optimization </h2>
+            <p>
+                To support bullet hell mechanics, I implemented object pooling to address performance drops caused by
+                numerous active projectiles. This optimization significantly improved efficiency and ensured smooth
+                gameplay during intense combat scenarios.
+            </p>
+
+
+            <ul class="visualDemo">
+                <li>
+                    <div>
+                        <img src="./media/SolarisAssault/Code.png">
                     </div>
-
-                    <div class="videoContainer">
-
-                        <video controls>
-                            <source src="./media/SolarisAssault/BossFightShowcase.mp4" type="video/mp4">
-                        </video>
+                </li>
+                <li>
+                    <div>
+                        <img class="twoImagesOnRight" src="./media/SolarisAssault/OP.png">
                     </div>
+                </li>
 
+            </ul>
 
-                </div>
+        </div>
 
-            </li>
+        <div class="topicContainer">
 
-            <hr>
+            <h2 id="world-Highlight">Game UI </h2>
+            <p>
+                In addition to designing player abilities, I created a user interface that clearly communicates the
+                player's toolkit. This included three bars for health, shield, and weapon heat, as well as cooldown
+                indicators for abilities to ensure clear, real-time feedback during gameplay.
+            </p>
 
-            <li class="topicBox">
-                <div class="topicDescirption1">
-                    <h2>Optimization</h2>
-                    <p>
-                        To support bullet hell mechanics, I implemented object pooling to address performance drops caused by numerous active projectiles. This optimization significantly improved efficiency and ensured smooth gameplay during intense combat scenarios.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual1">
-
-                    <img class="twoImagesOnRight" src="./media/SolarisAssault/Code.png">
-                    <img class="twoImagesOnRight" src="./media/SolarisAssault/OP.png">
-
-
-                </div>
-            </li>
-
-            <hr>
-
-            <li class="topicBox" id="SAUi">
-                <div class="topicDescirption2">
-                    <h2>Game UI Design</h2>
-                    <p>
-                       In addition to designing player abilities, I created a user interface that clearly communicates the player's toolkit. This included three bars for health, shield, and weapon heat, as well as cooldown indicators for abilities to ensure clear, real-time feedback during gameplay.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual2">
-
-                    <img class="twoImagesOnLeft" src="./media/SolarisAssault/UIpic.png">
-                    <div class="videoContainer">
-
-                        <video controls>
-                            <source src="./media/SolarisAssault/UiVid.mp4" type="video/mp4">
-                        </video>
+            <ul class="visualDemo">
+                <li>
+                    <div>
+                        <img src="./media/SolarisAssault/UIpic.png">
                     </div>
+                </li>
+                <li>
 
+                    <video controls>
+                        <source src="./media/SolarisAssault/UiVid.mp4" type="video/mp4">
+                    </video>
+                </li>
 
-                </div>
-            </li>
+            </ul>
 
-        </ul>
+        </div>
 
     </div>
 

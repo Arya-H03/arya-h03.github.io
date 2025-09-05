@@ -38,10 +38,10 @@
 
         </header>
 
-         <div class="gameBtns">
+        <div class="gameBtns">
 
             <ul>
-                
+
                 <li>
                     <div id="githubBtn">
 
@@ -55,9 +55,9 @@
 
         </div>
 
+        <div class="topicContainer">
 
-        <div class="projectDescription">
-
+            <h2 id="world-Highlight">Introduction</h2>
             <p> As the culmination of my Unreal Engine course, I developed a third-person zombie shooter prototype that
                 introduced me to the full potential of Unreal Engine 5. This project allowed me to explore key
                 development systems—ranging from character animation and loadout mechanics to AI behavior and modular
@@ -67,113 +67,97 @@
 
         </div>
 
-        <ul class="listOfTopics">
-            <li class="topicBox">
+        <div class="topicContainer">
 
-                <div class="topicDescirption1">
-                    <h2>Player Character</h2>
-                    <p>
+            <h2 id="world-Highlight">Player Character</h2>
+            <p>
 
-                        To create a responsive and dynamic player character, I imported custom meshes and animations
-                        into Unreal Engine 5, gaining hands-on experience with animation blueprints, blend spaces, bone
-                        retargeting, and seamless animation blending.
+                To create a responsive and dynamic player character, I imported custom meshes and animations
+                into Unreal Engine 5, gaining hands-on experience with animation blueprints, blend spaces, bone
+                retargeting, and seamless animation blending.
 
-                        I used state machines to manage transitions between states like Idle and Aiming, ensuring
-                        smooth, realistic movement. This project deepened my understanding of UE5’s animation systems
-                        and served as a valuable exercise in building fluid, immersive character behavior.
-                    </p>
+                I used state machines to manage transitions between states like Idle and Aiming, ensuring
+                smooth, realistic movement. This project deepened my understanding of UE5’s animation systems
+                and served as a valuable exercise in building fluid, immersive character behavior.
+            </p>
 
-                </div>
+            <ul class="visualDemo">
+                <li>
 
-                <div class="topicVisual1">
+                    <video controls>
+                        <source src="./media/ProjectZ/PlayerAnimation.mp4" type="video/mp4">
+                    </video>
+                </li>
 
-                    <div class="videoContainer">
+            </ul>
 
-                        <video controls>
-                            <source src="./media/ProjectZ/PlayerAnimation.mp4" type="video/mp4">
-                        </video>
-                    </div>
+        </div>
 
-                </div>
-            </li>
+        <div class="topicContainer">
 
-            <li class="topicBox" id="PZloadout">
-                <div class="topicDescirption2">
-                    <h2>Player Loadout</h2>
-                    <p>
+            <h2 id="world-Highlight">Player Loadout</h2>
+            <p>
 
-                        I designed a dynamic loadout system to support modular weapon integration, starting with an
-                        Assault Rifle, Shotgun, Melee Weapon, and Grenades. Weapon interactions use ray tracing for
-                        precise collision detection, ensuring responsive and accurate combat.
+                I designed a dynamic loadout system to support modular weapon integration, starting with an
+                Assault Rifle, Shotgun, Melee Weapon, and Grenades. Weapon interactions use ray tracing for
+                precise collision detection, ensuring responsive and accurate combat.
 
-                        To enhance realism, I implemented animation montages for actions like reloading and weapon
-                        swapping, allowing them to blend seamlessly with player movement. This system adds both visual
-                        polish and gameplay fluidity, contributing to an immersive and engaging combat experience.
+                To enhance realism, I implemented animation montages for actions like reloading and weapon
+                swapping, allowing them to blend seamlessly with player movement. This system adds both visual
+                polish and gameplay fluidity, contributing to an immersive and engaging combat experience.
 
 
-                    </p>
+            </p>
 
-                </div>
+            <ul class="visualDemo">
+                <li>
 
-                <div class="topicVisual2">
+                    <video controls>
+                        <source src="./media/ProjectZ/WeaponShowcase.mp4" type="video/mp4">
 
-                    <div class="videoContainer" id="TGPlayerCombat">
+                    </video>
 
-                        <video controls>
-                            <source src="./media/ProjectZ/WeaponShowcase.mp4" type="video/mp4">
+                </li>
 
-                        </video>
+                <li>
+                    <video controls>
+                        <source src="./media/ProjectZ/Combat.mp4" type="video/mp4">
 
-                    </div>
+                    </video>
+                </li>
 
-                    <div class="videoContainer" id="TGPlayerCombat">
+            </ul>
 
-                        <video controls>
-                            <source src="./media/ProjectZ/Combat.mp4" type="video/mp4">
+        </div>
 
-                        </video>
+        <div class="topicContainer">
 
-
-                    </div>
-
-                </div>
-
-            <li class="topicBox">
-                <div class="topicDescirption1">
-                    <h2>Enemy Implementation</h2>
-                    <p>
-                        I integrated two enemy types by importing meshes and animations, building a scalable framework
-                        using inheritance for easy expansion. An AI system powered by behavior trees enables dynamic,
-                        decision-based behavior, with strategically triggered abilities programmed directly into the
-                        tree. This structured approach ensures both flexibility and depth in enemy design.
+            <h2 id="world-Highlight">Enemy Implementation</h2>
+            <p>
+                I integrated two enemy types by importing meshes and animations, building a scalable framework
+                using inheritance for easy expansion. An AI system powered by behavior trees enables dynamic,
+                decision-based behavior, with strategically triggered abilities programmed directly into the
+                tree. This structured approach ensures both flexibility and depth in enemy design.
 
 
-                    </p>
+            </p>
 
-                </div>
+            <ul class="visualDemo">
+                <li>
+                    <video controls>
+                        <source src="./media/ProjectZ/EnemyShowcase.mp4" type="video/mp4">
+                    </video>
+                </li>
 
-                <div class="topicVisual1">
+                <li>
+                    <video controls>
+                        <source src="./media/ProjectZ/GameShowcase.mp4" type="video/mp4">
+                    </video>
+                </li>
 
-                    <div class="videoContainer" id="TGEnemyDesign">
+            </ul>
 
-                        <video controls>
-                            <source src="./media/ProjectZ/EnemyShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
-                    <div class="videoContainer" id="TGEnemyDesign">
-
-                        <video controls>
-                            <source src="./media/ProjectZ/GameShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
-                </div>
-            </li>
-
-            </li>
-        </ul>
-
+        </div>
     </div>
 
     <div class="footer">

@@ -37,7 +37,7 @@
 
         </header>
 
-        
+
         <div class="gameBtns">
 
             <ul>
@@ -61,9 +61,9 @@
 
         </div>
 
+        <div class="topicContainer">
 
-        <div class="projectDescription">
-
+            <h2 id="world-Highlight">Introduction</h2>
             <p>Hollow Omen is a 2D action-platformer developed as a prototype in my final college semester. It
                 served as a learning project for refining my Unity coding abilities, applying coding designs and
                 principles, working with Unity’s physics engine, and prototyping enemy behaviors using basic AI
@@ -71,160 +71,86 @@
 
         </div>
 
-        <ul class="listOfTopics">
+        <div class="topicContainer">
 
-            <li class="topicBox" id="SAInput">
-                <div class="topicDescirption1">
-                    <h2>Player Movement</h2>
-                    <p>
-                        The player movement system delivers smooth, seamless transitions between running, jumping, and
-                        falling by using a state pattern design. This approach isolates each movement state, making
-                        debugging and monitoring more efficient to ensure precise behavior.
+            <h2 id="world-Highlight">Player Controls</h2>
+            <p>
+                The player movement system delivers smooth, seamless transitions between running, jumping, and
+                falling by using a state pattern design. This approach isolates each movement state, making
+                debugging and monitoring more efficient to ensure precise behavior.
 
-                        Additionally, I synchronized character animations with gameplay actions using the Animator
-                        component, creating clear visual feedback for every movement and transition. This resulted in a
-                        highly responsive and intuitive control experience.
-                    </p>
+                Additionally, I synchronized character animations with gameplay actions using the Animator
+                component, creating clear visual feedback for every movement and transition. This resulted in a
+                highly responsive and intuitive control experience.
+            </p>
 
-                </div>
-
-                <div class="topicVisual1">
-
-
-
-                    <img class="twoImagesOnRight" src="./media/TheGuardian/PlayerAnimator.png">
-                    <div class="videoContainer">
-
-                        <video controls>
-                            <source src="./media/TheGuardian/MovementShowcase.mp4" type="video/mp4">
-                        </video>
+            <ul class="visualDemo">
+                <li>
+                    <div>
+                        <img 
+                            src="./media/TheGuardian/PlayerAnimator.png"> 
                     </div>
+                </li>
+                <li>
+                    
+                    <video controls>
+                        <source src="./media/TheGuardian/MovementShowcase.mp4" type="video/mp4">
+                    </video>
+                </li>
 
+            </ul>
 
+        </div>
 
-                </div>
-            </li>
+          <div class="topicContainer">
 
+            <h2 id="world-Highlight">Player Combat</h2>
+            <p>
+                    For the combat, I have implemented attack options, including a fluid
+                    slash combo, each paired with distinct visual and sound effects for greater impact. Carefully
+                    designed hitboxes improve strike precision, making combat feel strategic and rewarding.
 
+                    A key feature is the parry mechanic, allowing players to deflect enemy attacks and projectiles
+                    with skillful timing.
 
+                </p>
 
-            <li class="topicBox">
-                <div class="topicDescirption2">
-                    <h2>Player Combat</h2>
-                    <p>
-                        For the combat, I have implemented attack options, including a fluid
-                        slash combo, each paired with distinct visual and sound effects for greater impact. Carefully
-                        designed hitboxes improve strike precision, making combat feel strategic and rewarding.
+            <ul class="visualDemo">
+                <li>
+                   
+                    <video controls>
+                        <source src="./media/TheGuardian/CombatShowcase.mp4" type="video/mp4">
+                    </video>
+                </li>
 
-                        A key feature is the parry mechanic, allowing players to deflect enemy attacks and projectiles
-                        with skillful timing.
+            </ul>
 
-                    </p>
+        </div>
+    
+         <div class="topicContainer">
 
-                </div>
+            <h2 id="world-Highlight">Enemy Design</h2>
+            <p>
+                    Similar to the player, I developed an enemy controller using a state machine and state pattern
+                    to enable smooth transitions between states like idle, attack, and pursuit. This modular design
+                    keeps behaviors organized and easy to debug.
 
-                <div class="topicVisual2">
+                    To support future growth, the enemy framework is built with inheritance for easy customization
+                    and extension. Although only one enemy variant currently exists, this scalable structure ensures
+                    seamless integration of new types, laying a solid foundation for a diverse enemy roster.
+                </p>
 
-                    <div class="videoContainer" id="TGPlayerCombat">
+            <ul class="visualDemo">
+                <li>
+                    
+                       <video controls>
+                        <source src="./media/TheGuardian/EnemyShowcase.mp4" type="video/mp4">
+                    </video>
+                </li>
 
-                        <video controls>
-                            <source src="./media/TheGuardian/CombatShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
+            </ul>
 
-                </div>
-            </li>
-
-            <li class="topicBox">
-                <div class="topicDescirption1">
-                    <h2>Enemy Design</h2>
-                    <p>
-                        Similar to the player, I developed an enemy controller using a state machine and state pattern
-                        to enable smooth transitions between states like idle, attack, and pursuit. This modular design
-                        keeps behaviors organized and easy to debug.
-
-                        To support future growth, the enemy framework is built with inheritance for easy customization
-                        and extension. Although only one enemy variant currently exists, this scalable structure ensures
-                        seamless integration of new types, laying a solid foundation for a diverse enemy roster.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual1">
-
-                    <div class="videoContainer">
-
-                        <video controls>
-                            <source src="./media/TheGuardian/EnemyShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
-                </div>
-
-
-            </li>
-
-            <!-- 
-            <li class="topicBox">
-                <div class="topicDescirption2">
-                    <h2>Interaction System</h2>
-                    <p>
-
-                        In designing the Interaction System, the primary objective was to empower players with a
-                        versatile tool for engaging with diverse elements within the game, including item pickups, NPC
-                        interactions, and textual readings. To achieve this, I developed a dynamic system, leveraging
-                        the efficiency of delegates and events. This not only ensures seamless interaction handling but
-                        also establishes a foundation for scalability, allowing the feature to evolve alongside the
-                        gameplay dynamics.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual2">
-
-                    <div class="videoContainer" id="TGPlayerCombat">
-
-                        <video controls>
-                            <source src="./media/TheGuardian/InteractionShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-            </li>
-
-            <li class="topicBox">
-                <div class="topicDescirption1">
-                    <h2>Raytracing</h2>
-                    <p>
-
-                        In this project, I leveraged ray tracing to enhance both combat mechanics and audio immersion.
-                        Utilizing ray
-                        tracing, I ensured precise hitboxes for player attacks, elevating the combat experience with
-                        accurate collision
-                        detection. Additionally, I designed footsteps sound system which, dynamically generates distinct
-                        sounds
-                        based on the ground type. This innovative approach employs ray tracing to detect the surface
-                        beneath, providing
-                        players with an immersive auditory experience tied intricately to the in-game environment.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual1">
-
-                    <div class="videoContainer">
-
-                        <video controls>
-                            <source src="./media/TheGuardian/FootstepsShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
-                </div>
-
-
-            </li>
-            -->
-        </ul>
-
+        </div>
     </div>
 
     <div class="footer">
