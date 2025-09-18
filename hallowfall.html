@@ -74,13 +74,14 @@
         <div class="topicContainer">
 
             <h2 id="world-Highlight">Introduction</h2>
-            <p>Hallowfall is a project created as the groundwork for a 2D roguelike game. Built upon
-                systems adapted from my Hollow Omen project, its primary focus is to refine and scale both the player
-                and
-                enemy controllers into more modular and reusable components. The initial goal was to improve existing
-                mechanics, increase code maintainability, and establish a solid base upon which roguelike gameplay
-                systems could be implemented and expanded ranging from procedural combat interactions to diverse
-                abilities and enemy AI.</p>
+            <p> Hallowfall is my most recent project, a 2D roguelike inspired by soulslike games. I chose the
+                roguelike genre because it’s well suited for a solo developer. Its reusable content and system driven
+                design present both creative opportunities and meaningful programming challenges.
+
+                This project has been the perfect opportunity to establish the groundwork for core systems. My
+                initial goals were to refine existing mechanics, improve code maintainability, and build a scalable
+                foundation for roguelike gameplay. From procedural world to diverse abilities and adaptive
+                enemy AI, I'm hoping that one day the game grows into a rich and challenging experience.</p>
 
         </div>
 
@@ -90,11 +91,11 @@
 
             <h2 id="world-Highlight">Player Architecture</h2>
             <p>
-                To handle growing complexity around the player character, I designed a scalable, state-driven
+                To handle growing complexity around the player character, I designed a scalable, state driven
                 architecture centered on a <span id="world-Highlight">Finite State Machine (FSM)</span> managed by a
                 <span id="world-Highlight">PlayerController</span>.
                 The system emphasized clean separation of concerns and
-                <span id="world-Highlight">event-driven communication</span>, ensuring
+                <span id="world-Highlight">event driven communication</span>, ensuring
                 that each behavior existed in an isolated state while remaining decoupled, extensible,
                 and responsive.
             </p>
@@ -116,7 +117,7 @@
                     improving maintainability and enabling parallel development of systems.
                 </li>
 
-                <li><b>Event-Driven Communication:</b> Leveraged a centralized
+                <li><b>Event Driven Communication:</b> Leveraged a centralized
                     <span id="world-Highlight">SignalHub</span>
                     to decouple interactions between systems, reducing
                     interdependencies
@@ -435,7 +436,8 @@ public class PlayerSFXHandler : MonoBehaviour, IInitializeable<PlayerController>
 
                 <li>
                     <div>
-                        <h3 id="world-Highlight">Simplified Architecture Diagram</h3><img src="./media/Hallowfall/PlayerController.jpg">
+                        <h3 id="world-Highlight">Simplified Architecture Diagram</h3><img
+                            src="./media/Hallowfall/PlayerController.jpg">
                     </div>
                 </li>
             </ul>
@@ -453,12 +455,12 @@ public class PlayerSFXHandler : MonoBehaviour, IInitializeable<PlayerController>
                 gameplay elements according to defined profiles and procedural rules. This system was developed
                 to optimize memory usage, ensure seamless exploration, and allow for unique, replayable game
                 environments. The core idea revolves around a
-                <span id="world-Highlight">ZoneManager</span> for high-level management and a
-                <span id="world-Highlight">ZoneHandler</span> for zone-specific generation.
+                <span id="world-Highlight">ZoneManager</span> for high level management and a
+                <span id="world-Highlight">ZoneHandler</span> for zone specific generation.
             </p>
 
             <ul class="bulletPointList">
-                <li><b id="world-Highlight">Zone-Based Architecture</b>:
+                <li><b id="world-Highlight">Zone Based Architecture</b>:
                     <ul>
                         <li>The world is split into zones, each represented as a grid of
                             <span id="world-Highlight">Cells</span>, with independent procedural generation for
@@ -469,12 +471,12 @@ public class PlayerSFXHandler : MonoBehaviour, IInitializeable<PlayerController>
                     </ul>
                 </li>
 
-                <li ><b id="world-Highlight">ZoneManager</b>:
+                <li><b id="world-Highlight">ZoneManager</b>:
                     <ul>
                         <li>Centralized controller for managing all zones in the world.</li>
                         <li>Tracks player position and proximity to determine which zones to generate, expand,
                             or deactivate.</li>
-                        <li>Implements a buffer system to pre-generate zones near the player for seamless
+                        <li>Implements a buffer system to pre generate zones near the player for seamless
                             exploration.</li>
                         <li>Uses a dictionary (<code>GeneratedZonesDic</code>) for efficient retrieval of zone data.
                         </li>
@@ -521,9 +523,9 @@ public class PlayerSFXHandler : MonoBehaviour, IInitializeable<PlayerController>
                     </ul>
                 </li>
 
-                <li><b id="world-Highlight">Event-Driven Updates</b>:
+                <li><b id="world-Highlight">Event Driven Updates</b>:
                     <ul>
-                        <li>The system responds to player-driven events, such as movement or interactions, to trigger
+                        <li>The system responds to player driven events, such as movement or interactions, to trigger
                             zone generation or deactivation.</li>
                     </ul>
                 </li>
@@ -1511,10 +1513,10 @@ public class Cell
                 The Enemy AI System mirrors the
                 Player Architecture in its overall design, built on a foundation of
                 <span id="world-Highlight">Finite State Machine (FSM)</span> control,
-                event-driven communication,
+                event driven communication,
                 modular components, and isolated systems.
                 The key difference is in the way state transitions happen: enemies react to
-                real-time data such as player proximity, health thresholds, or
+                real time data such as player proximity, health thresholds, or
                 environmental conditions,
                 rather than relying on direct input handlers like the player.
                 This makes enemy behavior responsive and adaptive.
@@ -1524,25 +1526,28 @@ public class Cell
                 <li><b id="world-Highlight">Finite State Machine (FSM):</b> Implemented an
                     <span id="world-Highlight">FSM</span> managing states such as
                     Idle, Patrol, Chase, Attack, and Death.
-                    Transitions are driven by state-specific triggers
-                    (e.g., player detection, low health, line-of-sight checks),
+                    Transitions are driven by state specific triggers
+                    (e.g., player detection, low health, line of sight checks),
                     enabling smooth and adaptive responses.
                 </li>
 
-                <li><b id="world-Highlight">Event-Driven Communication:</b> Similar to the player system, signals decouple enemy logic from
+                <li><b id="world-Highlight">Event Driven Communication:</b> Similar to the player system, signals
+                    decouple enemy logic from
                     external systems.
                     Combat resolution, spawning, and environmental triggers are handled via events,
                     reducing dependencies and improving maintainability.
                 </li>
 
-                <li><b id="world-Highlight">Configuration via ScriptableObjects:</b> Enemy abilities, stats, and behaviors are defined
+                <li><b id="world-Highlight">Configuration via ScriptableObjects:</b> Enemy abilities, stats, and
+                    behaviors are defined
                     through
                     <span id="world-Highlight">ScriptableObjects</span>,
                     allowing flexible configuration of combat styles and AI patterns.
                     This makes it easy to create varied enemy types without modifying the core FSM logic.
                 </li>
 
-                <li><b id="world-Highlight">Pathfinding with Flow Fields:</b> Enemies navigate procedurally generated zones using
+                <li><b id="world-Highlight">Pathfinding with Flow Fields:</b> Enemies navigate procedurally generated
+                    zones using
                     <span id="world-Highlight">flow field pathfinding</span>,
                     coordinated by the <span id="world-Highlight">MovementHandler</span> Component.
                     This allows enemies to efficiently recalculate paths and move in groups,
@@ -1555,7 +1560,8 @@ public class Cell
                     while reusing the same state framework.
                 </li>
 
-                <li><b id="world-Highlight">Scalability:</b> Supports simple enemy with basic AI as well as bosses with more complex
+                <li><b id="world-Highlight">Scalability:</b> Supports simple enemy with basic AI as well as bosses with
+                    more complex
                     behaviors.
                     New enemy types can be created by reusing existing states and composing them with new strategies.
                 </li>
@@ -1748,12 +1754,12 @@ public struct EnemyMeleeStrikeData
             <h2 id="world-Highlight">Enemy Pathfinding</h2>
             <p>
                 The Enemy Pathfinding has evolved with the game. I felt it deserved
-                a dedicated section to explain my thoughts and efforts behind it. Initially, I used the built-in <span
+                a dedicated section to explain my thoughts and efforts behind it. Initially, I used the built in <span
                     id="world-Highlight">Unity NavMesh</span> to handle enemy pathfinding. However, after completing
                 the first iteration of the <span id="world-Highlight">World Generation System</span>, I realized that
                 NavMesh would need to be baked at runtime dynamically, causing noticeable performance issues. After
                 exploring some workarounds, I developed a custom pathfinding system using <span
-                    id="world-Highlight">Flow Field Pathfinding</span>. By modifying my  <span
+                    id="world-Highlight">Flow Field Pathfinding</span>. By modifying my <span
                     id="world-Highlight">CellGrid</span> system from the World Generation section, I successfully
                 integrated the new pathfinding solution.
             </p>
@@ -2096,7 +2102,7 @@ public class FlowFieldGenerator
                     </div>
                 </li>
                 <li>
-                   <div>
+                    <div>
                         <h3 id="world-Highlight">Flow Field Manager</h3>
                         <pre><code class="language-csharp">
 public class FlowFieldManager : MonoBehaviour
@@ -2198,7 +2204,7 @@ public class FlowFieldManager : MonoBehaviour
                 </li>
 
                 <li>
-                   <div>
+                    <div>
                         <h3 id="world-Highlight">Using the Flow Field Direction</h3>
                         <pre><code class="language-csharp">
 
@@ -2238,7 +2244,7 @@ public class FlowFieldManager : MonoBehaviour
                 </li>
 
                 <li>
-                   <div>
+                    <div>
                         <h3 id="world-Highlight">Repulsion Force</h3>
                         <pre><code class="language-csharp">
 private Vector2 CalculateRepulsionForce()
@@ -2277,7 +2283,7 @@ private Vector2 CalculateRepulsionForce()
             </ul>
 
         </div>
-
+        <!-- 
         <div class="topicContainer">
 
             <h2>Player Ability System</h2>
@@ -2696,6 +2702,7 @@ public class SkillTreeManager : MonoBehaviour
             </ul>
 
         </div>
+        -->
     </div>
 
     <div class="footer">
