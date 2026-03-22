@@ -27,7 +27,7 @@
             <nav>
                 <ul>
                     <li class="otherPages"><a id="Ghighlight" href="./home.html">Home</a></li>
-                    <li class="otherPages"><a id="Phighlight" href="./CV.pdf " target="_blank">CV</a></li>
+                    <li class="otherPages"><a id="Phighlight" href="./Arya-Hosseini-CV.pdf " target="_blank">CV</a></li>
                     <li class="otherPages"><a id="Ohighlight" href="https://github.com/Arya-H03"><img
                                 src="./media/GithubIcon.png"></a></li>
                     <li class="otherPages"><a id="Ohighlight"
@@ -74,7 +74,7 @@
         <div class="topicContainer">
 
             <h2 id="world-Highlight">Introduction</h2>
-            <p> Hallowfall is my most recent project, a 2D roguelike inspired by soulslike games. I chose the
+            <p> Hallowfall is my most recent Unity project, a 2D roguelike inspired by soulslike games. I chose the
                 roguelike genre because it’s well suited for a solo developer. Its reusable content and system driven
                 design present both creative opportunities and meaningful programming challenges.
 
@@ -153,7 +153,7 @@
                         <h3 id="world-Highlight">Player State</h3>
 
                         <pre><code class="language-csharp">
-                            
+
 public interface IEntityState
 {
     void EnterState();
@@ -182,15 +182,15 @@ public class PlayerState : IEntityState
         this.signalHub = playerController.PlayerSignalHub;
     }
 
-  
+
     public virtual void EnterState() { }
-    
+
     public virtual void ExitState() { }
-   
+
     public virtual void FrameUpdate() { }
-   
+
     public virtual void PhysicsUpdate() { }
-  
+
 }
 
 
@@ -233,7 +233,7 @@ public class PlayerParryState : PlayerState
     }
 
     public override void ExitState()
-    {      
+    {
         playerController.IsParrying = false;
         isParrySuccessful = false;
     }
@@ -241,7 +241,7 @@ public class PlayerParryState : PlayerState
     private void StartParry()
     {
         signalHub.OnTurningToMousePos?.Invoke();
-        signalHub.OnAnimBool?.Invoke("isParrying",true);      
+        signalHub.OnAnimBool?.Invoke("isParrying",true);
         playerController.CoroutineRunner.RunCoroutine(StopParryCoroutine());
     }
 
@@ -269,15 +269,15 @@ public class PlayerParryState : PlayerState
     }
 
     private void OnSuccessfulParry(EnemyController enemyController, float parryDamage)
-    {        
+    {
         parryShield.BoxCollider.enabled = false;
         signalHub.OnPlayRandomSFX?.Invoke(parrySFX, 1f);
         if (CanCounterParry)
         {
             isParrySuccessful = true;
             signalHub.OnAnimBool?.Invoke("isParrySuccessful", true);
-         
-        }         
+
+        }
     }
 }
 
@@ -292,7 +292,7 @@ public class PlayerParryState : PlayerState
 
 /* The section managing state initialization, dependency injection, and input callbacks,
 acting as the central hub for coordinating player systems.*/
-    
+
 public class PlayerController : MonoBehaviour
 {
     private void Start()
@@ -316,7 +316,7 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.CurrentState?.PhysicsUpdate();
     }
-   
+
     private void InjectDependencies()
     {
         playerInputHandler.Init(this);
@@ -602,11 +602,11 @@ public class ZoneManager : MonoBehaviour
     private void Start()
     {
         player = GameManager.Instance.Player;
-        
+
         cTicker.CanTick = true;
 
         TryGenerateZone(Vector2Int.zero, DirectionEnum.None);
-       
+
         cTicker.OnTickEvent += CheckForPlayerEdgeProximity;
     }
 
@@ -625,7 +625,7 @@ public class ZoneManager : MonoBehaviour
         Cell result = zoneData.ZoneHandler.CellGrid.GetCellFromWorldPos(worldPos);
         return result;
     }
-    
+
     private void TryGenerateZone(Vector2Int centerCoord, DirectionEnum expansionDir)
     {
         if (generatedZonesDic.ContainsKey(centerCoord)) return;
@@ -658,7 +658,7 @@ public class ZoneManager : MonoBehaviour
     {
         return new Vector3Int(centerCoord.x * zoneSize, centerCoord.y * zoneSize, 0);
     }
- 
+
     private void CheckForPlayerEdgeProximity()
     {
         Vector3 playerPos = player.transform.position;
@@ -794,11 +794,11 @@ public class ZoneHandler : MonoBehaviour
 
         cellGrid = new CellGrid(this.cellSize, this.zoneWidth, this.zoneHeight);
         cellGrid.InitializeGridCells(this.zoneData.centerPos);
-       
+
         StartCoroutine(GenerateZoneCoroutine());
     }
     private IEnumerator GenerateZoneCoroutine()
-    {    
+    {
         PopulateZoneWithPropBlocks(CellGrid, zoneLayoutProfile);
         AddDefaultGroundTileForZone(zoneLayoutProfile);
         yield return null;
@@ -815,7 +815,7 @@ public class ZoneHandler : MonoBehaviour
         Cell startCell = cellGrid.FindNextUnpartitionedCell(new Vector2Int(0, 0));
         CreateAllSubZoneBounds(cellGrid, startCell);
 
-        //Turns big subZones to smalle blocks 
+        //Turns big subZones to smalle blocks
         listOfPartitionedSubzoneBounds = MyUtils.PerformeBinarySpacePartitioning(listOfSubzoneBounds, 8, 8);
 
         InstantiatePropsBlocks(listOfPartitionedSubzoneBounds, zoneLayoutProfile);
@@ -1245,9 +1245,9 @@ public class CellGrid
             {
                 count = 0;
                 yield return null;
-                
+
             }
-        } 
+        }
     }
 
     public IEnumerator PaintAllCellsCoroutine()
@@ -1349,11 +1349,11 @@ public class Cell
     public DirectionEnum FlowDir
     {
         get => cellFlowData.flowDirection;
-        set 
+        set
         {
             cellFlowData.flowDirection = value;
             cellFlowData.flowVector = MyUtils.GetVectorFromDir(value);
-        }   
+        }
     }
 
     public int TotalCost => cellFlowData.totalCost;
@@ -1385,7 +1385,7 @@ public class Cell
             cellFlowData.hasEnemy = true;
             cellFlowData.dynamicCost += (int)CellFlowCost.hasEnemy;
         }
-       
+
     }
 
     public void MarkClearByEnemy()
@@ -1395,7 +1395,7 @@ public class Cell
             cellFlowData.hasEnemy = false;
             cellFlowData.dynamicCost -= (int)CellFlowCost.hasEnemy;
         }
-       
+
     }
     public void AddToCellPaint(CellPaint[] tilePaints)
     {
@@ -1406,7 +1406,7 @@ public class Cell
     {
         cellPaintHashSet.Add(tilePaint);
     }
-  
+
     public bool HasOccupiedNeighbor(CellGrid cellGrid)
     {
         foreach (var dir in MyUtils.GetAllDirectionsVectorArray())
@@ -1433,7 +1433,7 @@ public class Cell
         }
         return false;
     }
-  
+
     public void PaintCell(CellGrid parentGrid)
     {
         foreach (var tilePaint in cellPaintHashSet)
@@ -1448,7 +1448,7 @@ public class Cell
                 tilePaint.tilemap.SetTile(globalCellPos, tilePaint.tileBase);
             }
         }
-    }  
+    }
     public void PaintCell(Tilemap tilemap, TileBase tileBase, CellGrid parentGrid)
     {
         Vector3Int offset = new Vector3Int(parentGrid.CellPerRow / 2, parentGrid.CellPerCol / 2, 0);
@@ -1464,7 +1464,7 @@ public class Cell
     public List<Cell> GetAllNeighborCells()
     {
         List<Cell> result = new();
-   
+
         foreach (var vect in MyUtils.GetAllDirectionsVectorList())
         {
             Vector2Int neighborCoord = globalCellCoord + vect;
@@ -1478,7 +1478,7 @@ public class Cell
     public List<Cell> GetCardinalNeighborCells()
     {
         List<Cell> result = new();
-      
+
 
         foreach (var vect in MyUtils.GetCardinalDirectionsVectorList())
         {
@@ -1714,12 +1714,12 @@ public class EnemyMeleeStrike : BaseEnemyAbilitySO
     }
 
     public override void ActionOnAnimFrame(EnemyController enemy)
-    {     
-        if (attackZone != null) 
+    {
+        if (attackZone != null)
         {
-            attackZone.TryHitTarget(enemy);            
+            attackZone.TryHitTarget(enemy);
             attackZone = null;
-        }   
+        }
     }
 
     public override void EndAbility(EnemyController enemy)
@@ -1731,7 +1731,7 @@ public class EnemyMeleeStrike : BaseEnemyAbilitySO
     {
         attackZoneGO.transform.parent = enemyController.transform;
         Vector3 dir = (enemyController.PlayerController.GetPlayerPos() - enemyController.GetEnemyPos()).normalized;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;   
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         attackZoneGO.transform.SetPositionAndRotation(enemyController.GetEnemyPos() + (dir / 2), Quaternion.Euler(0, 0, angle + 180));
     }
 }
@@ -2138,20 +2138,20 @@ public class FlowFieldManager : MonoBehaviour
         if (lastCell != currentCell)
         {
             if (cellsOccupiedByEnemy.Contains(lastCell))
-            {W             
+            {W
                 cellsOccupiedByEnemy.Remove(lastCell);
             }
         }
         if (!cellsOccupiedByEnemy.Contains(currentCell))
         {
-            cellsOccupiedByEnemy.Add(currentCell);         
+            cellsOccupiedByEnemy.Add(currentCell);
         }
 
 
         return currentCell.FlowVect.normalized;
     }
 
- 
+
     public void UpdateFlowField(Vector3 targetPos)
     {
         ZoneData zoneData = zoneManager.FindZoneDataFromWorldPos(targetPos);
@@ -2181,7 +2181,7 @@ public class FlowFieldManager : MonoBehaviour
             flowFieldGenerator.GenerateFlowFieldOnNonePlayerZone(zoneHandler.CellGrid, direEnumToPlayer);
 
             if (canVisualizeFlowField) GridSystemDebugger.Instance.VisualizeCellFlowDirection(zoneHandler.CellGrid, zoneData.centerCoord);
-            
+
         }
     }
     public void ToggleCellDebuger()
@@ -2197,7 +2197,7 @@ public class FlowFieldManager : MonoBehaviour
             GridSystemDebugger.Instance.EnableAllVisuals();
         }
     }
-   
+
 }
 </code></pre>
                     </div>
@@ -2218,8 +2218,8 @@ public class FlowFieldManager : MonoBehaviour
          currentCell = zoneManager.FindCurrentCellFromWorldPos(enemyController.transform.position);
 
          Vector2 newDir = (flowFieldManager.RequestNewFlowDir(currentCell, lastCell) + CalculateRepulsionForce()) .normalized;
-         
-        
+
+
          if (newDir != Vector2.zero)
          {
              nextMoveDir = newDir;
@@ -2227,7 +2227,7 @@ public class FlowFieldManager : MonoBehaviour
              hasNotBeenOnFlow = false;
              flowRequestTimer = 0;
          }
-        
+
      }
  }
 
@@ -2256,7 +2256,7 @@ private Vector2 CalculateRepulsionForce()
     foreach (EnemyController otherEnemy in enemyController.Detector.DetectNearbyGenericTargetsOnParent<EnemyController>("EnemyCollider", enemyController.GetEnemyPos(), layerMask, detectionRadius))
     {
         if (otherEnemy == enemyController) continue;
-        Vector2 diff = (Vector2)(transform.position - otherEnemy.transform.position);   
+        Vector2 diff = (Vector2)(transform.position - otherEnemy.transform.position);
         float distance = diff.magnitude;
 
         if(distance < detectionRadius && distance >0.01f)
@@ -2283,7 +2283,7 @@ private Vector2 CalculateRepulsionForce()
             </ul>
 
         </div>
-        <!-- 
+        <!--
         <div class="topicContainer">
 
             <h2>Player Ability System</h2>

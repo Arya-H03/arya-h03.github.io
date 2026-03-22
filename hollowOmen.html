@@ -1,164 +1,170 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hollow Omen</title>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Hollow Omen</title>
+        <link rel="stylesheet" type="text/css" href="./css/styles.css" />
 
-    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+        <script src="./js/main.js"></script>
+    </head>
 
-    <script src="./js/main.js"></script>
+    <body>
+        <div class="container">
+            <header>
+                <div id="brand">
+                    <h1>Hollow Omen</h1>
+                </div>
 
-</head>
+                <nav>
+                    <ul>
+                        <li class="otherPages">
+                            <a id="Ghighlight" href="./home.html">Home</a>
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Phighlight"
+                                href="./Arya-Hosseini-CV.pdf "
+                                target="_blank"
+                                >CV</a
+                            >
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Ohighlight"
+                                href="https://github.com/Arya-H03"
+                                ><img src="./media/GithubIcon.png"
+                            /></a>
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Ohighlight"
+                                href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
+                                ><img src="./media/linkedinIcon.png"
+                            /></a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
-<body>
-
-
-
-
-    <div class="container">
-        <header>
-
-            <div id="brand">
-                <h1> Hollow Omen</h1>
+            <div class="gameBtns">
+                <ul>
+                    <li>
+                        <div id="playBtn">
+                            <a href="https://arya-h03.itch.io/hollowomen">
+                                Play
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="githubBtn">
+                            <a
+                                href="https://github.com/Arya-H03/2D-Platformer-"
+                            >
+                                GitHub
+                            </a>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
-            <nav>
-                <ul>
-                    <li class="otherPages"><a id="Ghighlight" href="./home.html">Home</a></li>
-                    <li class="otherPages"><a id="Phighlight" href="./CV.pdf " target="_blank">CV</a></li>
-                    <li class="otherPages"><a id="Ohighlight" href="https://github.com/Arya-H03"><img
-                                src="./media/GithubIcon.png"></a></li>
-                    <li class="otherPages"><a id="Ohighlight"
-                            href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"><img
-                                src="./media/linkedinIcon.png"></a></li>
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Introduction</h2>
+                <p>
+                    Hollow Omen is a 2D action platformer developed as a
+                    prototype in my final college semester. It served as a
+                    learning project for refining my Unity coding abilities,
+                    applying coding designs and principles, working with Unity’s
+                    physics engine, and prototyping enemy behaviors using basic
+                    AI programming.
+                </p>
+            </div>
+
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Player Controls</h2>
+                <p>
+                    The player movement system delivers smooth, seamless
+                    transitions between running, jumping, and falling by using a
+                    state pattern design. This approach isolates each movement
+                    state, making debugging and monitoring more efficient to
+                    ensure precise behavior. Additionally, I synchronized
+                    character animations with gameplay actions using the
+                    Animator component, creating clear visual feedback for every
+                    movement and transition. This resulted in a highly
+                    responsive and intuitive control experience.
+                </p>
+
+                <ul class="visualDemo">
+                    <li>
+                        <div>
+                            <img src="./media/TheGuardian/PlayerAnimator.png" />
+                        </div>
+                    </li>
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/TheGuardian/MovementShowcase.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
                 </ul>
-            </nav>
+            </div>
 
-        </header>
-
-
-        <div class="gameBtns">
-
-            <ul>
-                <li>
-                    <div id="playBtn">
-
-                        <a href="https://arya-h03.itch.io/hollowomen"> Play </a>
-
-                    </div>
-                </li>
-                <li>
-                    <div id="githubBtn">
-
-                        <a href="https://github.com/Arya-H03/2D-Platformer-"> GitHub </a>
-
-                    </div>
-
-                </li>
-            </ul>
-
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Introduction</h2>
-            <p>Hollow Omen is a 2D action-platformer developed as a prototype in my final college semester. It
-                served as a learning project for refining my Unity coding abilities, applying coding designs and
-                principles, working with Unity’s physics engine, and prototyping enemy behaviors using basic AI
-                programming.</p>
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Player Controls</h2>
-            <p>
-                The player movement system delivers smooth, seamless transitions between running, jumping, and
-                falling by using a state pattern design. This approach isolates each movement state, making
-                debugging and monitoring more efficient to ensure precise behavior.
-
-                Additionally, I synchronized character animations with gameplay actions using the Animator
-                component, creating clear visual feedback for every movement and transition. This resulted in a
-                highly responsive and intuitive control experience.
-            </p>
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <img 
-                            src="./media/TheGuardian/PlayerAnimator.png"> 
-                    </div>
-                </li>
-                <li>
-                    
-                    <video controls>
-                        <source src="./media/TheGuardian/MovementShowcase.mp4" type="video/mp4">
-                    </video>
-                </li>
-
-            </ul>
-
-        </div>
-
-          <div class="topicContainer">
-
-            <h2 id="world-Highlight">Player Combat</h2>
-            <p>
-                    For the combat, I have implemented attack options, including a fluid
-                    slash combo, each paired with distinct visual and sound effects for greater impact. Carefully
-                    designed hitboxes improve strike precision, making combat feel strategic and rewarding.
-
-                    A key feature is the parry mechanic, allowing players to deflect enemy attacks and projectiles
-                    with skillful timing.
-
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Player Combat</h2>
+                <p>
+                    For the combat, I have implemented attack options, including
+                    a fluid slash combo, each paired with distinct visual and
+                    sound effects for greater impact. Carefully designed
+                    hitboxes improve strike precision, making combat feel
+                    strategic and rewarding. A key feature is the parry
+                    mechanic, allowing players to deflect enemy attacks and
+                    projectiles with skillful timing.
                 </p>
 
-            <ul class="visualDemo">
-                <li>
-                   
-                    <video controls>
-                        <source src="./media/TheGuardian/CombatShowcase.mp4" type="video/mp4">
-                    </video>
-                </li>
+                <ul class="visualDemo">
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/TheGuardian/CombatShowcase.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
+                </ul>
+            </div>
 
-            </ul>
-
-        </div>
-    
-         <div class="topicContainer">
-
-            <h2 id="world-Highlight">Enemy Design</h2>
-            <p>
-                    Similar to the player, I developed an enemy controller using a state machine and state pattern
-                    to enable smooth transitions between states like idle, attack, and pursuit. This modular design
-                    keeps behaviors organized and easy to debug.
-
-                    To support future growth, the enemy framework is built with inheritance for easy customization
-                    and extension. Although only one enemy variant currently exists, this scalable structure ensures
-                    seamless integration of new types, laying a solid foundation for a diverse enemy roster.
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Enemy Design</h2>
+                <p>
+                    Similar to the player, I developed an enemy controller using
+                    a state machine and state pattern to enable smooth
+                    transitions between states like idle, attack, and pursuit.
+                    This modular design keeps behaviors organized and easy to
+                    debug. To support future growth, the enemy framework is
+                    built with inheritance for easy customization and extension.
+                    Although only one enemy variant currently exists, this
+                    scalable structure ensures seamless integration of new
+                    types, laying a solid foundation for a diverse enemy roster.
                 </p>
 
-            <ul class="visualDemo">
-                <li>
-                    
-                       <video controls>
-                        <source src="./media/TheGuardian/EnemyShowcase.mp4" type="video/mp4">
-                    </video>
-                </li>
-
-            </ul>
-
+                <ul class="visualDemo">
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/TheGuardian/EnemyShowcase.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="footer">
-        <p> &copy; BY Arya Hosseini.</p>
-        <p> I claim no rights to the assets used within my projects.</p>
-    </div>
-
-</body>
-
-
+        <div class="footer">
+            <p>&copy; BY Arya Hosseini.</p>
+            <p>I claim no rights to the assets used within my projects.</p>
+        </div>
+    </body>
 </html>

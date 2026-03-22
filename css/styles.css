@@ -1,142 +1,130 @@
-
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
-    padding:0;
+    padding: 0;
 }
 
-body{
-    background-image:url("../media/Background.jp");
-    background-size:cover;
+body {
+    background-image: url("../media/Background.jp");
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: 50%;
-    background-color: #111116;
+    background-color: #0f1214; /* darker gunmetal */
     background-attachment: fixed;
-    color:#fff;
-    
+    color: #c8ccd0; /* concrete grey */
 
-	font-family:Arial, Helvetica, Sans-serif;
-	margin:0;
-	font-size:16px;
+    font-family: Arial, Helvetica, Sans-serif;
+    margin: 0;
+    font-size: 16px;
 }
 
-.container{
-	width:90%;
-	margin:auto;
-	overflow:hidden;
+.container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
     text-align: center;
 }
 
-header{
-	padding-top:30px;
-	min-height:70px;
-    width:100%;
-	margin:auto;
-	overflow:hidden;
-    border-bottom: 2px solid #ffffff;
+header {
+    padding-top: 30px;
+    min-height: 70px;
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+    border-bottom: 2px solid #2a2e33; /* subtle steel border */
 }
 
-header a{
-	text-decoration:none;
-	text-transform:uppercase;
-	font-size:24px;
-    color:#fff
+header a {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 24px;
+    color: #fff;
 }
 
-ul{
-	margin:0;
-	padding:0;
+ul {
+    margin: 0;
+    padding: 0;
 }
 
-
-header li{
-	
-	float:left;
-	display:inline;
-	padding-left: 25px;
+header li {
+    float: left;
+    display: inline;
+    padding-left: 25px;
     margin-top: 0px;
-   
 }
 
-#brand{
-	float:left;
+#brand {
+    float: left;
     margin-left: 0;
 }
 
-#brand h1{
-	margin:0;
+#brand h1 {
+    margin: 0;
     font-size: 40px;
 }
 
-#Phighlight{
-
-    color: rgb(131, 0, 253);
+#Phighlight {
+    color: #c9a227; /* hazard yellow */
 }
 
-#Ghighlight{
-
-    color:#1de85a;
+#Ghighlight {
+    color: #7a9f7a; /* oxidized green */
 }
 
-nav{
-	
-	float:right;
-	margin-top:10px;
-    font-weight:bold;
+nav {
+    float: right;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
 h1 {
-
     margin: 0px 0px;
 }
 
-nav img{
-
+nav img {
     width: 35px;
     height: 35px;
     margin: 0px;
     padding: 0px;
 }
 
-
-.currentPage a{
-	color:#1de85a;
+.currentPage a {
+    color: #1de85a;
 }
 
-.currentPage a:hover{
-	opacity: 0.5;
-}
-
-.otherPages a:hover{
+.currentPage a:hover {
     opacity: 0.5;
 }
 
-#aboutMe{
+.otherPages a:hover {
+    opacity: 0.5 <li> <h3 id= "world-Highlight" >ProjectZ</h3> <a href=
+        "./projectZ.html" ><img class= "projectImage" src=
+        "./media/ProjectZcover.png" / ></a> <div class= "projectTagBox" > <ul>
+        <li id= "orangeTag" > <h5>2024</h5> </li> <li id= "blueTag" > <h5>Solo
+        Dev</h5> </li> <li id= "greenTag" > <h5>C + +</h5> </li> <li id=
+        "PlumProjectTag" > <h5>Blueprint</h5> </li> <li id= "purpleTag" >
+        <h5>Unreal Engine 5< / h5> </li> </ul> </div> </li>;
+}
 
+#aboutMe {
     margin: 50px 0px;
-    background-color: #333333b4;
+    background-color: #1f2327cc; /* dark steel glass */
     padding: 35px 35px;
     border-radius: 25px;
 }
-#aboutMe h1{
-    
+#aboutMe h1 {
     text-align: left;
-
 }
-#aboutMe p{
+#aboutMe p {
     width: 100%;
     text-align: left;
     font-size: 24px;
-    
 }
 
-
-#aboutMe img{
-
+#aboutMe img {
     width: 30%;
 }
-
-
 
 .platformImage {
     width: 7.5%;
@@ -144,32 +132,30 @@ nav img{
     float: left;
 }
 
-
-
-
 .platformProjects {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
 }
 
 .platformProjects li {
-    width: 25%;
-    margin: 0 25px;
-    margin-left: 50px;
+    width: 28%;
+    margin: 0;
     display: inline-block;
     vertical-align: top;
 }
 
-.platformProjects h3{
-
+.platformProjects h3 {
     text-align: center;
 }
 
-
-.platformProjects a:hover{
-    opacity: 0.75; 
+.platformProjects a:hover {
+    opacity: 0.75;
 }
 
 .projectImage {
@@ -183,25 +169,21 @@ nav img{
     text-align: left;
     margin: 10px 0;
     padding: 20px 0;
-    border-bottom: 1px solid #ffffff;
-    color: #9595A1;
+    border-bottom: 1px solid #2a2e33;
+    color: #8b9197; /* muted steel */
     background-color: transparent;
 }
-.topicContainer h2
-{
+.topicContainer h2 {
     margin-bottom: 20px;
     font-size: 34px;
 }
 
-
-.bulletPointList li
-{
-    display:inline-flexbox;
-    list-style-type:disc;
+.bulletPointList li {
+    display: inline-flexbox;
+    list-style-type: disc;
     font-size: 22px;
-    padding:0px;
-    margin:15px 20px;
-
+    padding: 0px;
+    margin: 15px 20px;
 }
 
 .visualDemo {
@@ -212,10 +194,9 @@ nav img{
     padding: 0;
     margin: 50px;
     gap: 40px;
-    
 }
-.visualDemo li{
-     width: 45%;
+.visualDemo li {
+    width: 45%;
     margin: 0;
 }
 .visualDemo video,
@@ -223,26 +204,23 @@ nav img{
     width: 100%;
     height: 460px;
     border-radius: 25px;
-    object-fit:fill;
+    object-fit: fill;
     display: block;
 }
-.visualDemo h3
-{
+.visualDemo h3 {
     font-size: 22px;
     text-align: center;
     margin: 10px 0px;
 }
-.projectDescription{
-
+.projectDescription {
     font-size: 24px;
     text-align: left;
     margin: 50px 0px;
     background-color: #33333300;
     padding: 35px 35px;
     border-radius: 25px;
-    
 }
-.projectDescription h2{
+.projectDescription h2 {
     font-size: 32px;
 }
 .projectTagBox {
@@ -255,8 +233,8 @@ nav img{
     padding: 0;
     margin: 0;
     list-style: none;
-     display: flex;
-    flex-wrap: wrap;      
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
@@ -269,140 +247,116 @@ nav img{
     color: #ffffff;
     width: auto;
     background-color: #333333;
-
 }
 
-.projectTagBox h5{
-
-    margin:  0px;
+.projectTagBox h5 {
+    margin: 0px;
     padding: 0px;
     font-size: 12px;
     font-weight: bold;
 }
 
 #greenTag {
-
-    border-color: #1de85a;
-    color: #1de85a;
+    border-color: #7a9f7a;
+    color: #7a9f7a;
 }
 
-#orangeTag{
-
-    border-color:orange;
-    color: orange;
+#orangeTag {
+    border-color: #bf956a;
+    color: #bf956a;
 }
 
-#purpleTag{
-
-    border-color:rgb(125, 0, 241);
-    color: rgb(125, 0, 241);
-
+#purpleTag {
+    border-color: #8f6fb8;
+    color: #8f6fb8;
 }
 
-#PlumProjectTag{
-
-    border-color:plum;
+#plumTag {
+    border-color: plum;
     color: plum;
 }
 
-#SnowProjectTag{
-
-    border-color:snow;
-    color: snow;
+#snowTag {
+    border-color: #acb2be;
+    color: #acb2be;
 }
 
 #redTag {
-
-    border-color:rgb(248, 57, 57);
-    color: rgb(248, 57, 57);
+    border-color: #7a2e2e;
+    color: #7a2e2e;
 }
 
-#blueTag{
-
-    border-color:rgb(0, 163, 228);
-    color:rgb(0, 163, 228);
+#blueTag {
+    border-color: rgb(0, 163, 228);
+    color: rgb(0, 163, 228);
 }
 
-#YellowProjectTag{
-
-    border-color:rgb(197, 226, 68);
-    color:rgb(197, 226, 68);
+#yellowTag {
+    border-color: #c9a227;
+    color: #c9a227;
 }
 
-video { 
+video {
     border-radius: 25px;
 }
 
 #SAplayer .videoContainer {
-
-  margin-right: 50px;
-  width: 45%;
-  float: left;
+    margin-right: 50px;
+    width: 45%;
+    float: left;
 }
 
 #PZloadout .videoContainer {
-
     margin-right: 50px;
     width: 45%;
     float: left;
 }
 
 .videoContainer {
-
-    
     width: 75%;
     float: inline-end;
-
 }
 
-#TGEnemyDesign{
-
+#TGEnemyDesign {
     width: 45%;
     margin-left: 50px;
 }
 
 #TGPlayerCombat {
-
-    float:left;
+    float: left;
 }
 
 .videoContainer video {
-
     width: 100%;
-    float:inline-end;
+    float: inline-end;
 }
 
 #SAInput .videoContainer {
-
     width: 45%;
     margin-right: 25px;
 }
 
 #SAUi .videoContainer {
-
     width: 45%;
     margin-right: 50px;
 }
-.footer{
-	
-	padding:20px;
-	text-align:center;
-	margin-top:20px;
+.footer {
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
     width: 100%;
     bottom: 0;
     position: relative;
 }
 
-.gameBtns div
-{
+.gameBtns div {
     width: 200px;
-    height: 60px;  
+    height: 60px;
     border-radius: 5px;
     margin: 40px 10px;
 }
 
-.gameBtns a{
-
+.gameBtns a {
     color: #ffffff;
     font-size: 32px;
     text-align: center;
@@ -411,31 +365,24 @@ video {
     text-decoration: none;
 }
 
-.gameBtns a:hover{
-	opacity: 0.5;
+.gameBtns a:hover {
+    opacity: 0.5;
     color: #333333;
 }
 
-#githubBtn
-{
-    background-color: rgb(131, 0, 253);
+#githubBtn {
+    background-color: #8f6fb8; /* muted purple accent */
 }
 
-#playBtn
-{
-    background-color: #1de85a;
+#playBtn {
+    background-color: #c9a227; /* hazard yellow */
 }
 
-
-.gameBtns li
-{
-    display:inline-block;
+.gameBtns li {
+    display: inline-block;
 }
 
-
-
-.mainGameplayShowcase
-{
+.mainGameplayShowcase {
     width: 100%;
     margin: 50px 0px;
 }
@@ -444,16 +391,65 @@ pre {
     background-color: #000000;
     padding: 1rem;
     border-radius: 25px;
-    overflow-x: auto;    /* Horizontal scroll if needed */
-    overflow-y: auto;    /* Vertical scroll */
-    max-height: 435px;   /* Limit height of code box */
+    overflow-x: auto; /* Horizontal scroll if needed */
+    overflow-y: auto; /* Vertical scroll */
+    max-height: 435px; /* Limit height of code box */
     font-size: 12px;
-    margin: 200PX 0PX;
+    margin: 200px 0px;
 }
 
-.keyword-system { color: #0074e9; font-weight: 600; }   
-.keyword-class { color: #1de85a; font-weight: 600; }   
-.keyword-struct { color: #ff8c42; font-weight: 600; }
-.keyword-concept { color: #9c6cfc;}
-.keyword-config { color: #fff12e;}
-#world-Highlight{color: #fff; font-weight:bold}
+.keyword-system {
+    color: #0074e9;
+    font-weight: 600;
+}
+.keyword-class {
+    color: #1de85a;
+    font-weight: 600;
+}
+.keyword-struct {
+    color: #ff8c42;
+    font-weight: 600;
+}
+.keyword-concept {
+    color: #9c6cfc;
+}
+.keyword-config {
+    color: #fff12e;
+}
+#world-Highlight {
+    color: #fff;
+    font-weight: bold;
+}
+
+pre::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+pre::-webkit-scrollbar-track {
+    background: #0f1113; /* Near-black steel */
+    border-radius: 6px;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: #2a2e33; /* Gunmetal */
+    border-radius: 6px;
+    border: 1px solid #1a1d20;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+    background: #c9a227; /* Hazard yellow */
+}
+
+pre::-webkit-scrollbar-thumb:active {
+    background: #e0b93a; /* Brighter yellow */
+}
+
+/* =========================================
+   Firefox Support
+   ========================================= */
+
+pre {
+    scrollbar-width: thin;
+    scrollbar-color: #2a2e33 #0f1113;
+}

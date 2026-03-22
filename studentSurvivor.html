@@ -1,199 +1,229 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Student Survivors</title>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Student Survivors</title>
+        <link rel="stylesheet" type="text/css" href="./css/styles.css" />
 
-    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+        <script src="./js/main.js"></script>
+    </head>
 
-    <script src="./js/main.js"></script>
+    <body>
+        <div class="container">
+            <header>
+                <div id="brand">
+                    <h1>Student Survivors</h1>
+                </div>
 
-</head>
+                <nav>
+                    <ul>
+                        <li class="otherPages">
+                            <a id="Ghighlight" href="./home.html">Home</a>
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Phighlight"
+                                href="./Arya-Hosseini-CV.pdf "
+                                target="_blank"
+                                >CV</a
+                            >
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Ohighlight"
+                                href="https://github.com/Arya-H03"
+                                ><img src="./media/GithubIcon.png"
+                            /></a>
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Ohighlight"
+                                href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
+                                ><img src="./media/linkedinIcon.png"
+                            /></a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
-<body>
-
-
-
-    <div class="container">
-
-        <header>
-
-
-            <div id="brand">
-                <h1> Student Survivors</h1>
+            <div class="projectDescription">
+                <p>
+                    Student Survivor is a 2D action roguelike crafted in Unity,
+                    inspired by iconic titles like Vampire Survivors and Hades.
+                    As my first step into game development, this project emerged
+                    from a fast-paced development process that challenged me to
+                    think creatively and adapt quickly to new tools and
+                    concepts. Designed as an educational project, Student
+                    Survivor reflects my initial exploration of Unity’s
+                    capabilities, balancing technical learning with imaginative
+                    design to create an engaging player experience. Here, I’m
+                    excited to share some of the unique features that define the
+                    game and to showcase the technical layers that bring Student
+                    Survivor to life.
+                </p>
             </div>
 
-            <nav>
-                <ul>
-                    <li class="otherPages"><a id="Ghighlight" href="./home.html">Home</a></li>
-                    <li class="otherPages"><a id="Phighlight" href="./CV.pdf " target="_blank">CV</a></li>
-                    <li class="otherPages"><a id="Ohighlight" href="https://github.com/Arya-H03"><img
-                                src="./media/GithubIcon.png"></a></li>
-                    <li class="otherPages"><a id="Ohighlight"
-                            href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"><img
-                                src="./media/linkedinIcon.png"></a></li>
-                </ul>
-            </nav>
+            <div id="PlayGame">
+                <a href="https://arya-h03.itch.io/student-survivors"> Play </a>
+            </div>
 
-        </header>
+            <ul class="listOfTopics">
+                <li class="topicBox">
+                    <div class="topicDescirption1">
+                        <h2>Gameplay</h2>
+                        <p>
+                            Take control as the player, utilizing automated
+                            attacks to obliterate waves of randomized enemies,
+                            leveling up your character, and unlocking new
+                            abilities along the way. Navigate through the
+                            levels, collecting consumables to enhance your
+                            survival odds. The pinnacle of each level introduces
+                            a boss spawning on a timer, compelling the player to
+                            amass as much power as possible before the boss
+                            arrives.
+                        </p>
+                    </div>
 
-        <div class="projectDescription">
+                    <div class="topicVisual1">
+                        <img
+                            class="twoImagesOnRight"
+                            src="./media/StudentSurvivor/StudentSurvivorCover.png"
+                        />
+                        <img
+                            class="twoImagesOnRight"
+                            src="./media/StudentSurvivor/SSgameplay.png"
+                        />
+                    </div>
+                </li>
 
-            <p> Student Survivor is a 2D action roguelike crafted in Unity, inspired by iconic titles like Vampire
-                Survivors and Hades. As my first step into game development, this project emerged from a fast-paced
-                development process that challenged me to think creatively and adapt quickly to new tools and concepts.
-                Designed as an educational project, Student Survivor reflects my initial exploration of Unity’s
-                capabilities, balancing technical learning with imaginative design to create an engaging player
-                experience. Here, I’m excited to share some of the unique features that define the game and to showcase
-                the technical layers that bring Student Survivor to life.</p>
+                <hr />
 
+                <li class="topicBox">
+                    <div class="topicDescirption2">
+                        <h2>Playable Classes</h2>
+                        <p>
+                            Explore the diverse gameplay options with three
+                            distinct classes in the game, each offering a unique
+                            playstyle and providing players with varied ways to
+                            experience the game. Every class is equipped with
+                            exclusive abilities and individualized stats,
+                            ensuring a different gaming experience.
+                            Additionally, each class boasts its own set of
+                            animations, adding a touch of character and
+                            uniqueness to the gameplay visuals.
+                        </p>
+                    </div>
 
+                    <div class="topicVisual2">
+                        <img
+                            class="twoImagesOnLeft"
+                            src="./media/StudentSurvivor/HeroShowcase.png"
+                        />
+                        <img
+                            class="twoImagesOnLeft"
+                            src="./media/StudentSurvivor/HeroCamp.png"
+                        />
+                    </div>
+                </li>
 
+                <hr />
+
+                <li class="topicBox">
+                    <div class="topicDescirption1">
+                        <h2>Enemies and Bosses</h2>
+                        <p>
+                            The game comes with 2 bosses and 11 different
+                            enemies spread across 2 levels in the game. The
+                            implementation utilizes the concept of inheritance
+                            to organize and structure the code, ensuring a high
+                            degree of customizability for the enemies. Each
+                            enemy and boss is implemented with distinct
+                            animations and individualized stats, adding variety
+                            to the gameplay. Moreover, the bosses come with
+                            different mechanics and phases, keeping the boss
+                            fights unique and challenging.
+                        </p>
+                    </div>
+
+                    <div class="topicVisual1">
+                        <img
+                            class="twoImagesOnRight"
+                            src="./media/StudentSurvivor/BossShowcase.png"
+                        />
+                        <img
+                            class="twoImagesOnRight"
+                            src="./media/StudentSurvivor/EnemyShowcase.png"
+                        />
+                    </div>
+                </li>
+
+                <hr />
+
+                <li class="topicBox">
+                    <div class="topicDescirption2">
+                        <h2>Randomized Upgrades</h2>
+                        <p>
+                            To ensure dynamic progression, I developed a
+                            randomized upgrade system for the player character.
+                            Upon leveling up, players are presented with a
+                            choice of three random upgrades, spanning from
+                            unlocking new abilities, enhancing existing skills,
+                            to boosting player stats. This system adds an
+                            element of unpredictability and strategic
+                            decision-making, ensuring each playthrough offers a
+                            unique and personalized experience.
+                        </p>
+                    </div>
+
+                    <div class="topicVisual2">
+                        <img
+                            class="threeImagesOnLeft"
+                            src="./media/StudentSurvivor/KnightUpgrades.png"
+                        />
+                        <img
+                            class="threeImagesOnLeft"
+                            src="./media/StudentSurvivor/RangerUpgrades.png"
+                        />
+                        <img
+                            class="threeImagesOnLeft"
+                            src="./media/StudentSurvivor/WitchUpgrades.png"
+                        />
+                    </div>
+                </li>
+
+                <hr />
+
+                <li class="topicBox">
+                    <div class="topicDescirption1">
+                        <h2>Shaders</h2>
+                        <p>
+                            Moreover, This project deepened my understanding of
+                            shaders as I delved into creating shader graphs for
+                            the first time. I designed shaders for both player
+                            and enemies, improving visual clarity to distinctly
+                            represent various states such as poisoning,
+                            freezing, empowerment, or impact.
+                        </p>
+                    </div>
+
+                    <div class="topicVisual1">
+                        <img
+                            class="twoImagesOnRight"
+                            src="./media/StudentSurvivor/PlayerShader.png"
+                        />
+                        <img
+                            class="twoImagesOnRight"
+                            src="./media/StudentSurvivor/EnemyShader.png"
+                        />
+                    </div>
+                </li>
+            </ul>
         </div>
 
-        <div id="PlayGame">
-
-            <a href="https://arya-h03.itch.io/student-survivors"> Play </a>
-
+        <div class="footer">
+            <p>&copy; BY Arya Hosseini.</p>
+            <p>I claim no rights to the assets used within my projects.</p>
         </div>
-
-
-        <ul class="listOfTopics">
-            <li class="topicBox">
-
-                <div class="topicDescirption1">
-                    <h2>Gameplay</h2>
-                    <p>
-                        Take control as the player, utilizing automated attacks to obliterate waves of randomized
-                        enemies, leveling up your
-                        character, and unlocking new abilities along the way. Navigate through the levels, collecting
-                        consumables
-                        to enhance your survival odds. The pinnacle of each level introduces a boss spawning on
-                        a timer, compelling the player to amass as much power as possible before the boss arrives.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual1">
-
-                    <img class="twoImagesOnRight" src="./media/StudentSurvivor/StudentSurvivorCover.png">
-                    <img class="twoImagesOnRight" src="./media/StudentSurvivor/SSgameplay.png">
-
-                </div>
-            </li>
-
-            <hr>
-
-            <li class="topicBox">
-                <div class="topicDescirption2">
-                    <h2>Playable Classes</h2>
-                    <p>
-                        Explore the diverse gameplay options with three distinct classes in the game, each offering a
-                        unique playstyle and
-                        providing players with varied ways to experience the game. Every class is equipped with
-                        exclusive abilities and
-                        individualized stats, ensuring a different gaming experience. Additionally, each class boasts
-                        its own set of animations,
-                        adding a touch of character and uniqueness to the gameplay visuals.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual2">
-
-                    <img class="twoImagesOnLeft" src="./media/StudentSurvivor/HeroShowcase.png">
-                    <img class="twoImagesOnLeft" src="./media/StudentSurvivor/HeroCamp.png">
-
-                </div>
-
-            </li>
-
-            <hr>
-
-            <li class="topicBox">
-                <div class="topicDescirption1">
-                    <h2>Enemies and Bosses</h2>
-                    <p>
-                        The game comes with 2 bosses and 11 different enemies spread across 2
-                        levels in the game. The implementation utilizes the concept of inheritance to organize and
-                        structure the code, ensuring a high degree of customizability for the enemies. Each enemy and
-                        boss is implemented
-                        with distinct animations and individualized stats, adding variety to the gameplay. Moreover, the
-                        bosses come with different mechanics and phases, keeping the boss fights unique and challenging.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual1">
-
-                    <img class="twoImagesOnRight" src="./media/StudentSurvivor/BossShowcase.png">
-                    <img class="twoImagesOnRight" src="./media/StudentSurvivor/EnemyShowcase.png">
-
-
-                </div>
-            </li>
-
-            <hr>
-
-            <li class="topicBox">
-                <div class="topicDescirption2">
-                    <h2>Randomized Upgrades</h2>
-                    <p>
-                        To ensure dynamic progression, I developed a randomized upgrade system for the player character.
-                        Upon leveling up,
-                        players are presented with a choice of three random upgrades, spanning from unlocking new
-                        abilities, enhancing existing
-                        skills, to boosting player stats. This system adds an element of unpredictability and strategic
-                        decision-making,
-                        ensuring each playthrough offers a unique and personalized experience.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual2">
-
-                    <img class="threeImagesOnLeft" src="./media/StudentSurvivor/KnightUpgrades.png">
-                    <img class="threeImagesOnLeft" src="./media/StudentSurvivor/RangerUpgrades.png">
-                    <img class="threeImagesOnLeft" src="./media/StudentSurvivor/WitchUpgrades.png">
-
-                </div>
-            </li>
-
-            <hr>
-
-
-            <li class="topicBox">
-                <div class="topicDescirption1">
-                    <h2>Shaders</h2>
-                    <p>
-                        Moreover, This project deepened my understanding of shaders as I delved into creating shader
-                        graphs for the first time.
-                        I designed shaders for both player and enemies, improving visual clarity to distinctly represent
-                        various
-                        states such as poisoning, freezing, empowerment, or impact.
-                    </p>
-
-                </div>
-
-                <div class="topicVisual1">
-
-                    <img class="twoImagesOnRight" src="./media/StudentSurvivor/PlayerShader.png">
-                    <img class="twoImagesOnRight" src="./media/StudentSurvivor/EnemyShader.png">
-
-                </div>
-            </li>
-
-        </ul>
-
-    </div>
-
-    <div class="footer">
-        <p> &copy; BY Arya Hosseini.</p>
-        <p> I claim no rights to the assets used within my projects.</p>
-    </div>
-
-</body>
-
-
+    </body>
 </html>

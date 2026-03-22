@@ -1,222 +1,244 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Home Page</title>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
+        <link rel="stylesheet" type="text/css" href="./css/styles.css" />
 
-    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+        <script src="./js/main.js"></script>
+    </head>
 
-    <script src="./js/main.js"></script>
+    <body>
+        <div class="container">
+            <header>
+                <div id="brand">
+                    <h1>Arya Hosseini</h1>
+                </div>
 
-</head>
+                <nav>
+                    <ul>
+                        <li class="otherPages">
+                            <a id="Ghighlight" href="#world-Highlight"
+                                >Projects</a
+                            >
+                        </li>
+                        <li class="otherPages">
+                            <a id="Phighlight" href="./Arya-Hosseini-CV.pdf " target="_blank"
+                                >CV</a
+                            >
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                href="https://github.com/Arya-H03"
+                                target="_blank"
+                                ><img src="./media/GithubIcon.png"
+                            /></a>
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
+                                target="_blank"
+                                ><img src="./media/linkedinIcon.png"
+                            /></a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
-<body>
-
-
-    <div class="container">
-        <header>
-
-
-            <div id="brand">
-                <h1>Arya Hosseini</h1>
-            </div>
-
-            <nav>
-                <ul>
-
-                    <li class="otherPages"><a id="Ghighlight" href="#world-Highlight">Projects</a></li>
-                    <li class="otherPages"><a id="Phighlight" href="./CV.pdf " target="_blank">CV</a></li>
-                    <li class="otherPages"><a href="https://github.com/Arya-H03" target="_blank"><img
-                                src="./media/GithubIcon.png"></a>
-                    </li>
-                    <li class="otherPages"><a href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
-                            target="_blank"><img src="./media/linkedinIcon.png"></a></li>
-
-                </ul>
-            </nav>
-
-        </header>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">About Me</h2>
-            <p>
-
-                Hi! I’m Arya, a passionate Junior Game Developer based in Montreal, Canada. I hold a DEC in Computer
-                Science with a specialization in Video Game Programming, which has given me a strong foundation in both
-                Unity and Unreal Engine.
-
-                My goal is to create fun, memorable games by combining my passion for programming with my love for video
-                games, all while focusing on developing clean, high quality software. I bring a versatile technical
-                skill set that includes C++, C#, LUA, SQL, and frontend development.
-
-                Outside of game development, I enjoy weightlifting, combat sports and gaming! 
-                
-                <br>
-                <br>
-                Contact: hosseini.arya.8910@gmail.com
-            </p>
-        </div>
-
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Projects</h2>
-            <img class="platformImage" src="./media/UnityIcon.png" alt="Unity Icon">
-
-            <ul class="platformProjects">
-                <li>
-                    <h3 id="world-Highlight">Hallowfall</h3>
-                    <a href="./hallowfall.html"><img class="projectImage" src="./media/HallowfallCover.png"
-                            alt="Hallowfall Cover"></a>
-                    <div class="projectTagBox">
-                        <ul>
-                            <li id="redTag">
-                                <h5>Most Recent</h5>
-                            </li>
-                            <li id="orangeTag">
-                                <h5>2025</h5>
-                            </li>
-                            <li id="blueTag">
-                                <h5>Solo Dev</h5>
-                            </li>
-                            <li id="greenTag">
-                                <h5>C#</h5>
-                            </li>
-                            <li id="purpleTag">
-                                <h5>Unity</h5>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <h3 id="world-Highlight">Hollow Omen</h3>
-                    <a href="./hollowOmen.html"><img class="projectImage" src="./media/TheGuardianCover.png"
-                            alt="Hollow Omen Cover"></a>
-                    <div class="projectTagBox">
-                        <ul>
-                            <li id="orangeTag">
-                                <h5>2024</h5>
-                            </li>
-                            <li id="blueTag">
-                                <h5>Solo Dev</h5>
-                            </li>
-                            <li id="greenTag">
-                                <h5>C#</h5>
-                            </li>
-                            <li id="purpleTag">
-                                <h5>Unity</h5>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <h3 id="world-Highlight">Solaris Assault</h3>
-                    <a href="./solarisAssault.html"><img class="projectImage" src="./media/SolarisAssaultCover.png"
-                            alt="Solaris Assault Cover"></a>
-                    <div class="projectTagBox">
-                        <ul>
-                            <li id="orangeTag">
-                                <h5>2023</h5>
-                            </li>
-                            <li id="blueTag">
-                                <h5>Team Dev</h5>
-                            </li>
-                            <li id="greenTag">
-                                <h5>C#</h5>
-                            </li>
-                            <li id="purpleTag">
-                                <h5>Unity</h5>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-
-            <img class="platformImage" src="./media/UnrealEngineIcon.png">
-
-            <ul class="platformProjects">
-                <li>
-                    <h3 id="world-Highlight"> ProjectZ</h3>
-                    <a href="./projectZ.html"><img class="projectImage" src="./media/ProjectZcover.png"></a>
-                    <div class="projectTagBox">
-                        <ul>
-                            <li id="orangeTag">
-                                <h5> 2024 </h5>
-                            </li>
-
-                            <li id="blueTag">
-                                <h5>Solo Dev</h5>
-                            </li>
-                            <li id="greenTag">
-                                <h5>C++</h5>
-                            </li>
-
-                            <li id="PlumProjectTag">
-                                <h5> Blueprint</h5>
-                            </li>
-
-                            <li id="purpleTag">
-                                <h5> Unreal Engine 5</h5>
-                            </li>
-
-                        </ul>
-                    </div>
-                </li>
-
-
-            </ul>
-
-            
-        </div>
-
+            <br />
+            <h1 id="world-Highlight">About Me</h1>
+            <br />
             <div class="topicContainer">
 
-            <h2 id="world-Highlight">Side Projects & Fun </h2>
-            <img class="platformImage" >
+                    Hi! I’m Arya, a Junior Game Programmer based in Montreal,
+                    Canada. I'm a recent grad with a DEC in Computer Science,
+                    specializing in Video Game Programming. With a strong
+                    foundation in <span id="greenTag">Unity</span> and <span id="greenTag">Unreal Engine</span> I have worked on a
+                    variety of game projects and most recently started making my
+                    own custom engine to get a better insight into lower level
+                    game programming.
+                    <br />
+                    <br />
+                    My skillset is mainly focused around <span id="yellowTag">C++</span> and <span id="yellowTag">C#</span>, with <span id="plumTag">Lua</span> as
+                    a scripting language. However I also have some prior
+                    knowledge with web development and database management.
+                    <br />
+                    <br />
+                    My aim is to create fun games by combining my passion and
+                    talent for programming with my love for video games, all
+                    while focusing on developing quality software. Beside
+                    programming, I enjoy weightlifting, combat sports and
+                    gaming!
 
-            <ul class="platformProjects">
-                <li>
-                    <h3 id="world-Highlight">Shape Wars</h3>
-                    <a href="./shapeWars.html"><img class="projectImage" src="./media/ShapeWarsCover.png"
-                            alt="Hallowfall Cover"></a>
-                    <div class="projectTagBox">
-                        <ul>
-                            <li id="orangeTag">
-                                <h5>2024</h5>
-                            </li>
-                            <li id="blueTag">
-                                <h5>Solo Dev</h5>
-                            </li>
-                            <li id="greenTag">
-                                <h5>C++</h5>
-                            </li>
-                            <li id="PlumProjectTag">
-                                <h5>ECS</h5>
-                            </li>
-                            <li id="YellowProjectTag">
-                                <h5>SFML</h5>
-                            </li>
-                            <li id="SnowProjectTag">
-                                <h5>ImGui</h5>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
+                    <br />
+                    <br />
+                    <br />
+                    Contact: hosseini.arya.8910@gmail.com
+                </p>
+            </div>
 
+            <br />
+            <h1 id="world-Highlight">Projects</h1>
+            <br />
+            <div class="topicContainer">
+                <ul class="platformProjects">
+                    <li>
+                        <h3 id="world-Highlight">IronHammer Engine</h3>
+                        <a href="./ironHammer.html"
+                            ><img
+                                class="projectImage"
+                                src="./media/IronHammerCover.png"
+                                alt="Hallowfall Cover"
+                        /></a>
+                        <div class="projectTagBox">
+                            <ul>
+                                <li id="blueTag">
+                                    <h5>Solo Dev</h5>
+                                </li>
+                                <li id="yellowTag">
+                                    <h5>C++</h5>
+                                </li>
+                                <li id="plumTag">
+                                    <h5>ECS</h5>
+                                </li>
+                                <li id="greenTag">
+                                    <h5>SFML</h5>
+                                </li>
+                                <li id="purpleTag">
+                                    <h5>ImGui</h5>
+                                </li>
+                                <li id="orangeTag">
+                                    <h5>Phyiscs</h5>
+                                </li>
+                                <li id="snowTag">
+                                    <h5>Rendering</h5>
+                                </li>
+                                <li id="redTag">
+                                    <h5>Multithreading</h5>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <h3 id="world-Highlight">Hallowfall</h3>
+                        <a href="./hallowfall.html"
+                            ><img
+                                class="projectImage"
+                                src="./media/HallowfallCover.png"
+                                alt="Hallowfall Cover"
+                        /></a>
+                        <div class="projectTagBox">
+                            <ul>
+                                <li id="blueTag">
+                                    <h5>Solo Dev</h5>
+                                </li>
+                                <li id="yellowTag">
+                                    <h5>C#</h5>
+                                </li>
+                                <li id="greenTag">
+                                    <h5>Unity</h5>
+                                </li>
+                                <li id="purpleTag">
+                                    <h5>Pathfinding</h5>
+                                </li>
+                                <li id="redTag">
+                                    <h5>EnemyAI</h5>
+                                </li>
+                                <li id="orangeTag">
+                                    <h5>Procedural World</h5>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <h3 id="world-Highlight">ProjectZ</h3>
+                        <a href="./projectZ.html"
+                            ><img
+                                class="projectImage"
+                                src="./media/ProjectZcover.png"
+                        /></a>
+                        <div class="projectTagBox">
+                            <ul>
+                                <li id="blueTag">
+                                    <h5>Solo Dev</h5>
+                                </li>
+                                <li id="yellowTag">
+                                    <h5>C++</h5>
+                                </li>
+                                <li id="greenTag">
+                                    <h5>Unreal Engine 5</h5>
+                                </li>
+
+                                <li id="purpleTag">
+                                    <h5>Behavior Trees</h5>
+                                </li>
+                                <li id="orangeTag">
+                                    <h5>3D Animation Programming</h5>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <h3 id="world-Highlight">Solaris Assault</h3>
+                        <a href="./solarisAssault.html"
+                            ><img
+                                class="projectImage"
+                                src="./media/SolarisAssaultCover.png"
+                                alt="Solaris Assault Cover"
+                        /></a>
+                        <div class="projectTagBox">
+                            <ul>
+                                <li id="blueTag">
+                                    <h5>Team Dev</h5>
+                                </li>
+                                <li id="yellowTag">
+                                    <h5>C#</h5>
+                                </li>
+                                <li id="greenTag">
+                                    <h5>Unity</h5>
+                                </li>
+                                <li id="orangeTag">
+                                    <h5>Academic Project</h5>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <h3 id="world-Highlight">Hollow Omen</h3>
+                        <a href="./hollowOmen.html"
+                            ><img
+                                class="projectImage"
+                                src="./media/TheGuardianCover.png"
+                                alt="Hollow Omen Cover"
+                        /></a>
+                        <div class="projectTagBox">
+                            <ul>
+                                <li id="blueTag">
+                                    <h5>Solo Dev</h5>
+                                </li>
+                                <li id="yellowTag">
+                                    <h5>C#</h5>
+                                </li>
+                                <li id="greenTag">
+                                    <h5>Unity</h5>
+                                </li>
+                                <li id="orangeTag">
+                                    <h5>Academic Project</h5>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-
-    <div class="footer">
-        <p> &copy; BY Arya Hosseini.</p>
-    </div>
-
-</body>
-
-
+        <div class="footer">
+            <p>&copy; BY Arya Hosseini.</p>
+        </div>
+    </body>
 </html>

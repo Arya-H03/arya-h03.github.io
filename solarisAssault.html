@@ -1,192 +1,202 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Solaris Assault</title>
 
-<head>
-    <meta charset="UTF-8">
-    <title> Solaris Assault</title>
+        <link rel="stylesheet" type="text/css" href="./css/styles.css" />
 
-    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+        <script src="./js/main.js"></script>
+    </head>
 
-    <script src="./js/main.js"></script>
+    <body>
+        <div class="container">
+            <header>
+                <div id="brand">
+                    <h1>Solaris Assault</h1>
+                </div>
 
-</head>
+                <nav>
+                    <ul>
+                        <li class="otherPages">
+                            <a id="Ghighlight" href="./home.html">Home</a>
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Phighlight"
+                                href="./Arya-Hosseini-CV.pdf "
+                                target="_blank"
+                                >CV</a
+                            >
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Ohighlight"
+                                href="https://github.com/Arya-H03"
+                                ><img src="./media/GithubIcon.png"
+                            /></a>
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Ohighlight"
+                                href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
+                                ><img src="./media/linkedinIcon.png"
+                            /></a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
-<body>
-
-
-
-    <div class="container">
-
-        <header>
-
-
-            <div id="brand">
-                <h1> Solaris Assault</h1>
+            <div class="gameBtns">
+                <ul>
+                    <li>
+                        <div id="playBtn">
+                            <a href="https://arya-h03.itch.io/solaris-assault">
+                                Play
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="githubBtn">
+                            <a
+                                href="https://github.com/Arya-H03/Solaris-Assault"
+                            >
+                                GitHub
+                            </a>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
-            <nav>
-                <ul>
-                    <li class="otherPages"><a id="Ghighlight" href="./home.html">Home</a></li>
-                    <li class="otherPages"><a id="Phighlight" href="./CV.pdf " target="_blank">CV</a></li>
-                    <li class="otherPages"><a id="Ohighlight" href="https://github.com/Arya-H03"><img
-                                src="./media/GithubIcon.png"></a></li>
-                    <li class="otherPages"><a id="Ohighlight"
-                            href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"><img
-                                src="./media/linkedinIcon.png"></a></li>
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Introduction</h2>
+                <p>
+                    Solaris Assault is a team-based project developed with
+                    friends during my degree, built in Unity. It marked a key
+                    step in my growth, introducing me to game programming and
+                    collaborative design. The experience helped me strengthen my
+                    skills in Unity and C#, while pushing us to experiment with
+                    creative mechanics and technical solutions. Below, I
+                    showcase my individual contributions to the project.
+                </p>
+            </div>
+
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Input System</h2>
+                <p>
+                    Implemented the new Unity Input System to support flexible,
+                    scalable input handling across keyboard and mouse. This
+                    newer system allowed for clean input mapping, easier device
+                    support, and improved control responsiveness, enhancing
+                    overall player experience and future-proofing the input
+                    architecture.
+                </p>
+
+                <ul class="visualDemo">
+                    <li>
+                        <div>
+                            <img src="./media/SolarisAssault/PlayerInput.png" />
+                        </div>
+                    </li>
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/SolarisAssault/PlayerShowcase.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
                 </ul>
-            </nav>
+            </div>
 
-        </header>
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Player</h2>
+                <p>
+                    Designed a set of six diverse player abilities, balancing
+                    offensive and defensive gameplay. Introduced a rechargeable
+                    shield that regenerates over time to protect player health,
+                    and implemented a heat system for the primary weapon to
+                    prevent overuse through an overheating mechanic.
+                </p>
 
+                <ul class="visualDemo">
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/SolarisAssault/AbilitiesShowcase.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/SolarisAssault/BossFightShowcase.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
+                </ul>
+            </div>
 
-        <div class="gameBtns">
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Optimization</h2>
+                <p>
+                    To support bullet hell mechanics, I implemented object
+                    pooling to address performance drops caused by numerous
+                    active projectiles. This optimization significantly improved
+                    efficiency and ensured smooth gameplay during intense combat
+                    scenarios.
+                </p>
 
-            <ul>
-                <li>
-                    <div id="playBtn">
+                <ul class="visualDemo">
+                    <li>
+                        <div>
+                            <img src="./media/SolarisAssault/Code.png" />
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <img
+                                class="twoImagesOnRight"
+                                src="./media/SolarisAssault/OP.png"
+                            />
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-                        <a href="https://arya-h03.itch.io/solaris-assault"> Play </a>
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Game UI</h2>
+                <p>
+                    In addition to designing player abilities, I created a user
+                    interface that clearly communicates the player's toolkit.
+                    This included three bars for health, shield, and weapon
+                    heat, as well as cooldown indicators for abilities to ensure
+                    clear, real-time feedback during gameplay.
+                </p>
 
-                    </div>
-                </li>
-                <li>
-                    <div id="githubBtn">
-
-                        <a href="https://github.com/Arya-H03/Solaris-Assault"> GitHub </a>
-
-                    </div>
-
-                </li>
-            </ul>
-
-
+                <ul class="visualDemo">
+                    <li>
+                        <div>
+                            <img src="./media/SolarisAssault/UIpic.png" />
+                        </div>
+                    </li>
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/SolarisAssault/UiVid.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Introduction</h2>
-            <p> Solaris Assault is a team-based project developed with friends during my degree, built in Unity. It
-                marked a key step in my growth, introducing me to game programming and collaborative design. The
-                experience helped me strengthen my skills in Unity and C#, while pushing us to experiment with creative
-                mechanics and technical solutions. Below, I showcase my individual contributions to the project.</p>
-
+        <div class="footer">
+            <p>&copy; BY Arya Hosseini.</p>
+            <p>I claim no rights to the assets used within my projects.</p>
         </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Input System</h2>
-            <p>
-                Implemented the new Unity Input System to support flexible, scalable input handling across
-                keyboard and mouse. This newer system allowed for clean input mapping, easier device
-                support, and improved control responsiveness, enhancing overall player experience and
-                future-proofing the input architecture.
-            </p>
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <img src="./media/SolarisAssault/PlayerInput.png">
-                    </div>
-                </li>
-                <li>
-
-                    <video controls>
-                        <source src="./media/SolarisAssault/PlayerShowcase.mp4" type="video/mp4">
-                    </video>
-                </li>
-
-            </ul>
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Player </h2>
-            <p>
-                Designed a set of six diverse player abilities, balancing offensive and defensive gameplay. Introduced a
-                rechargeable shield that regenerates over time to protect player health, and implemented a heat system
-                for the primary weapon to prevent overuse through an overheating mechanic.
-            </p>
-
-
-            <ul class="visualDemo">
-                <li>
-                    <video controls>
-                        <source src="./media/SolarisAssault/AbilitiesShowcase.mp4" type="video/mp4">
-                    </video>
-
-                </li>
-                <li>
-
-
-                    <video controls>
-                        <source src="./media/SolarisAssault/BossFightShowcase.mp4" type="video/mp4">
-                    </video>
-                </li>
-
-            </ul>
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Optimization </h2>
-            <p>
-                To support bullet hell mechanics, I implemented object pooling to address performance drops caused by
-                numerous active projectiles. This optimization significantly improved efficiency and ensured smooth
-                gameplay during intense combat scenarios.
-            </p>
-
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <img src="./media/SolarisAssault/Code.png">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <img class="twoImagesOnRight" src="./media/SolarisAssault/OP.png">
-                    </div>
-                </li>
-
-            </ul>
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Game UI </h2>
-            <p>
-                In addition to designing player abilities, I created a user interface that clearly communicates the
-                player's toolkit. This included three bars for health, shield, and weapon heat, as well as cooldown
-                indicators for abilities to ensure clear, real-time feedback during gameplay.
-            </p>
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <img src="./media/SolarisAssault/UIpic.png">
-                    </div>
-                </li>
-                <li>
-
-                    <video controls>
-                        <source src="./media/SolarisAssault/UiVid.mp4" type="video/mp4">
-                    </video>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
-
-    <div class="footer">
-        <p> &copy; BY Arya Hosseini.</p>
-        <p> I claim no rights to the assets used within my projects.</p>
-    </div>
-
-</body>
-
+    </body>
 </html>

@@ -1,171 +1,179 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>ProjectZ</title>
 
-<head>
-    <meta charset="UTF-8">
-    <title>ProjectZ</title>
+        <link rel="stylesheet" type="text/css" href="./css/styles.css" />
 
-    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+        <script src="./js/main.js"></script>
+    </head>
 
-    <script src="./js/main.js"></script>
+    <body>
+        <div class="container">
+            <header>
+                <div id="brand">
+                    <h1>ProjectZ</h1>
+                </div>
 
-</head>
+                <nav>
+                    <ul>
+                        <li class="otherPages">
+                            <a id="Ghighlight" href="./home.html">Home</a>
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Phighlight"
+                                href="./Arya-Hosseini-CV.pdf "
+                                target="_blank"
+                                >CV</a
+                            >
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Ohighlight"
+                                href="https://github.com/Arya-H03"
+                                ><img src="./media/GithubIcon.png"
+                            /></a>
+                        </li>
+                        <li class="otherPages">
+                            <a
+                                id="Ohighlight"
+                                href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
+                                ><img src="./media/linkedinIcon.png"
+                            /></a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
-<body>
-
-
-
-    <div class="container">
-
-        <header>
-
-
-            <div id="brand">
-                <h1> ProjectZ</h1>
+            <div class="gameBtns">
+                <ul>
+                    <li>
+                        <div id="githubBtn">
+                            <a href="https://github.com/Arya-H03/ProjectZ">
+                                GitHub
+                            </a>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
-            <nav>
-                <ul>
-                    <li class="otherPages"><a id="Ghighlight" href="./home.html">Home</a></li>
-                    <li class="otherPages"><a id="Phighlight" href="./CV.pdf " target="_blank">CV</a></li>
-                    <li class="otherPages"><a id="Ohighlight" href="https://github.com/Arya-H03"><img
-                                src="./media/GithubIcon.png"></a></li>
-                    <li class="otherPages"><a id="Ohighlight"
-                            href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"><img
-                                src="./media/linkedinIcon.png"></a></li>
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Introduction</h2>
+                <p>
+                    As the culmination of my Unreal Engine course, I developed a
+                    third-person zombie shooter prototype that introduced me to
+                    the full potential of Unreal Engine 5. This project allowed
+                    me to explore key development systems, ranging from
+                    character animation and loadout mechanics to AI behavior and
+                    modular enemy design. It served as a hands-on opportunity to
+                    build immersive gameplay, apply structured programming
+                    patterns, and experiment with scalable architecture. The
+                    result is a solid foundation for a fully realized action
+                    game that can be expanded upon.
+                </p>
+            </div>
+
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Player Character</h2>
+                <p>
+                    To create a responsive and dynamic player character, I
+                    imported custom meshes and animations into Unreal Engine 5,
+                    gaining hands-on experience with animation blueprints, blend
+                    spaces, bone retargeting, and seamless animation blending. I
+                    used state machines to manage transitions between states
+                    like Idle and Aiming, ensuring smooth, realistic movement.
+                    This project deepened my understanding of UE5’s animation
+                    systems and served as a valuable exercise in building fluid,
+                    immersive character behavior.
+                </p>
+
+                <ul class="visualDemo">
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/ProjectZ/PlayerAnimation.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
                 </ul>
-            </nav>
+            </div>
 
-        </header>
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Player Loadout</h2>
+                <p>
+                    I designed a dynamic loadout system to support modular
+                    weapon integration, starting with an Assault Rifle, Shotgun,
+                    Melee Weapon, and Grenades. Weapon interactions use ray
+                    tracing for precise collision detection, ensuring responsive
+                    and accurate combat. To enhance realism, I implemented
+                    animation montages for actions like reloading and weapon
+                    swapping, allowing them to blend seamlessly with player
+                    movement. This system adds both visual polish and gameplay
+                    fluidity, contributing to an immersive and engaging combat
+                    experience.
+                </p>
 
-        <div class="gameBtns">
+                <ul class="visualDemo">
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/ProjectZ/WeaponShowcase.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
 
-            <ul>
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/ProjectZ/Combat.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
+                </ul>
+            </div>
 
-                <li>
-                    <div id="githubBtn">
+            <div class="topicContainer">
+                <h2 id="world-Highlight">Enemy Implementation</h2>
+                <p>
+                    I integrated two enemy types by importing meshes and
+                    animations, building a scalable framework using inheritance
+                    for easy expansion. An AI system powered by behavior trees
+                    enables dynamic, decision-based behavior, with strategically
+                    triggered abilities programmed directly into the tree. This
+                    structured approach ensures both flexibility and depth in
+                    enemy design.
+                </p>
 
-                        <a href="https://github.com/Arya-H03/ProjectZ"> GitHub </a>
+                <ul class="visualDemo">
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/ProjectZ/EnemyShowcase.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
 
-                    </div>
-
-                </li>
-            </ul>
-
-
+                    <li>
+                        <video controls>
+                            <source
+                                src="./media/ProjectZ/GameShowcase.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Introduction</h2>
-            <p> As the culmination of my Unreal Engine course, I developed a third-person zombie shooter prototype that
-                introduced me to the full potential of Unreal Engine 5. This project allowed me to explore key
-                development systems—ranging from character animation and loadout mechanics to AI behavior and modular
-                enemy design. It served as a hands-on opportunity to build immersive gameplay, apply structured
-                programming patterns, and experiment with scalable architecture. The result is a solid foundation for a
-                fully realized action game that can be expanded upon.</p>
-
+        <div class="footer">
+            <p>&copy; BY Arya Hosseini.</p>
+            <p>I claim no rights to the assets used within my projects.</p>
         </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Player Character</h2>
-            <p>
-
-                To create a responsive and dynamic player character, I imported custom meshes and animations
-                into Unreal Engine 5, gaining hands-on experience with animation blueprints, blend spaces, bone
-                retargeting, and seamless animation blending.
-
-                I used state machines to manage transitions between states like Idle and Aiming, ensuring
-                smooth, realistic movement. This project deepened my understanding of UE5’s animation systems
-                and served as a valuable exercise in building fluid, immersive character behavior.
-            </p>
-
-            <ul class="visualDemo">
-                <li>
-
-                    <video controls>
-                        <source src="./media/ProjectZ/PlayerAnimation.mp4" type="video/mp4">
-                    </video>
-                </li>
-
-            </ul>
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Player Loadout</h2>
-            <p>
-
-                I designed a dynamic loadout system to support modular weapon integration, starting with an
-                Assault Rifle, Shotgun, Melee Weapon, and Grenades. Weapon interactions use ray tracing for
-                precise collision detection, ensuring responsive and accurate combat.
-
-                To enhance realism, I implemented animation montages for actions like reloading and weapon
-                swapping, allowing them to blend seamlessly with player movement. This system adds both visual
-                polish and gameplay fluidity, contributing to an immersive and engaging combat experience.
-
-
-            </p>
-
-            <ul class="visualDemo">
-                <li>
-
-                    <video controls>
-                        <source src="./media/ProjectZ/WeaponShowcase.mp4" type="video/mp4">
-
-                    </video>
-
-                </li>
-
-                <li>
-                    <video controls>
-                        <source src="./media/ProjectZ/Combat.mp4" type="video/mp4">
-
-                    </video>
-                </li>
-
-            </ul>
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Enemy Implementation</h2>
-            <p>
-                I integrated two enemy types by importing meshes and animations, building a scalable framework
-                using inheritance for easy expansion. An AI system powered by behavior trees enables dynamic,
-                decision-based behavior, with strategically triggered abilities programmed directly into the
-                tree. This structured approach ensures both flexibility and depth in enemy design.
-
-
-            </p>
-
-            <ul class="visualDemo">
-                <li>
-                    <video controls>
-                        <source src="./media/ProjectZ/EnemyShowcase.mp4" type="video/mp4">
-                    </video>
-                </li>
-
-                <li>
-                    <video controls>
-                        <source src="./media/ProjectZ/GameShowcase.mp4" type="video/mp4">
-                    </video>
-                </li>
-
-            </ul>
-
-        </div>
-    </div>
-
-    <div class="footer">
-        <p> &copy; BY Arya Hosseini.</p>
-        <p> I claim no rights to the assets used within my projects.</p>
-    </div>
-
-</body>
-
-
+    </body>
 </html>
