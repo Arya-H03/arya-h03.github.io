@@ -665,20 +665,20 @@ if (xCollide &amp;&amp; yCollide)
                 <h2 id="world-Highlight">Rendering System</h2>
                 <p>
                     At the beginning of this project the one area where I felt
-                    most lacking was graphics programming. Although I'm keen on
-                    learning this topic from scratch, With all the other things
-                    that I had to learn and implement for the first time, I
-                    decided to go with an open source library to handle
-                    graphics. I'm already thinking about upgrading the engine to
-                    3D at a later date and that will be point where I certainly
-                    try to implement my own libraries. However, that's out of
-                    scope currently. With that out of the way, I've decided to
-                    use SFML's graphics module which is built on top of OpenGL.
-                    This will allow simple rendering of sprites, shapes, lines
-                    and texts. The key point is to ensure efficient rendering
-                    when entity count grows and draw calls increase. The
-                    rendering system avoids issuing one per entity by
-                    accumulating all geometry into a single
+                    most lacking was graphics programming. Although I would love
+                    to learn it from scratch, With all the other things that I
+                    had to learn and implement, I decided to go with an open
+                    source library to handle graphics. I'm already thinking
+                    about upgrading the engine to support 3D graphics at some
+                    point, that will be the time where I certainly try to make
+                    my own libraries tailored to the engine. However, that's out
+                    of scope currently. Therefore, I've decided to use SFML's
+                    graphics module which is built on top of OpenGL. This will
+                    allow simple rendering of sprites, shapes, lines and texts.
+                    The key point is to ensure efficient rendering when entity
+                    count grows and draw calls increase. The rendering system
+                    avoids issuing one per entity by accumulating all geometry
+                    into a single
                     <span id="world-Highlight">vertex array</span> and flushing
                     it in one call, or as few calls as possible. For sprites, a
                     new flush only happens when the texture changes. For shapes
