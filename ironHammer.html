@@ -12,7 +12,6 @@
 
     <body>
         <div class="container">
-
             <header>
                 <div id="brand">
                     <h1>IronHammer Engine</h1>
@@ -24,15 +23,26 @@
                             <a id="Ghighlight" href="./home.html">Home</a>
                         </li>
                         <li class="otherPages">
-                            <a id="Phighlight" href="./Arya-Hosseini-CV.pdf" target="_blank">CV</a>
+                            <a
+                                id="Phighlight"
+                                href="./Arya-Hosseini-CV.pdf"
+                                target="_blank"
+                                >CV</a
+                            >
                         </li>
                         <li class="otherPages">
-                            <a id="Ohighlight" href="https://github.com/Arya-H03">
+                            <a
+                                id="Ohighlight"
+                                href="https://github.com/Arya-H03"
+                            >
                                 <img src="./media/GithubIcon.png" />
                             </a>
                         </li>
                         <li class="otherPages">
-                            <a id="Ohighlight" href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/">
+                            <a
+                                id="Ohighlight"
+                                href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
+                            >
                                 <img src="./media/linkedinIcon.png" />
                             </a>
                         </li>
@@ -41,8 +51,19 @@
             </header>
 
             <div class="mainGameplayShowcase">
-                <video autoplay controls muted loop playsinline width="100%" style="max-width: 1280px; height: auto">
-                    <source src="./media/ShapeWars/IronHammerDemo.webm" type="video/mp4" />
+                <video
+                    autoplay
+                    controls
+                    muted
+                    loop
+                    playsinline
+                    width="100%"
+                    style="max-width: 1280px; height: auto"
+                >
+                    <source
+                        src="./media/ShapeWars/IronHammerDemo.webm"
+                        type="video/mp4"
+                    />
                 </video>
             </div>
 
@@ -50,7 +71,9 @@
                 <ul>
                     <li>
                         <div id="githubBtn">
-                            <a href="https://github.com/Arya-H03/IronHammer">GitHub</a>
+                            <a href="https://github.com/Arya-H03/IronHammer"
+                                >GitHub</a
+                            >
                         </div>
                     </li>
                 </ul>
@@ -60,7 +83,10 @@
                 <h2 id="world-Highlight">Introduction</h2>
                 <p>
                     IronHammer started as a question:
-                    <span id="world-Highlight">what does a game engine actually look like under the hood?</span>
+                    <span id="world-Highlight"
+                        >what does a game engine actually look like under the
+                        hood?</span
+                    >
                 </p>
                 <p>
                     I have experience working with commercial engines like Unity
@@ -147,7 +173,9 @@
                 <ul class="visualDemo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">ECS Memory Layout Simplified</h3>
+                            <h3 id="world-Highlight">
+                                ECS Memory Layout Simplified
+                            </h3>
                             <pre><code class="language-cpp">
                                                 ArchetypeA
                                     {Transform, Sprite, RigidBody}
@@ -194,7 +222,9 @@
 
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Component Structure Example</h3>
+                            <h3 id="world-Highlight">
+                                Component Structure Example
+                            </h3>
                             <pre><code class="language-cpp">
 
 struct CTransform
@@ -245,7 +275,7 @@ struct CSprite
                             <pre><code class="language-cpp">
 
 // Find matching archetypes using a query
-spriteQuery = newWorldPtr->Query<RequiredComponents<CSprite, CTransform>, ExcludedComponents<CNotDrawable>>();
+spriteQuery = newWorldPtr->Query&lt;RequiredComponents&lt;CSprite, CTransform&gt;, ExcludedComponents&lt;CNotDrawable&gt;&gt;();
 
 // Use a loop to go through every component column
 for (auto& archetype : spriteQuery->GetMatchingArchetypes())
@@ -282,33 +312,45 @@ for (auto& archetype : spriteQuery->GetMatchingArchetypes())
 
                 <ul class="bulletPointList">
                     <li>
-                        <b>Templated Slab Allocator:</b> A type safe, template driven allocator that manages a
-                        growable list of fixed size slabs on the heap. Each slab holds <code>SlabSize</code>
-                        objects of type <code>T</code> and tracks free slots using a 64 bit integer bitset,
-                        finding the next available slot reduces to a single CPU instruction
-                        (<span id="world-Highlight">std::countr_zero</span>). Supports both single object and
-                        full array allocation. Deallocated memory is returned to its originating slab and made
-                        immediately available for reuse, keeping fragmentation minimal. When all existing slabs
-                        are full, a new one is appended automatically.
+                        <b>Templated Slab Allocator:</b> A type safe, template
+                        driven allocator that manages a growable list of fixed
+                        size slabs on the heap. Each slab holds
+                        <code>SlabSize</code> objects of type <code>T</code> and
+                        tracks free slots using a 64 bit integer bitset, finding
+                        the next available slot reduces to a single CPU
+                        instruction (<span id="world-Highlight"
+                            >std::countr_zero</span
+                        >). Supports both single object and full array
+                        allocation. Deallocated memory is returned to its
+                        originating slab and made immediately available for
+                        reuse, keeping fragmentation minimal. When all existing
+                        slabs are full, a new one is appended automatically.
                     </li>
 
                     <li>
-                        <b>Type Erased Slab Allocator:</b> Functionally similar to the Templated Slab Allocator
-                        but operates without compile time type information. Rather than being dependent on a
-                        type, it accepts an element size at construction and allocates raw 64 byte aligned memory
-                        blocks accordingly. A linked free list is added directly into the slab slots
-                        themselves, so no external bookkeeping structure is needed. Typed access is restored at
-                        the call site via reinterprate casting.
+                        <b>Type Erased Slab Allocator:</b> Functionally similar
+                        to the Templated Slab Allocator but operates without
+                        compile time type information. Rather than being
+                        dependent on a type, it accepts an element size at
+                        construction and allocates raw 64 byte aligned memory
+                        blocks accordingly. A linked free list is added directly
+                        into the slab slots themselves, so no external
+                        bookkeeping structure is needed. Typed access is
+                        restored at the call site via reinterprate casting.
                     </li>
 
                     <li>
-                        <b>Type Erased Block Allocator:</b> A simpler, array only variant of the type erased
-                        approach designed specifically for archetype component storage. Rather than allocating
-                        individual objects, it hands out entire contiguous blocks of memory, one block per
-                        component array per chunk. Individual element removal is handled not by deallocation
-                        but by a swap and pop: the removed element is overwritten by the last element in the
-                        array, keeping the block fully packed at all times. Once enough removals have accumulated
-                        and a block becomes empty, it is returned to the free list and recycled for future
+                        <b>Type Erased Block Allocator:</b> A simpler, array
+                        only variant of the type erased approach designed
+                        specifically for archetype component storage. Rather
+                        than allocating individual objects, it hands out entire
+                        contiguous blocks of memory, one block per component
+                        array per chunk. Individual element removal is handled
+                        not by deallocation but by a swap and pop: the removed
+                        element is overwritten by the last element in the array,
+                        keeping the block fully packed at all times. Once enough
+                        removals have accumulated and a block becomes empty, it
+                        is returned to the free list and recycled for future
                         chunks.
                     </li>
                 </ul>
@@ -316,8 +358,10 @@ for (auto& archetype : spriteQuery->GetMatchingArchetypes())
                 <ul class="visualDemo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Templated Slab Allocator</h3>
-<pre><code class="language-cpp">
+                            <h3 id="world-Highlight">
+                                Templated Slab Allocator
+                            </h3>
+                            <pre><code class="language-cpp">
 // Free slots tracked as bits: 1 = free, 0 = used.
 size_t FindFirstFreeBit()
 {
@@ -374,8 +418,10 @@ void DeAllocate(T* ptr)
 
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Type Erased Slab Allocator</h3>
-<pre><code class="language-cpp">
+                            <h3 id="world-Highlight">
+                                Type Erased Slab Allocator
+                            </h3>
+                            <pre><code class="language-cpp">
 struct Slot
 {
     Slot* nextFreeSlot;       // free list pointer
@@ -421,8 +467,10 @@ void Deallocate(T* obj)
 
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Type Erased Block Allocator</h3>
-<pre><code class="language-cpp">
+                            <h3 id="world-Highlight">
+                                Type Erased Block Allocator
+                            </h3>
+                            <pre><code class="language-cpp">
 // Allocates entire contiguous blocks, one per component array per chunk.
 // Blocks are 64 byte aligned so arrays land exactly on cache line boundaries.
 void AllocateNewBlock()
@@ -454,7 +502,6 @@ void DeallocateBlock(void* ptr)
                 </ul>
             </div>
 
-            <!-- ═══════════════ PHYSICS ═══════════════ -->
             <div class="topicContainer">
                 <h2 id="world-Highlight">Physics Pipeline</h2>
                 <p>
@@ -479,7 +526,9 @@ void DeallocateBlock(void* ptr)
                         the broad phase are tested exactly. A key detail here:
                         rather than just checking the current frame's overlap,
                         the engine also looks at
-                        <span id="world-Highlight">where each object was last frame</span>
+                        <span id="world-Highlight"
+                            >where each object was last frame</span
+                        >
                         to determine the correct push direction. This prevents
                         the jittery, incorrect collisions that occur when
                         objects meet at a corner.
@@ -503,7 +552,9 @@ void DeallocateBlock(void* ptr)
                 <ul class="visualDemo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Broad Phase Spatial Grid</h3>
+                            <h3 id="world-Highlight">
+                                Broad Phase Spatial Grid
+                            </h3>
                             <pre><code class="language-cpp">
 // Each entity registers into every grid cell its bounds touch.
 // Only entities sharing a cell become collision candidates.
@@ -532,7 +583,9 @@ for (size_t i = 0; i &lt; chunk.size; ++i)
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Narrow Phase Previous Frame Normal</h3>
+                            <h3 id="world-Highlight">
+                                Narrow Phase Previous Frame Normal
+                            </h3>
                             <pre><code class="language-cpp">
 // Check which axes were already overlapping last frame.
 // This tells us which direction the collision entered from
@@ -563,15 +616,21 @@ else if (!lastXCollide &amp;&amp; lastYCollide)
             <div class="topicContainer">
                 <h2 id="world-Highlight">Rendering System</h2>
                 <p>
-                    At the beginning of this project the one area where I felt most lacking was graphics programming.
-                    Although I'm keen on learning this topic from scratch, With all the other things that
-                    I had to learn and implement for the first time, I decided to go with an open source library to handle graphics.
-                    I'm already thinking about upgrading the engine to 3D at a later date and that will be point where I certainly try to implement my
-                    own libraries. However, that's out of scope currently. With that out of the way, I've decided to use SFML's graphics module which is
-                    built on top of OpenGL. This will allow simple rendering of sprites, shapes, lines and texts. The key point is to
-                    ensure efficient rendering when entity count grows and draw calls increase.
-                    The rendering system avoids issuing one
-                    per entity by accumulating all geometry into a single
+                    At the beginning of this project the one area where I felt
+                    most lacking was graphics programming. Although I'm keen on
+                    learning this topic from scratch, With all the other things
+                    that I had to learn and implement for the first time, I
+                    decided to go with an open source library to handle
+                    graphics. I'm already thinking about upgrading the engine to
+                    3D at a later date and that will be point where I certainly
+                    try to implement my own libraries. However, that's out of
+                    scope currently. With that out of the way, I've decided to
+                    use SFML's graphics module which is built on top of OpenGL.
+                    This will allow simple rendering of sprites, shapes, lines
+                    and texts. The key point is to ensure efficient rendering
+                    when entity count grows and draw calls increase. The
+                    rendering system avoids issuing one per entity by
+                    accumulating all geometry into a single
                     <span id="world-Highlight">vertex array</span> and flushing
                     it in one call, or as few calls as possible. For sprites, a
                     new flush only happens when the texture changes. For shapes
@@ -587,29 +646,37 @@ else if (!lastXCollide &amp;&amp; lastYCollide)
                 </p>
 
                 <ul class="visualDemo">
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Default Rendering</h3>
-                        <h3>70000 sprites every frame</h3>
-                        <h3>15 - 20 FPS</h3>
-                        <video controls>
-                            <source src="./media/IronHammer/IndividualRendingShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Batch Rendering</h3>
-                        <h3>70000 sprites every frame</h3>
-                        <h3>50 - 60 FPS</h3>
-                        <video controls>
-                            <source src="./media/IronHammer/BatchRenderingShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Texture Grouped Sprite Batching</h3>
+                            <h3 id="world-Highlight">Default Rendering</h3>
+                            <h3>70,000 sprites every frame</h3>
+                            <h3>15 - 20 FPS</h3>
+                            <video controls>
+                                <source
+                                    src="./media/IronHammer/IndividualRendingShowcase.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3 id="world-Highlight">Batch Rendering</h3>
+                            <h3>70,000 sprites every frame</h3>
+                            <h3>50 - 60 FPS</h3>
+                            <video controls>
+                                <source
+                                    src="./media/IronHammer/BatchRenderingShowcase.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3 id="world-Highlight">
+                                Texture Grouped Sprite Batching
+                            </h3>
                             <pre><code class="language-cpp">
 // Sprites are batched together as long as they share a texture.
 // A draw call is only issued when the texture changes keeping
@@ -640,7 +707,10 @@ renderTarget.draw(batch, currentTexture); // final flush
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Adding an Entity with a sprite to the current draw batch</h3>
+                            <h3 id="world-Highlight">
+                                Adding an Entity with a sprite to the current
+                                draw batch
+                            </h3>
                             <pre><code class="language-cpp">
 void RenderSystem::AddSpriteToBatch(const CSprite& csprite, const CTransform& ctransform, sf::VertexArray& batch)
 {
@@ -696,9 +766,9 @@ void RenderSystem::AddSpriteToBatch(const CSprite& csprite, const CTransform& ct
                     <span id="world-Highlight">stack trace</span> on every log
                     call, a record of every function call that led to that
                     point. The problem is that translating raw memory addresses
-                    into readable function names and file paths is exteremly slow. Doing
-                    it on the game thread would cause a noticeable frame drop on
-                    every single log.
+                    into readable function names and file paths is exteremly
+                    slow. Doing it on the game thread would cause a noticeable
+                    frame drop on every single log.
                 </p>
                 <p>
                     The solution is to split the work across two threads. The
@@ -718,10 +788,10 @@ void RenderSystem::AddSpriteToBatch(const CSprite& csprite, const CTransform& ct
                         condition variable notification.
                     </li>
                     <li>
-                        <b>Logger Thread:</b> Resolves symbols using backwards-cpp, cleans up C++
-                        name mangling, and writes finished log entries to a
-                        double buffer. Sleeps when idle, zero CPU overhead
-                        between frames.
+                        <b>Logger Thread:</b> Resolves symbols using
+                        backwards-cpp, cleans up C++ name mangling, and writes
+                        finished log entries to a double buffer. Sleeps when
+                        idle, zero CPU overhead between frames.
                     </li>
                     <li>
                         <b>Main Thread:</b> Calls
@@ -738,14 +808,17 @@ void RenderSystem::AddSpriteToBatch(const CSprite& csprite, const CTransform& ct
                 </ul>
 
                 <ul class="visualDemo">
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Log Window</h3>
-                        <video controls>
-                            <source src="./media/IronHammer/LogWindowShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </li>
+                    <li>
+                        <div>
+                            <h3 id="world-Highlight">Log Window</h3>
+                            <video controls>
+                                <source
+                                    src="./media/IronHammer/LogWindowShowcase.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </div>
+                    </li>
                     <li>
                         <div>
                             <h3 id="world-Highlight">Logger Thread</h3>
@@ -827,7 +900,8 @@ LOG_ERROR("Failed to open file: " + path);
                         dragging within that view requires converting between
                         three different coordinate systems world space, texture
                         pixel space, and screen space which the
-                        <span id="world-Highlight">Viewport</span> class handles.
+                        <span id="world-Highlight">Viewport</span> class
+                        handles.
                     </li>
                     <li>
                         <b>Transform Gizmo:</b> Selecting an entity in the
@@ -866,14 +940,17 @@ LOG_ERROR("Failed to open file: " + path);
                         <b>Log Window:</b> The bottom panel displays real time
                         logs from the background logger, filterable by type
                         (info, warning, error), with expandable stack traces
-                        showing the exact file and line number of every log call.
+                        showing the exact file and line number of every log
+                        call.
                     </li>
                 </ul>
 
                 <ul class="visualDemo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">World → Screen Coordinate Conversion</h3>
+                            <h3 id="world-Highlight">
+                                World → Screen Coordinate Conversion
+                            </h3>
                             <pre><code class="language-cpp">
 // Three coordinate systems must be bridged correctly:
 // World space (Y up), texture pixels (Y down), screen (Y down).
@@ -938,18 +1015,25 @@ inline static ImVec2 WorldToViewportGui(const Vect2f& worldPos)
                     <li>
                         <div>
                             <h3 id="world-Highlight">Inspector Panel</h3>
-                            <img src="./media/IronHammer/InspectorShowcase.png" alt="Inspector Panel" />
+                            <img
+                                src="./media/IronHammer/InspectorShowcase.png"
+                                alt="Inspector Panel"
+                            />
                         </div>
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Physics Debug Visualiser</h3>
-                            <img src="./media/IronHammer/PhysicsDebug.png" alt="Physics Debug Grid" />
+                            <h3 id="world-Highlight">
+                                Physics Debug Visualiser
+                            </h3>
+                            <img
+                                src="./media/IronHammer/PhysicsDebug.png"
+                                alt="Physics Debug Grid"
+                            />
                         </div>
                     </li>
                 </ul>
             </div>
-
         </div>
 
         <div class="footer">
