@@ -61,7 +61,7 @@
                     style="max-width: 1280px; height: auto"
                 >
                     <source
-                        src="./media/ShapeWars/IronHammerDemo.webm"
+                        src="./media/IronHammer/EngineShowcase.mp4"
                         type="video/mp4"
                     />
                 </video>
@@ -523,9 +523,10 @@ void DeallocateBlock(void* ptr)
                     </li>
                     <li>
                         <b>Narrow Phase Precise Contact:</b> The candidates from
-                        the broad phase are tested exactly. A key detail here:
-                        rather than just checking the current frame's overlap,
-                        the engine also looks at
+                        the broad phase are tested exactly using an AABB
+                        collision check. A key detail here: rather than just
+                        checking the current frame's overlap, the engine also
+                        looks at
                         <span id="world-Highlight"
                             >where each object was last frame</span
                         >
@@ -553,7 +554,7 @@ void DeallocateBlock(void* ptr)
                     <li>
                         <div>
                             <h3 id="world-Highlight">
-                                Broad Phase Spatial Grid
+                                Broad Phase Spatial Grid Filtering
                             </h3>
                             <pre><code class="language-cpp">
 // Each entity registers into every grid cell its bounds touch.
@@ -566,7 +567,6 @@ for (size_t i = 0; i &lt; chunk.size; ++i)
 
     // Which cells does this entity's bounding box overlap?
     Vect2&lt;int&gt; topLeft  = ((tr.position + col.offset - col.halfSize) / m_cellSize).Floor();
-
     Vect2&lt;int&gt; botRight = ((tr.position + col.offset + col.halfSize) / m_cellSize).Ceil();
 
 
@@ -584,30 +584,78 @@ for (size_t i = 0; i &lt; chunk.size; ++i)
                     <li>
                         <div>
                             <h3 id="world-Highlight">
-                                Narrow Phase Previous Frame Normal
+                                Narrow Phase Collison Confirmation
                             </h3>
                             <pre><code class="language-cpp">
-// Check which axes were already overlapping last frame.
-// This tells us which direction the collision entered from
-// solving the corner collision jitter problem cleanly.
+// For each two collision candidate pair (e1,e2)
 
-bool lastXCollide = abs(lastFrameDistance.x) &lt;= (e1Col-&gt;halfSize.x + e2Col-&gt;halfSize.x);
-bool lastYCollide = abs(lastFrameDistance.y)  &lt;= (e1Col-&gt;halfSize.y + e2Col-&gt;halfSize.y);
+Vect2f e1Center = e1Transform-&gt;position + e1Collider-&gt;offset;
+Vect2f e2Center = e2Transform-&gt;position + e2Collider-&gt;offset;
 
+Vect2f distance = e2Center - e1Center;
+Vect2f distanceAbs = distance.Abs();
 
-if (lastXCollide &amp;&amp; !lastYCollide)
+bool xCollide = distanceAbs.x &lt;= (e1Collider-&gt;halfSize.x + e2Collider-&gt;halfSize.x);
+bool yCollide = distanceAbs.y &lt;= (e1Collider-&gt;halfSize.y + e2Collider-&gt;halfSize.y);
+
+// Collision is confirmed
+if (xCollide &amp;&amp; yCollide)
 {
-    // Was overlapping X and entered from the Y direction
-    normal = (distance.y &lt; 0) ? Vect2f(0, -1) : Vect2f(0, 1);
-    penetration = overlap.y;
-}
-else if (!lastXCollide &amp;&amp; lastYCollide)
-{
-    // Was overlapping Y and entered from the X direction
-    normal = (distance.x &lt; 0) ? Vect2f(-1, 0) : Vect2f(1, 0);
-    penetration = overlap.x;
+    Vect2f overlap = (e1Collider-&gt;halfSize + e2Collider-&gt;halfSize) - distanceAbs;
+    Vect2f lastFrameE1Center = e1Rb-&gt;previousPosition + e1Collider-&gt;offset;
+    Vect2f lastFrameE2Center = e2Rb-&gt;previousPosition + e2Collider-&gt;offset;
+    Vect2f lastFrameDistance = lastFrameE2Center - lastFrameE1Center;
+
+    bool lastXCollide = std::abs(lastFrameDistance.x) &lt;= (e1Collider-&gt;halfSize.x + e2Collider-&gt;halfSize.x);
+    bool lastYCollide = std::abs(lastFrameDistance.y) &lt;= (e1Collider-&gt;halfSize.y + e2Collider-&gt;halfSize.y);
+
+    Vect2f normal;
+    float penetration;
+
+    // Calculate penetration amount and collision normal
+    if (lastXCollide &amp;&amp; !lastYCollide)
+    {
+        normal = (distance.y &lt; 0) ? Vect2f(0, -1) : Vect2f(0, 1);
+        penetration = overlap.y;
+    }
+    else if (!lastXCollide &amp;&amp; lastYCollide)
+    {
+        normal = (distance.x &lt; 0) ? Vect2f(-1, 0) : Vect2f(1, 0);
+        penetration = overlap.x;
+    }
+    else
+    {
+        if (overlap.x &lt; overlap.y)
+        {
+            normal = (distance.x &lt; 0) ? Vect2f(-1, 0) : Vect2f(1, 0);
+            penetration = overlap.x;
+        }
+        else
+        {
+            normal = (distance.y &lt; 0) ? Vect2f(0, -1) : Vect2f(0, 1);
+            penetration = overlap.y;
+        }
+    }
+    m_collisionDataVector.emplace_back(e1, e2, normal, penetration);
 }
 </code></pre>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3 id="world-Highlight">
+                                Collision Filtering Showcase
+                            </h3>
+                            <h3>
+                                The yellow cells show potential of collision
+                            </h3>
+                            <h3>The red cells show confirmed collision</h3>
+                            <video controls>
+                                <source
+                                    src="./media/IronHammer/CollisionShowcase.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
                         </div>
                     </li>
                 </ul>
@@ -880,7 +928,6 @@ LOG_ERROR("Failed to open file: " + path);
                 </ul>
             </div>
 
-            <!-- ═══════════════ EDITOR ═══════════════ -->
             <div class="topicContainer">
                 <h2 id="world-Highlight">Editor &amp; Tooling</h2>
                 <p>
@@ -972,6 +1019,9 @@ inline static ImVec2 WorldToViewportGui(const Vect2f& worldPos)
         m_viewportImagePos.y + m_viewportImageDrawSize.y
             - (float)texPixel.y * scaleY);
 }
+
+
+
 </code></pre>
                         </div>
                     </li>
@@ -980,10 +1030,6 @@ inline static ImVec2 WorldToViewportGui(const Vect2f& worldPos)
                             <h3 id="world-Highlight">Prefab JSON Format</h3>
                             <pre><code class="language-cpp">
 // Each entity template is a plain JSON file.
-// Tag components like "Enemy" serialize as empty objects,
-// their presence alone is enough to restore the
-// entity's component signature on load.
-
 {
   "Transform": {
     "position": { "x": 0, "y": 0 },
@@ -1014,22 +1060,13 @@ inline static ImVec2 WorldToViewportGui(const Vect2f& worldPos)
                 <ul class="visualDemo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Inspector Panel</h3>
-                            <img
-                                src="./media/IronHammer/InspectorShowcase.png"
-                                alt="Inspector Panel"
-                            />
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <h3 id="world-Highlight">
-                                Physics Debug Visualiser
-                            </h3>
-                            <img
-                                src="./media/IronHammer/PhysicsDebug.png"
-                                alt="Physics Debug Grid"
-                            />
+                            <h3 id="world-Highlight">Editor Demo</h3>
+                            <video controls>
+                                <source
+                                    src="./media/IronHammer/EditorShowcase.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
                         </div>
                     </li>
                 </ul>
