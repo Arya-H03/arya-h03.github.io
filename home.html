@@ -2,11 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Home Page</title>
 
         <link rel="stylesheet" type="text/css" href="./css/styles.css" />
-
-        <script src="./js/main.js"></script>
     </head>
 
     <body>
@@ -18,135 +17,120 @@
 
                 <nav>
                     <ul>
-                        <li class="otherPages">
-                            <a id="Ghighlight" href="#world-Highlight"
-                                >Projects</a
-                            >
+                        <li class="other-pages">
+                            <a class="nav-blogs" href="#blogs">Blogs</a>
                         </li>
-                        <li class="otherPages">
-                            <a id="Phighlight" href="./Arya-Hosseini-CV.pdf " target="_blank"
+                        <li class="other-pages">
+                            <a class="nav-home" href="#projects">Projects</a>
+                        </li>
+                        <li class="other-pages">
+                            <a
+                                class="nav-cv"
+                                href="./Arya-Hosseini-CV.pdf"
+                                target="_blank"
                                 >CV</a
                             >
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
                                 href="https://github.com/Arya-H03"
                                 target="_blank"
-                                ><img src="./media/GithubIcon.png"
-                            /></a>
+                            >
+                                <img
+                                    src="./media/GithubIcon.png"
+                                    alt="GitHub"
+                                />
+                            </a>
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
                                 href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
                                 target="_blank"
-                                ><img src="./media/linkedinIcon.png"
-                            /></a>
+                            >
+                                <img
+                                    src="./media/linkedinIcon.png"
+                                    alt="LinkedIn"
+                                />
+                            </a>
                         </li>
                     </ul>
                 </nav>
             </header>
 
             <br />
-            <h1 id="world-Highlight">About Me</h1>
+            <h1 class="text-highlight">About Me</h1>
             <br />
-            <div class="topicContainer">
-
-                    Hi! I’m Arya, a Junior Game Programmer based in Montreal,
+            <div class="topic-container">
+                <p>
+                    Hi! I'm Arya, a Junior Game Programmer based in Montreal,
                     Canada. I'm a recent grad with a DEC in Computer Science,
                     specializing in Video Game Programming. With a strong
-                    foundation in <span id="greenTag">Unity</span> and <span id="greenTag">Unreal Engine</span> I have worked on a
-                    variety of game projects and most recently started making my
-                    own custom engine to get a better insight into lower level
-                    game programming.
-                    <br />
-                    <br />
-                    My skillset is mainly focused around <span id="yellowTag">C++</span> and <span id="yellowTag">C#</span>, with <span id="plumTag">Lua</span> as
-                    a scripting language. However I also have some prior
-                    knowledge with web development and database management.
-                    <br />
-                    <br />
+                    foundation in <span class="tag-green">Unity</span> and
+                    <span class="tag-green">Unreal Engine</span> I have worked
+                    on a variety of game projects and most recently started
+                    making my own custom engine to get a better insight into
+                    lower level game programming. <br /><br />
+                    My skillset is mainly focused around
+                    <span class="tag-yellow">C++</span> and
+                    <span class="tag-yellow">C#</span>, with
+                    <span class="tag-plum">Lua</span> as a scripting language.
+                    However I also have some prior knowledge with web
+                    development and database management. <br /><br />
                     My aim is to create fun games by combining my passion and
                     talent for programming with my love for video games, all
                     while focusing on developing quality software. Beside
                     programming, I enjoy weightlifting, combat sports and
                     gaming!
-
-                    <br />
-                    <br />
-                    <br />
+                    <br /><br />
                     Contact: hosseini.arya.8910@gmail.com
                 </p>
             </div>
 
             <br />
-            <h1 id="world-Highlight">Projects</h1>
+            <h1 id="projects" class="text-highlight">Projects</h1>
             <br />
-            <div class="topicContainer">
-                <ul class="platformProjects">
+            <div class="topic-container">
+                <ul class="platform-projects">
                     <li>
-                        <h3 id="world-Highlight">IronHammer Engine</h3>
-                        <a href="./ironHammer.html"
-                            ><img
-                                class="projectImage"
+                        <h3 class="text-highlight">IronHammer Engine</h3>
+                        <a href="./ironHammer.html">
+                            <img
+                                class="project-image"
                                 src="./media/IronHammerCover.png"
-                                alt="Hallowfall Cover"
-                        /></a>
-                        <div class="projectTagBox">
+                                alt="IronHammer Engine Cover"
+                            />
+                        </a>
+                        <div class="project-tag-box">
                             <ul>
-                                <li id="blueTag">
-                                    <h5>Solo Dev</h5>
-                                </li>
-                                <li id="yellowTag">
-                                    <h5>C++</h5>
-                                </li>
-                                <li id="plumTag">
-                                    <h5>ECS</h5>
-                                </li>
-                                <li id="greenTag">
-                                    <h5>SFML</h5>
-                                </li>
-                                <li id="purpleTag">
-                                    <h5>ImGui</h5>
-                                </li>
-                                <li id="orangeTag">
-                                    <h5>Phyiscs</h5>
-                                </li>
-                                <li id="snowTag">
-                                    <h5>Rendering</h5>
-                                </li>
-                                <li id="redTag">
-                                    <h5>Multithreading</h5>
-                                </li>
+                                <li class="tag-blue"><h5>Solo Dev</h5></li>
+                                <li class="tag-yellow"><h5>C++</h5></li>
+                                <li class="tag-plum"><h5>ECS</h5></li>
+                                <li class="tag-green"><h5>SFML</h5></li>
+                                <li class="tag-purple"><h5>ImGui</h5></li>
+                                <li class="tag-orange"><h5>Physics</h5></li>
+                                <li class="tag-snow"><h5>Rendering</h5></li>
+                                <li class="tag-red"><h5>Multithreading</h5></li>
                             </ul>
                         </div>
                     </li>
 
                     <li>
-                        <h3 id="world-Highlight">Hallowfall</h3>
-                        <a href="./hallowfall.html"
-                            ><img
-                                class="projectImage"
+                        <h3 class="text-highlight">Hallowfall</h3>
+                        <a href="./hallowfall.html">
+                            <img
+                                class="project-image"
                                 src="./media/HallowfallCover.png"
                                 alt="Hallowfall Cover"
-                        /></a>
-                        <div class="projectTagBox">
+                            />
+                        </a>
+                        <div class="project-tag-box">
                             <ul>
-                                <li id="blueTag">
-                                    <h5>Solo Dev</h5>
-                                </li>
-                                <li id="yellowTag">
-                                    <h5>C#</h5>
-                                </li>
-                                <li id="greenTag">
-                                    <h5>Unity</h5>
-                                </li>
-                                <li id="purpleTag">
-                                    <h5>Pathfinding</h5>
-                                </li>
-                                <li id="redTag">
-                                    <h5>EnemyAI</h5>
-                                </li>
-                                <li id="orangeTag">
+                                <li class="tag-blue"><h5>Solo Dev</h5></li>
+                                <li class="tag-yellow"><h5>C#</h5></li>
+                                <li class="tag-green"><h5>Unity</h5></li>
+                                <li class="tag-purple"><h5>Pathfinding</h5></li>
+                                <li class="tag-red"><h5>Enemy AI</h5></li>
+                                <li class="tag-orange">
                                     <h5>Procedural World</h5>
                                 </li>
                             </ul>
@@ -154,28 +138,25 @@
                     </li>
 
                     <li>
-                        <h3 id="world-Highlight">ProjectZ</h3>
-                        <a href="./projectZ.html"
-                            ><img
-                                class="projectImage"
+                        <h3 class="text-highlight">ProjectZ</h3>
+                        <a href="./projectZ.html">
+                            <img
+                                class="project-image"
                                 src="./media/ProjectZcover.png"
-                        /></a>
-                        <div class="projectTagBox">
+                                alt="ProjectZ Cover"
+                            />
+                        </a>
+                        <div class="project-tag-box">
                             <ul>
-                                <li id="blueTag">
-                                    <h5>Solo Dev</h5>
-                                </li>
-                                <li id="yellowTag">
-                                    <h5>C++</h5>
-                                </li>
-                                <li id="greenTag">
+                                <li class="tag-blue"><h5>Solo Dev</h5></li>
+                                <li class="tag-yellow"><h5>C++</h5></li>
+                                <li class="tag-green">
                                     <h5>Unreal Engine 5</h5>
                                 </li>
-
-                                <li id="purpleTag">
+                                <li class="tag-purple">
                                     <h5>Behavior Trees</h5>
                                 </li>
-                                <li id="orangeTag">
+                                <li class="tag-orange">
                                     <h5>3D Animation Programming</h5>
                                 </li>
                             </ul>
@@ -183,25 +164,20 @@
                     </li>
 
                     <li>
-                        <h3 id="world-Highlight">Solaris Assault</h3>
-                        <a href="./solarisAssault.html"
-                            ><img
-                                class="projectImage"
+                        <h3 class="text-highlight">Solaris Assault</h3>
+                        <a href="./solarisAssault.html">
+                            <img
+                                class="project-image"
                                 src="./media/SolarisAssaultCover.png"
                                 alt="Solaris Assault Cover"
-                        /></a>
-                        <div class="projectTagBox">
+                            />
+                        </a>
+                        <div class="project-tag-box">
                             <ul>
-                                <li id="blueTag">
-                                    <h5>Team Dev</h5>
-                                </li>
-                                <li id="yellowTag">
-                                    <h5>C#</h5>
-                                </li>
-                                <li id="greenTag">
-                                    <h5>Unity</h5>
-                                </li>
-                                <li id="orangeTag">
+                                <li class="tag-blue"><h5>Team Dev</h5></li>
+                                <li class="tag-yellow"><h5>C#</h5></li>
+                                <li class="tag-green"><h5>Unity</h5></li>
+                                <li class="tag-orange">
                                     <h5>Academic Project</h5>
                                 </li>
                             </ul>
@@ -209,29 +185,40 @@
                     </li>
 
                     <li>
-                        <h3 id="world-Highlight">Hollow Omen</h3>
-                        <a href="./hollowOmen.html"
-                            ><img
-                                class="projectImage"
+                        <h3 class="text-highlight">Hollow Omen</h3>
+                        <a href="./hollowOmen.html">
+                            <img
+                                class="project-image"
                                 src="./media/TheGuardianCover.png"
                                 alt="Hollow Omen Cover"
-                        /></a>
-                        <div class="projectTagBox">
+                            />
+                        </a>
+                        <div class="project-tag-box">
                             <ul>
-                                <li id="blueTag">
-                                    <h5>Solo Dev</h5>
-                                </li>
-                                <li id="yellowTag">
-                                    <h5>C#</h5>
-                                </li>
-                                <li id="greenTag">
-                                    <h5>Unity</h5>
-                                </li>
-                                <li id="orangeTag">
+                                <li class="tag-blue"><h5>Solo Dev</h5></li>
+                                <li class="tag-yellow"><h5>C#</h5></li>
+                                <li class="tag-green"><h5>Unity</h5></li>
+                                <li class="tag-orange">
                                     <h5>Academic Project</h5>
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                </ul>
+            </div>
+
+            <br />
+            <h1 id="blogs" class="text-highlight">Blogs</h1>
+            <br />
+            <div class="topic-container">
+                <ul class="blog-projects">
+                    <li>
+                        <a href="./blog1.html">
+                            <h3 class="text-highlight">
+                                Simulating Reflection in C++: A Practical ECS
+                                Serialization System
+                            </h3>
+                        </a>
                     </li>
                 </ul>
             </div>

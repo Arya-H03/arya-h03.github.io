@@ -2,11 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Solaris Assault</title>
 
         <link rel="stylesheet" type="text/css" href="./css/styles.css" />
-
-        <script src="./js/main.js"></script>
     </head>
 
     <body>
@@ -18,58 +17,61 @@
 
                 <nav>
                     <ul>
-                        <li class="otherPages">
-                            <a id="Ghighlight" href="./home.html">Home</a>
+                        <li class="other-pages">
+                            <a class="nav-home" href="./home.html">Home</a>
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
-                                id="Phighlight"
-                                href="./Arya-Hosseini-CV.pdf "
+                                class="nav-cv"
+                                href="./Arya-Hosseini-CV.pdf"
                                 target="_blank"
                                 >CV</a
                             >
                         </li>
-                        <li class="otherPages">
-                            <a
-                                id="Ohighlight"
-                                href="https://github.com/Arya-H03"
-                                ><img src="./media/GithubIcon.png"
-                            /></a>
+                        <li class="other-pages">
+                            <a href="https://github.com/Arya-H03">
+                                <img
+                                    src="./media/GithubIcon.png"
+                                    alt="GitHub"
+                                />
+                            </a>
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
-                                id="Ohighlight"
                                 href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
-                                ><img src="./media/linkedinIcon.png"
-                            /></a>
+                            >
+                                <img
+                                    src="./media/linkedinIcon.png"
+                                    alt="LinkedIn"
+                                />
+                            </a>
                         </li>
                     </ul>
                 </nav>
             </header>
 
-            <div class="gameBtns">
+            <div class="game-btns">
                 <ul>
                     <li>
-                        <div id="playBtn">
-                            <a href="https://arya-h03.itch.io/solaris-assault">
-                                Play
-                            </a>
+                        <div id="play-btn">
+                            <a href="https://arya-h03.itch.io/solaris-assault"
+                                >Play</a
+                            >
                         </div>
                     </li>
                     <li>
-                        <div id="githubBtn">
+                        <div id="github-btn">
                             <a
                                 href="https://github.com/Arya-H03/Solaris-Assault"
+                                >GitHub</a
                             >
-                                GitHub
-                            </a>
                         </div>
                     </li>
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Introduction</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Introduction</h2>
                 <p>
                     Solaris Assault is a team-based project developed with
                     friends during my degree, built in Unity. It marked a key
@@ -81,8 +83,8 @@
                 </p>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Input System</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Input System</h2>
                 <p>
                     Implemented the new Unity Input System to support flexible,
                     scalable input handling across keyboard and mouse. This
@@ -92,10 +94,13 @@
                     architecture.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <img src="./media/SolarisAssault/PlayerInput.png" />
+                            <img
+                                src="./media/SolarisAssault/PlayerInput.png"
+                                alt="Player Input diagram"
+                            />
                         </div>
                     </li>
                     <li>
@@ -109,8 +114,8 @@
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Player</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Player</h2>
                 <p>
                     Designed a set of six diverse player abilities, balancing
                     offensive and defensive gameplay. Introduced a rechargeable
@@ -119,7 +124,7 @@
                     prevent overuse through an overheating mechanic.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <video controls>
                             <source
@@ -139,8 +144,8 @@
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Optimization</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Optimization</h2>
                 <p>
                     To support bullet hell mechanics, I implemented object
                     pooling to address performance drops caused by numerous
@@ -149,25 +154,28 @@
                     scenarios.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <img src="./media/SolarisAssault/Code.png" />
+                            <img
+                                src="./media/SolarisAssault/Code.png"
+                                alt="Object pooling code"
+                            />
                         </div>
                     </li>
                     <li>
                         <div>
                             <img
-                                class="twoImagesOnRight"
                                 src="./media/SolarisAssault/OP.png"
+                                alt="Object pooling diagram"
                             />
                         </div>
                     </li>
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Game UI</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Game UI</h2>
                 <p>
                     In addition to designing player abilities, I created a user
                     interface that clearly communicates the player's toolkit.
@@ -176,10 +184,13 @@
                     clear, real-time feedback during gameplay.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <img src="./media/SolarisAssault/UIpic.png" />
+                            <img
+                                src="./media/SolarisAssault/UIpic.png"
+                                alt="Game UI screenshot"
+                            />
                         </div>
                     </li>
                     <li>

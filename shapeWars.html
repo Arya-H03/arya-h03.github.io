@@ -1,119 +1,143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shape Wars</title>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Shape Wars</title>
+        <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+        <link href="./prism/prism.css" rel="stylesheet" />
+    </head>
 
-    <link rel="stylesheet" type="text/css" href="./css/styles.css">
-    <link href="./prism/prism.css" rel="stylesheet" />
+    <body>
+        <div class="container">
+            <header>
+                <div id="brand">
+                    <h1>Shape Wars</h1>
+                </div>
 
-    <script src="./js/main.js"></script>
+                <nav>
+                    <ul>
+                        <li class="other-pages">
+                            <a class="nav-home" href="./home.html">Home</a>
+                        </li>
+                        <li class="other-pages">
+                            <a
+                                class="nav-cv"
+                                href="./Arya-Hosseini-CV.pdf"
+                                target="_blank"
+                                >CV</a
+                            >
+                        </li>
+                        <li class="other-pages">
+                            <a href="https://github.com/Arya-H03">
+                                <img
+                                    src="./media/GithubIcon.png"
+                                    alt="GitHub"
+                                />
+                            </a>
+                        </li>
+                        <li class="other-pages">
+                            <a
+                                href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
+                            >
+                                <img
+                                    src="./media/linkedinIcon.png"
+                                    alt="LinkedIn"
+                                />
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
-</head>
-
-<body>
-
-
-
-
-    <div class="container">
-        <header>
-
-            <div id="brand">
-                <h1>Shape Wars</h1>
+            <div class="main-showcase">
+                <video
+                    autoplay
+                    controls
+                    muted
+                    loop
+                    playsinline
+                    width="100%"
+                    style="max-width: 1280px; height: auto"
+                >
+                    <source
+                        src="./media/ShapeWars/GameShowcase.mp4"
+                        type="video/mp4"
+                    />
+                </video>
             </div>
 
-            <nav>
+            <div class="game-btns">
                 <ul>
-                    <li class="otherPages"><a id="Ghighlight" href="./home.html">Home</a></li>
-                    <li class="otherPages"><a id="Phighlight" href="./Arya-Hosseini-CV.pdf " target="_blank">CV</a></li>
-                    <li class="otherPages"><a id="Ohighlight" href="https://github.com/Arya-H03"><img
-                                src="./media/GithubIcon.png"></a></li>
-                    <li class="otherPages"><a id="Ohighlight"
-                            href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"><img
-                                src="./media/linkedinIcon.png"></a></li>
+                    <li>
+                        <div id="github-btn">
+                            <a
+                                href="https://github.com/Arya-H03/CPP_Game_Programming/tree/main/Shape%20Wars/Shape%20Wars"
+                            >
+                                GitHub
+                            </a>
+                        </div>
+                    </li>
                 </ul>
-            </nav>
+            </div>
 
-        </header>
+            <div class="topic-container">
+                <h2 class="text-highlight">Introduction</h2>
+                <p>
+                    Ever since I started developing games, I've mostly worked
+                    with game engines to bring them to life. However, I've
+                    always wanted to understand the fundamentals of how engines
+                    work behind the scene. How objects are rendered, how
+                    collisions are detected, and what drives the core game loop.
+                    I started this small project to explore the backend of game
+                    engines and aim to eventually build a simple engine of my
+                    own using C++, the SFML library, and ImGui for UI handling.
+                    I also had prior exposure to ECS (Entity-Component-System)
+                    architecture, and this project provided the perfect
+                    opportunity to implement a basic ECS system from scratch.
+                </p>
+            </div>
 
-		 <div class="mainGameplayShowcase">
+            <div class="topic-container">
+                <h2 class="text-highlight">SFML &amp; ImGui</h2>
+                <p>
+                    While planning my approach to the game and the tools I would
+                    need, I quickly realized I needed a way to interact with
+                    various components of the computer. Using SFML provided a
+                    simple and effective interface to handle tasks such as
+                    rendering objects, playing sounds, registering input, and
+                    more. This allowed me to provide my small engine with core
+                    modules that could be reused across multiple systems.
+                    Similarly, I wanted a configurable UI system to display
+                    information to the player and assist with debugging. That's
+                    why I chose ImGui, to handle both UI functionality and
+                    in-game debugging efficiently.
+                </p>
 
-            <video autoplay controls muted loop playsinline width="100%" style="max-width: 1280px; height: auto;">
-                <source src="./media/ShapeWars/GameShowcase.mp4" type="video/mp4">
-
-            </video>
-
-        </div>
-
-
-        <div class="gameBtns">
-
-            <ul>
-                <li>
-                    <div id="githubBtn">
-
-                        <a href="https://github.com/Arya-H03/CPP_Game_Programming/tree/main/Shape%20Wars/Shape%20Wars"> GitHub </a>
-
-                    </div>
-
-                </li>
-            </ul>
-
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Introduction</h2>
-            <p>Ever since I started developing games, I’ve mostly worked with game engines to bring them to life.
-                However, I’ve always wanted to understand the fundamentals of how engines work behind the scene.How
-                objects are rendered, how collisions are detected, and what drives the core game loop.
-
-                I started this small project to explore the backend of game engines and aim to eventually build a simple
-                engine of my own using C++, the SFML library, and ImGui for UI handling. I also had prior exposure to
-                ECS (Entity-Component-System) architecture, and this project provided the perfect opportunity to
-                implement a basic ECS system from scratch.
-            </p>
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">SFML & ImGui</h2>
-            <p>
-                While planning my approach to the game and the tools I would need, I quickly realized I needed a way to
-                interact with various components of the computer. Using SFML provided a simple and effective interface
-                to handle tasks such as rendering objects, playing sounds, registering input, and more. This allowed me
-                to provide my small engine with core modules that could be reused across multiple systems.
-
-                Similarly, I wanted a configurable UI system to display information to the player and assist with
-                debugging. That’s why I chose ImGui, to handle both UI functionality and in-game debugging efficiently.
-            </p>
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Handling Input with SFML</h3>
-
-                        <pre><code class="language-csharp">
+                <ul class="visual-demo">
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                Handling Input with SFML
+                            </h3>
+                            <pre><code class="language-csharp">
 void Game::SUserInput()
 {
 	if (!Player()) return;
 
-	auto& inputC = Player()->Get<CInput>();
+	auto& inputC = Player()->Get&lt;CInput&gt;();
 	while (const auto event = m_window.pollEvent())
 	{
 		ImGui::SFML::ProcessEvent(m_window, *event);
 
-		if (event->is<sf::Event::Closed>())
+		if (event->is&lt;sf::Event::Closed&gt;())
 		{
 			m_running = false;
 			m_window.close();
 		}
 
-		else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+		else if (const auto* keyPressed = event->getIf&lt;sf::Event::KeyPressed&gt;())
 		{
 			switch (keyPressed->scancode)
 			{
@@ -134,7 +158,7 @@ void Game::SUserInput()
 			}
 		}
 
-		else if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>())
+		else if (const auto* keyReleased = event->getIf&lt;sf::Event::KeyReleased&gt;())
 		{
 			switch (keyReleased->scancode)
 			{
@@ -155,7 +179,7 @@ void Game::SUserInput()
 			}
 		}
 
-		else if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>())
+		else if (const auto* mousePressed = event->getIf&lt;sf::Event::MouseButtonPressed&gt;())
 		{
 			if (mousePressed->button == sf::Mouse::Button::Left)
 			{
@@ -164,7 +188,7 @@ void Game::SUserInput()
 			}
 		}
 
-		else if (const auto* mouseReleased = event->getIf<sf::Event::MouseButtonReleased>())
+		else if (const auto* mouseReleased = event->getIf&lt;sf::Event::MouseButtonReleased&gt;())
 		{
 			if (mouseReleased->button == sf::Mouse::Button::Left)
 			{
@@ -173,14 +197,15 @@ void Game::SUserInput()
 		}
 	}
 }
-
 </code></pre>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Rendering entities and UI with SFML</h3>
-                        <pre><code class="language-csharp">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                Rendering entities and UI with SFML
+                            </h3>
+                            <pre><code class="language-csharp">
 sf::RenderWindow m_window;
 
 void Game::SRender()
@@ -188,22 +213,22 @@ void Game::SRender()
 	m_window.clear();
 	if (Player())
 	{
-		Player()->Get<CShape>().circle.setPosition(Player()->Get<CTransform>().pos);
-		Player()->Get<CTransform>().angle += 1.0f;
-		Player()->Get<CShape>().circle.setRotation(sf::degrees(Player()->Get<CTransform>().angle));
+		Player()->Get&lt;CShape&gt;().circle.setPosition(Player()->Get&lt;CTransform&gt;().pos);
+		Player()->Get&lt;CTransform&gt;().angle += 1.0f;
+		Player()->Get&lt;CShape&gt;().circle.setRotation(sf::degrees(Player()->Get&lt;CTransform&gt;().angle));
 
-		m_window.draw(Player()->Get<CShape>().circle);
+		m_window.draw(Player()->Get&lt;CShape&gt;().circle);
 	}
 
 	for (auto& bullet : m_entities.GetEntities("Bullet"))
 	{
-		auto& shape = bullet->Get<CShape>();
-		auto& lifeSpan = bullet->Get<CLifeSpan>();
-		auto& transform = bullet->Get<CTransform>();
+		auto& shape = bullet->Get&lt;CShape&gt;();
+		auto& lifeSpan = bullet->Get&lt;CLifeSpan&gt;();
+		auto& transform = bullet->Get&lt;CTransform&gt;();
 
 		if (lifeSpan.lifeSpan > 0)
 		{
-			uint8_t alpha = static_cast<uint8_t>((lifeSpan.remaining * 255) / lifeSpan.lifeSpan);
+			uint8_t alpha = static_cast&lt;uint8_t&gt;((lifeSpan.remaining * 255) / lifeSpan.lifeSpan);
 			sf::Color fillColor = shape.circle.getFillColor();
 			sf::Color outColor = shape.circle.getOutlineColor();
 			fillColor.a = alpha;
@@ -215,47 +240,19 @@ void Game::SRender()
 		m_window.draw(shape.circle);
 	}
 
-	for (auto& enemy : m_entities.GetEntities("Enemy"))
-	{
-		enemy->Get<CShape>().circle.setPosition(enemy->Get<CTransform>().pos);
-		enemy->Get<CTransform>().angle += 1.0f;
-		enemy->Get<CShape>().circle.setRotation(sf::degrees(enemy->Get<CTransform>().angle));
-		m_window.draw(enemy->Get<CShape>().circle);
-	}
-
-	for (auto& sEnemy : m_entities.GetEntities("SmallEnemy"))
-	{
-		auto& lifeSpan = sEnemy->Get<CLifeSpan>();
-		auto& transform = sEnemy->Get<CTransform>();
-		auto& shape = sEnemy->Get<CShape>();
-		if (lifeSpan.lifeSpan > 0)
-		{
-			uint8_t alpha = static_cast<uint8_t>((lifeSpan.remaining * 255) / lifeSpan.lifeSpan);
-			sf::Color fillColor = shape.circle.getFillColor();
-			sf::Color outColor = shape.circle.getOutlineColor();
-			fillColor.a = alpha;
-			outColor.a = alpha;
-			shape.circle.setFillColor(fillColor);
-			shape.circle.setOutlineColor(outColor);
-		}
-		transform.angle += 1.0f;
-		shape.circle.setRotation(sf::degrees(sEnemy->Get<CTransform>().angle));
-		shape.circle.setPosition(transform.pos);
-
-		m_window.draw(sEnemy->Get<CShape>().circle);
-	}
-
 	ImGui::SFML::Render(m_window);
 	m_window.display();
 }
 </code></pre>
-                    </div>
-                </li>
+                        </div>
+                    </li>
 
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Creating the UI with ImGui</h3>
-                        <pre><code class="language-csharp">
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                Creating the UI with ImGui
+                            </h3>
+                            <pre><code class="language-csharp">
 void Game::SGUI()
 {
 	ImGui::Begin("Shape Wars");
@@ -264,7 +261,6 @@ void Game::SGUI()
 	{
 		if (ImGui::BeginTabItem("Game"))
 		{
-
 			ImGui::Text("%s%i", "Score:", m_score);
 			int clicked = 0;
 			if (ImGui::Button("Replay")) clicked++;
@@ -277,444 +273,185 @@ void Game::SGUI()
 			}
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem("Entities"))
-		{
-			int btnId = 0;
-			if (ImGui::CollapsingHeader("Entities by Tags"))
-			{
-				for (auto& [tag, entityVec] : m_entities.GetEntityMap())
-				{
-					std::string headerName = tag;
-					if (ImGui::CollapsingHeader(headerName.c_str()))
-					{
-						bool isDestroyed = false;
-						for (auto& e : entityVec)
-						{
-							//Delete btn
-							static int clicked = 0;
-							isDestroyed = false;
-							sf::Color shapeColor = e->Get<CShape>().circle.getFillColor();
-							ImGui::PushID(btnId);
-							btnId++;
-							ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(static_cast<float>(shapeColor.r) / 255, static_cast<float>(shapeColor.g) / 255, static_cast<float>(shapeColor.b) / 255, 1.0f));
-							if (ImGui::Button("D")) isDestroyed = true;
-							ImGui::PopStyleColor();
-							ImGui::PopID();
-							ImGui::SameLine();
-							//ID
-							ImGui::Text("%i", e->Id());
-							ImGui::SameLine();
-							//Position
-							ImGui::Text("(%.2f,%.2f)", e->Get<CTransform>().pos.x, e->Get<CTransform>().pos.y);
-
-							if (isDestroyed) e->Destroy();
-						}
-					}
-				}
-			}
-
-			if (ImGui::CollapsingHeader("All Entities"))
-			{
-				bool isDestroyed = false;
-				for (auto& e : m_entities.GetEntities())
-				{
-					//Delete btn
-					static int clicked = 0;
-					isDestroyed = false;
-					sf::Color shapeColor = e->Get<CShape>().circle.getFillColor();
-					ImGui::PushID(btnId);
-					btnId++;
-					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(static_cast<float>(shapeColor.r) / 255, static_cast<float>(shapeColor.g) / 255, static_cast<float>(shapeColor.b) / 255, 1.0f));
-					if (ImGui::Button("D")) isDestroyed = true;
-
-
-					ImGui::PopStyleColor();
-					ImGui::PopID();
-					ImGui::SameLine();
-					//ID
-					ImGui::Text("%i", e->Id());
-					ImGui::SameLine();
-					//Tag
-					ImGui::Text("%s", e->Tag().c_str());
-					ImGui::SameLine();
-					//Position
-					ImGui::Text("(%.2f,%.2f)", e->Get<CTransform>().pos.x, e->Get<CTransform>().pos.y);
-
-					if (isDestroyed) e->Destroy();
-				}
-			}
-			ImGui::EndTabItem();
-		}
 		ImGui::EndTabBar();
 	}
 	ImGui::End();
 }
 </code></pre>
-                    </div>
-                </li>
-            </ul>
-        </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-        <div class="topicContainer">
+            <div class="topic-container">
+                <h2 class="text-highlight">ECS</h2>
+                <p>
+                    Entity Component System (ECS) is an architectural pattern
+                    that allows for flexible and efficient management of game
+                    objects. It breaks down into three parts:
+                </p>
 
-            <h2 id="world-Highlight">ECS</h2>
-            <p>
-                Entity Component System (ECS) is an architectural pattern that allows for flexible and efficient
-                management of game objects. It breaks down into three parts:
+                <ul class="bullet-list">
+                    <li>
+                        <span class="text-highlight">Entities</span> are unique
+                        identifiers that represent objects in the game world.
+                        They don't hold data or logic themselves; anything in a
+                        game, such as the player, projectiles, UI elements, or
+                        world objects, can be an entity.
+                    </li>
+                    <li>
+                        <span class="text-highlight">Components</span> are data
+                        containers that can be attached to entities. They store
+                        attributes such as position, speed, health, or color,
+                        without containing behavior.
+                    </li>
+                    <li>
+                        <span class="text-highlight">Systems</span> are
+                        responsible for processing logic. During the main game
+                        loop (tick), systems operate on entities that have the
+                        required components, updating or modifying their data to
+                        drive gameplay.
+                    </li>
+                </ul>
 
-            <ul class="bulletPointList">
-                <li><span id="world-Highlight">Entities</span> are unique identifiers that represent objects in the game
-                    world. They don’t hold data
-                    or logic themselves, anything in a game, such as the player, projectiles, UI elements, or world
-                    objects,
-                    can be an entity.
-                </li>
+                <p>
+                    In traditional OOP-style GameObject models such as Unity's,
+                    a GameObject acts as a container that can hold both data and
+                    logic. This is quite different from ECS, which separates
+                    data and behavior strictly. In this project, I wanted to
+                    implement an ECS to better understand when, where, and how
+                    it is more effective than the traditional model I'm used to.
+                    After building my first ECS, I came to the following
+                    conclusions:
+                </p>
 
-                <li><span id="world-Highlight">Components</span> are data containers that can be attached to entities.
-                    They store attributes such as position,
-                    speed, health, or color, without containing behavior.
-                </li>
+                <ul class="bullet-list">
+                    <li>
+                        <span class="text-highlight">Composable design</span>:
+                        Components can be mixed and matched easily to create new
+                        entities, without having to plan deep inheritance
+                        hierarchies or rewrite classes.
+                    </li>
+                    <li>
+                        <span class="text-highlight"
+                            >Separation of concerns</span
+                        >: Each system is isolated and doesn't interfere with
+                        others, making it easier to debug, test, and expand
+                        functionality.
+                    </li>
+                    <li>
+                        <span class="text-highlight">Performance</span>:
+                        Components of the same type are typically stored in
+                        contiguous memory, which allows systems to iterate over
+                        them more efficiently.
+                    </li>
+                    <li>
+                        <span class="text-highlight">Setup complexity</span>:
+                        Implementing a proper ECS framework introduces more
+                        design overhead and complexity in the early stages of
+                        development.
+                    </li>
+                    <li>
+                        <span class="text-highlight">Learning curve</span>: For
+                        someone used to the GameObject model, ECS can feel
+                        unintuitive at first since it flips the way you think
+                        about game objects.
+                    </li>
+                </ul>
 
-                <li><span id="world-Highlight">Systems</span> are responsible for processing logic. During the main game
-                    loop (tick), systems operate on
-                    entities that have the required components, updating or modifying their data to drive gameplay.
-                </li>
-
-            </ul>
-            In traditional OOP-style GameObject models such as Unity’s, a GameObject acts as a container that can hold
-            both data and logic. This is quite different from ECS, which separates data and behavior strictly.
-
-            In this project, I wanted to implement an ECS to better understand when, where, and how it is more effective
-            than the traditional model I’m used to. After building my first ECS, I came to the following conclusion:
-
-            <ul class="bulletPointList">
-                <li><span id="world-Highlight">Composable design</span>: Components can be mixed and matched easily to
-                    create new entities, without having to plan deep inheritance hierarchies or rewrite classes.
-                </li>
-
-                <li><span id="world-Highlight">Separation of concerns</span>: Each system is isolated and doesn’t
-                    interfere with others, making it easier to debug, test, and expand functionality.
-
-                <li><span id="world-Highlight">Performance</span>: Components of the same type are typically stored in
-                    contiguous memory, which allows systems to iterate over them more efficiently (taking advantage of
-                    CPU cache locality).
-                <li><span id="world-Highlight">Setup complexity</span>: Implementing a proper ECS framework introduces
-                    more and design overhead and complexity in the early stages of development.
-                <li><span id="world-Highlight">Learning</span>: For someone like me that is used to the GameObject
-                    model, ECS can
-                    feel unintuitive at first since it flips the way you think about game objects.
-
-            </ul>
-
-
-            </p>
-
-            <ul class="visualDemo">
-                 <li>
-                    <div>
-                        <h3 id="world-Highlight">Entity</h3>
-
-                        <pre><code class="language-csharp">
-using ComponentTuple = std::tuple<
-
-	CTransform,
-	CShape,
-	CCollision,
-	CScore,
-	CLifeSpan,
-	CInput
-
->;
+                <ul class="visual-demo">
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">Entity</h3>
+                            <pre><code class="language-csharp">
+using ComponentTuple = std::tuple&lt;
+    CTransform,
+    CShape,
+    CCollision,
+    CScore,
+    CLifeSpan,
+    CInput
+&gt;;
 
 class Entity
 {
-	friend class EntityManager;
+    friend class EntityManager;
 
-	ComponentTuple m_components;
-	bool m_active = true;
-	std::string m_tag = "default";
-	size_t m_id = 0;
+    ComponentTuple m_components;
+    bool m_active = true;
+    std::string m_tag = "default";
+    size_t m_id = 0;
 
-	Entity(const size_t& id, const std::string &tag)
-		:m_tag(tag), m_id(id) { }
+    Entity(const size_t& id, const std::string& tag)
+        : m_tag(tag), m_id(id) { }
 
 public:
+    bool IsActive() const { return m_active; }
+    void Destroy()        { m_active = false; }
+    size_t Id() const     { return m_id; }
+    const std::string& Tag() const { return m_tag; }
 
-	bool IsActive() const
-	{
-		return m_active;
-	}
+    template &lt;typename T&gt;
+    T& Get() { return std::get&lt;T&gt;(m_components); }
 
-	void Destroy()
-	{
-		m_active = false;
-	}
+    template &lt;typename T&gt;
+    const T& Get() const { return std::get&lt;T&gt;(m_components); }
 
-	size_t Id() const
-	{
-		return m_id;
-	}
+    template &lt;typename T&gt;
+    void Remove() { Get&lt;T&gt;() = T(); }
 
-	const std::string& Tag() const
-	{
-		return m_tag;
-	}
+    template &lt;typename T, typename... TArgs&gt;
+    T& Add(TArgs&&... mArgs)
+    {
+        auto& component = Get&lt;T&gt;();
+        component = T(std::forward&lt;TArgs&gt;(mArgs)...);
+        component.exists = true;
+        return component;
+    }
 
-	template <typename T>
-	T& Get()
-	{
-		return std::get<T>(m_components);
-	}
-
-	template <typename T>
-	const T& Get() const
-	{
-		return std::get<T>(m_components);
-	}
-
-	template <typename T>
-	void Remove()
-	{
-		Get<T>() = T();
-	}
-
-	template<typename T,typename... TArgs>
-	T& Add(TArgs&&... mArgs)
-	{
-		auto& component = Get<T>();
-		component = T(std::forward<TArgs>(mArgs)...);
-		component.exists = true;
-		return component;
-	}
-
-	template <typename T>
-	bool Has() const
-	{
-		return Get<T>().exists;
-	}
+    template &lt;typename T&gt;
+    bool Has() const { return Get&lt;T&gt;().exists; }
 };
 </code></pre>
-                    </div>
-                </li>
-                  <li>
-                    <div>
-                        <h3 id="world-Highlight">Entity Manager</h3>
-
-                        <pre><code class="language-csharp">
-class EntityManager
-{
-	EntityVec m_entities;
-	EntityVec m_entitiesToAdd;
-	std::map<std::string, EntityVec> m_entityMap;
-	size_t m_totalEntities = 0;
-
-	void RemoveDeadEntities(EntityVec& vec)
-	{
-		vec.erase(std::remove_if(vec.begin(),vec.end(),
-			[](const auto& e) { return !e->IsActive(); }), vec.end());
-	}
-
-public:
-
-	EntityManager() = default;
-
-	void Update()
-	{
-		for (auto& e : m_entitiesToAdd)
-		{
-			m_entities.push_back(e);
-		}
-		m_entitiesToAdd.clear();
-
-		RemoveDeadEntities(m_entities);
-
-		for (auto& [tag, entityVec] : m_entityMap)
-		{
-			RemoveDeadEntities(m_entityMap[tag]);
-		}
-	}
-
-	std::shared_ptr<Entity> AddEntity(const std::string& tag)
-	{
-		auto entity = std::shared_ptr<Entity>(new Entity(m_totalEntities++, tag));
-
-		m_entitiesToAdd.push_back(entity);
-
-		if (m_entityMap.find(tag) == m_entityMap.end())
-		{
-			m_entityMap[tag] = EntityVec();
-		}
-
-		m_entityMap[tag].push_back(entity);
-
-		return entity;
-	}
-
-	const EntityVec& GetEntities()
-	{
-		return m_entities;
-	}
-
-	const EntityVec& GetEntities(const std::string& tag)
-	{
-		if (m_entityMap.find(tag) == m_entityMap.end())
-		{
-			m_entityMap[tag] = EntityVec();
-		}
-		return m_entityMap[tag];
-	}
-
-	const std::map<std::string, EntityVec>& GetEntityMap()
-	{
-		return m_entityMap;
-	}
-};
-
-</code></pre>
-                    </div>
-                </li>
-
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Components</h3>
-
-                        <pre><code class="language-csharp">
-class Component
-{
-public:
-
-	bool exists = false;
-};
-
-class CTransform : public Component
-{
-public:
-
-	Vec2f pos = { 0.0,0.0 };
-	Vec2f velocity = { 0.0,0.0 };
-	float angle = 0;
-	float speed = 0;
-
-	CTransform() = default;
-	CTransform(const Vec2f& p, const Vec2f& v, float a, float s) :pos(p), velocity(v), angle(a), speed(s){ }
-};
-
-class CShape : public Component
-{
-public:
-
-	sf::CircleShape circle;
-
-
-	CShape() = default;
-	CShape(float radius, size_t points, const sf::Color& fillColor, const sf::Color& outlineColor, float outlineThickness)
-		:circle(radius, points)
-	{
-		circle.setFillColor(fillColor);
-		circle.setOutlineColor(outlineColor);
-		circle.setOutlineThickness(outlineThickness);
-		circle.setOrigin({ radius, radius });
-	}
-};
-
-class CCollision : public Component
-{
-public:
-
-	float radius = 0;
-
-	CCollision() = default;
-	CCollision(float r): radius(r) {}
-};
-
-class CScore : public Component
-{
-public:
-
-	int score = 0;
-
-	CScore() = default;
-	CScore(int s) : score(s) {}
-};
-
-class CLifeSpan : public Component
-{
-public:
-
-	int lifeSpan = 0;
-	int remaining = 0;
-
-	CLifeSpan() = default;
-	CLifeSpan(int totalLifeSpan) : lifeSpan(totalLifeSpan), remaining(totalLifeSpan){}
-};
-
-class CInput : public Component
-{
-public:
-
-	bool up = false;
-	bool down = false;
-	bool right = false;
-	bool left = false;
-	bool shoot = false;
-
-	CInput() = default;
-};
-
-</code></pre>
-                    </div>
-                </li>
-
-                 <li>
-                    <div>
-                        <h3 id="world-Highlight">Update Loop</h3>
-
-                        <pre><code class="language-csharp">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">Update Loop</h3>
+                            <pre><code class="language-csharp">
 void Game::Run()
 {
+    while (m_running)
+    {
+        m_entities.Update();
 
-	while (m_running)
-	{
-		m_entities.Update();
+        // Update UI
+        ImGui::SFML::Update(m_window, m_clock.restart());
 
-        //Update UI
-		ImGui::SFML::Update(m_window, m_clock.restart());
+        // Systems
+        SEnemySpawner();
+        SMovement();
+        SCollision();
+        SUserInput();
+        SLifeSpan();
+        SGUI();
+        SRender();
 
-        ////Systems
-		SEnemySpawner();
-		SMovement();
-		SCollision();
-		SUserInput();
-		SLifeSpan();
-		SGUI();
-		SRender();
-        ////
-
-		m_currentFrame++;
-	}
+        m_currentFrame++;
+    }
 }
-
-
-
-
-
-
-
-
 </code></pre>
-                    </div>
-                </li>
-            </ul>
-
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-    <div class="footer">
-        <p> &copy; BY Arya Hosseini.</p>
-        <p> I claim no rights to the assets used within my projects.</p>
-    </div>
+        <div class="footer">
+            <p>&copy; BY Arya Hosseini.</p>
+            <p>I claim no rights to the assets used within my projects.</p>
+        </div>
 
-    <script src="./prism/prism.js"></script>
-</body>
-
-
+        <script src="./prism/prism.js" defer></script>
+    </body>
 </html>

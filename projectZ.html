@@ -2,11 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>ProjectZ</title>
 
         <link rel="stylesheet" type="text/css" href="./css/styles.css" />
-
-        <script src="./js/main.js"></script>
     </head>
 
     <body>
@@ -18,49 +17,53 @@
 
                 <nav>
                     <ul>
-                        <li class="otherPages">
-                            <a id="Ghighlight" href="./home.html">Home</a>
+                        <li class="other-pages">
+                            <a class="nav-home" href="./home.html">Home</a>
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
-                                id="Phighlight"
-                                href="./Arya-Hosseini-CV.pdf "
+                                class="nav-cv"
+                                href="./Arya-Hosseini-CV.pdf"
                                 target="_blank"
                                 >CV</a
                             >
                         </li>
-                        <li class="otherPages">
-                            <a
-                                id="Ohighlight"
-                                href="https://github.com/Arya-H03"
-                                ><img src="./media/GithubIcon.png"
-                            /></a>
+                        <li class="other-pages">
+                            <a href="https://github.com/Arya-H03">
+                                <img
+                                    src="./media/GithubIcon.png"
+                                    alt="GitHub"
+                                />
+                            </a>
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
-                                id="Ohighlight"
                                 href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
-                                ><img src="./media/linkedinIcon.png"
-                            /></a>
+                            >
+                                <img
+                                    src="./media/linkedinIcon.png"
+                                    alt="LinkedIn"
+                                />
+                            </a>
                         </li>
                     </ul>
                 </nav>
             </header>
 
-            <div class="gameBtns">
+            <div class="game-btns">
                 <ul>
                     <li>
-                        <div id="githubBtn">
-                            <a href="https://github.com/Arya-H03/ProjectZ">
-                                GitHub
-                            </a>
+                        <div id="github-btn">
+                            <a href="https://github.com/Arya-H03/ProjectZ"
+                                >GitHub</a
+                            >
                         </div>
                     </li>
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Introduction</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Introduction</h2>
                 <p>
                     As the culmination of my Unreal Engine course, I developed a
                     third-person zombie shooter prototype that introduced me to
@@ -75,8 +78,8 @@
                 </p>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Player Character</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Player Character</h2>
                 <p>
                     To create a responsive and dynamic player character, I
                     imported custom meshes and animations into Unreal Engine 5,
@@ -84,12 +87,12 @@
                     spaces, bone retargeting, and seamless animation blending. I
                     used state machines to manage transitions between states
                     like Idle and Aiming, ensuring smooth, realistic movement.
-                    This project deepened my understanding of UE5’s animation
+                    This project deepened my understanding of UE5's animation
                     systems and served as a valuable exercise in building fluid,
                     immersive character behavior.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <video controls>
                             <source
@@ -101,8 +104,8 @@
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Player Loadout</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Player Loadout</h2>
                 <p>
                     I designed a dynamic loadout system to support modular
                     weapon integration, starting with an Assault Rifle, Shotgun,
@@ -116,7 +119,7 @@
                     experience.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <video controls>
                             <source
@@ -125,7 +128,6 @@
                             />
                         </video>
                     </li>
-
                     <li>
                         <video controls>
                             <source
@@ -137,8 +139,8 @@
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Enemy Implementation</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Enemy Implementation</h2>
                 <p>
                     I integrated two enemy types by importing meshes and
                     animations, building a scalable framework using inheritance
@@ -149,7 +151,7 @@
                     enemy design.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <video controls>
                             <source
@@ -158,7 +160,6 @@
                             />
                         </video>
                     </li>
-
                     <li>
                         <video controls>
                             <source

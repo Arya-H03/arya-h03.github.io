@@ -2,11 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Hollow Omen</title>
 
         <link rel="stylesheet" type="text/css" href="./css/styles.css" />
-
-        <script src="./js/main.js"></script>
     </head>
 
     <body>
@@ -18,70 +17,72 @@
 
                 <nav>
                     <ul>
-                        <li class="otherPages">
-                            <a id="Ghighlight" href="./home.html">Home</a>
+                        <li class="other-pages">
+                            <a class="nav-home" href="./home.html">Home</a>
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
-                                id="Phighlight"
-                                href="./Arya-Hosseini-CV.pdf "
+                                class="nav-cv"
+                                href="./Arya-Hosseini-CV.pdf"
                                 target="_blank"
                                 >CV</a
                             >
                         </li>
-                        <li class="otherPages">
-                            <a
-                                id="Ohighlight"
-                                href="https://github.com/Arya-H03"
-                                ><img src="./media/GithubIcon.png"
-                            /></a>
+                        <li class="other-pages">
+                            <a href="https://github.com/Arya-H03">
+                                <img
+                                    src="./media/GithubIcon.png"
+                                    alt="GitHub"
+                                />
+                            </a>
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
-                                id="Ohighlight"
                                 href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
-                                ><img src="./media/linkedinIcon.png"
-                            /></a>
+                            >
+                                <img
+                                    src="./media/linkedinIcon.png"
+                                    alt="LinkedIn"
+                                />
+                            </a>
                         </li>
                     </ul>
                 </nav>
             </header>
 
-            <div class="gameBtns">
+            <div class="game-btns">
                 <ul>
                     <li>
-                        <div id="playBtn">
-                            <a href="https://arya-h03.itch.io/hollowomen">
-                                Play
-                            </a>
+                        <div id="play-btn">
+                            <a href="https://arya-h03.itch.io/hollowomen"
+                                >Play</a
+                            >
                         </div>
                     </li>
                     <li>
-                        <div id="githubBtn">
-                            <a
-                                href="https://github.com/Arya-H03/2D-Platformer-"
+                        <div id="github-btn">
+                            <a href="https://github.com/Arya-H03/2D-Platformer-"
+                                >GitHub</a
                             >
-                                GitHub
-                            </a>
                         </div>
                     </li>
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Introduction</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Introduction</h2>
                 <p>
                     Hollow Omen is a 2D action platformer developed as a
                     prototype in my final college semester. It served as a
                     learning project for refining my Unity coding abilities,
-                    applying coding designs and principles, working with Unity’s
+                    applying coding designs and principles, working with Unity's
                     physics engine, and prototyping enemy behaviors using basic
                     AI programming.
                 </p>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Player Controls</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Player Controls</h2>
                 <p>
                     The player movement system delivers smooth, seamless
                     transitions between running, jumping, and falling by using a
@@ -94,10 +95,13 @@
                     responsive and intuitive control experience.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <img src="./media/TheGuardian/PlayerAnimator.png" />
+                            <img
+                                src="./media/TheGuardian/PlayerAnimator.png"
+                                alt="Player Animator diagram"
+                            />
                         </div>
                     </li>
                     <li>
@@ -111,8 +115,8 @@
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Player Combat</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Player Combat</h2>
                 <p>
                     For the combat, I have implemented attack options, including
                     a fluid slash combo, each paired with distinct visual and
@@ -123,7 +127,7 @@
                     projectiles with skillful timing.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <video controls>
                             <source
@@ -135,8 +139,8 @@
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Enemy Design</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Enemy Design</h2>
                 <p>
                     Similar to the player, I developed an enemy controller using
                     a state machine and state pattern to enable smooth
@@ -149,7 +153,7 @@
                     types, laying a solid foundation for a diverse enemy roster.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <video controls>
                             <source

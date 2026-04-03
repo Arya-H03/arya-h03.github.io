@@ -2,12 +2,11 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>IronHammer Engine</title>
 
         <link rel="stylesheet" type="text/css" href="./css/styles.css" />
         <link href="./prism/prism.css" rel="stylesheet" />
-
-        <script src="./js/main.js"></script>
     </head>
 
     <body>
@@ -19,38 +18,40 @@
 
                 <nav>
                     <ul>
-                        <li class="otherPages">
-                            <a id="Ghighlight" href="./home.html">Home</a>
+                        <li class="other-pages">
+                            <a class="nav-home" href="./home.html">Home</a>
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
-                                id="Phighlight"
+                                class="nav-cv"
                                 href="./Arya-Hosseini-CV.pdf"
                                 target="_blank"
                                 >CV</a
                             >
                         </li>
-                        <li class="otherPages">
-                            <a
-                                id="Ohighlight"
-                                href="https://github.com/Arya-H03"
-                            >
-                                <img src="./media/GithubIcon.png" />
+                        <li class="other-pages">
+                            <a href="https://github.com/Arya-H03">
+                                <img
+                                    src="./media/GithubIcon.png"
+                                    alt="GitHub"
+                                />
                             </a>
                         </li>
-                        <li class="otherPages">
+                        <li class="other-pages">
                             <a
-                                id="Ohighlight"
                                 href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
                             >
-                                <img src="./media/linkedinIcon.png" />
+                                <img
+                                    src="./media/linkedinIcon.png"
+                                    alt="LinkedIn"
+                                />
                             </a>
                         </li>
                     </ul>
                 </nav>
             </header>
 
-            <div class="mainGameplayShowcase">
+            <div class="main-showcase">
                 <video
                     autoplay
                     controls
@@ -67,10 +68,10 @@
                 </video>
             </div>
 
-            <div class="gameBtns">
+            <div class="game-btns">
                 <ul>
                     <li>
-                        <div id="githubBtn">
+                        <div id="github-btn">
                             <a href="https://github.com/Arya-H03/IronHammer"
                                 >GitHub</a
                             >
@@ -79,11 +80,11 @@
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Introduction</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Introduction</h2>
                 <p>
                     IronHammer started as a question:
-                    <span id="world-Highlight"
+                    <span class="text-highlight"
                         >what does a game engine actually look like under the
                         hood?</span
                     >
@@ -110,28 +111,28 @@
                 </p>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Entity Component System</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Entity Component System</h2>
                 <p>
                     The ECS is the foundation that everything else is built on.
                     Rather than storing game objects as individual classes
                     scattered across memory, IronHammer groups entities that
                     share the same set of components together in one contiguous
-                    block, an <span id="world-Highlight">archetype</span>.
+                    block, an <span class="text-highlight">archetype</span>.
                     Within each archetype, all transforms are packed together,
                     all sprites are packed together, and so on.
                 </p>
                 <p>
                     This layout, known as
-                    <span id="world-Highlight">Structure of Arrays</span>, means
-                    that iterating 10,000 entities to move them is a single
-                    sequential read through memory, rather than 10,000 random
-                    jumps between objects. Modern CPUs are designed to handle
-                    sequential reads efficiently, so the difference in
+                    <span class="text-highlight">Structure of Arrays</span>,
+                    means that iterating 10,000 entities to move them is a
+                    single sequential read through memory, rather than 10,000
+                    random jumps between objects. Modern CPUs are designed to
+                    handle sequential reads efficiently, so the difference in
                     performance is significant and measurable.
                 </p>
 
-                <ul class="bulletPointList">
+                <ul class="bullet-list">
                     <li>
                         <b>Archetype Storage:</b> Entities sharing the same set
                         of components are grouped into a single contiguous
@@ -142,91 +143,88 @@
                         <b>Component Self Registration:</b> Every component
                         registers itself with the engine before the program
                         starts via a
-                        <span id="world-Highlight">REGISTER_COMPONENT</span>
+                        <span class="text-highlight">REGISTER_COMPONENT</span>
                         macro. This lets the engine construct, destroy, save,
                         and display any component through a uniform interface,
                         without knowing the specific type at the call site.
                     </li>
                     <li>
                         <b>Query System:</b> Systems declare what components
-                        they need upfront. The engine pre filters matching
+                        they need upfront. The engine pre-filters matching
                         entity groups at startup, so at runtime there is no
-                        searching, just a flat loop over pre validated data.
+                        searching, just a flat loop over pre-validated data.
                     </li>
                     <li>
                         <b>Deferred Changes (CommandBuffer):</b> Structural
                         changes like adding or removing components are queued
                         during the frame and applied after all systems finish,
-                        preventing the kind of mid loop corruption that would
-                        otherwise be very difficult to debug.
+                        preventing mid-loop corruption that would otherwise be
+                        very difficult to debug.
                     </li>
                     <li>
                         <b>Generation Safety:</b> Every entity carries a
                         generation counter alongside its ID. When an entity is
                         destroyed and its slot is reused, the counter
                         increments. Any old reference to that entity will fail
-                        validation automatically, no dangling pointers, no
+                        validation automatically — no dangling pointers, no
                         silent bugs.
                     </li>
                 </ul>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
+                            <h3 class="text-highlight">
                                 ECS Memory Layout Simplified
                             </h3>
                             <pre><code class="language-cpp">
-                                                ArchetypeA
-                                    {Transform, Sprite, RigidBody}
+                                            ArchetypeA
+                                {Transform, Sprite, RigidBody}
 
-    Chunk size of 64        |   Chunks   |           Chunk0         |              Chunk1          | ...
-                            |   Entites  | E0 | E1 | E2 | ... | E63 | E64 | E65 | E66 | ... | E127 | ...
-    CTransform Allocator -> | CTransform | T0 | T1 | T2 | ... | T63 | T64 | T65 | T66 | ... | T127 | ...
-    CSprite    Allocator -> |   CSprite  | S0 | S1 | S2 | ... | S63 | S64 | S65 | S66 | ... | S127 | ...
-    CRigidBody Allocator -> | CRigidBody | R0 | R1 | R2 | ... | R63 | R64 | R65 | R66 | ... | R127 | ...
+Chunk size of 64        |   Chunks   |           Chunk0         |              Chunk1          | ...
+                        |   Entites  | E0 | E1 | E2 | ... | E63 | E64 | E65 | E66 | ... | E127 | ...
+CTransform Allocator -> | CTransform | T0 | T1 | T2 | ... | T63 | T64 | T65 | T66 | ... | T127 | ...
+CSprite    Allocator -> |   CSprite  | S0 | S1 | S2 | ... | S63 | S64 | S65 | S66 | ... | S127 | ...
+CRigidBody Allocator -> | CRigidBody | R0 | R1 | R2 | ... | R63 | R64 | R65 | R66 | ... | R127 | ...
 
-    class Archetype
-    {
-        std::vector&lt;ArchetypeChunk&gt; m_chunks;
+class Archetype
+{
+    std::vector&lt;ArchetypeChunk&gt; m_chunks;
 
-        // Sparse / dense index mapping inside each archetype for O(1) component lookup, no hash map
-        std::vector&lt;TypeErasedBlockAllocator&gt; m_allocators; // dens
-        uint16_t m_densIds[MaxComponents];                  // dens Ids : Give Allocator Index -> Get ComponentId
-        uint16_t m_sparse[MaxComponents];                   // sparse   : Give ComponentId     -> Get Allocator Index
+    std::vector&lt;TypeErasedBlockAllocator&gt; m_allocators;
+    uint16_t m_densIds[MaxComponents];
+    uint16_t m_sparse[MaxComponents];
 
-        ArchetypeId m_archetypeId;
-        std::string m_archetypeName;
+    ArchetypeId m_archetypeId;
+    std::string m_archetypeName;
 
-        ComponentSignatureMask m_componentSignature;
+    ComponentSignatureMask m_componentSignature;
 
-        size_t m_chunkCapacity = 0;
-        size_t m_totalSize     = 0;
-    }
+    size_t m_chunkCapacity = 0;
+    size_t m_totalSize     = 0;
+}
 
-    struct ArchetypeChunk
-    {
-        std::vector&lt;void*&gt; components;      // Raw ptrs to memory blocks
-        uint16_t densIds[MaxComponents];    // dens Ids : Give Components Index -> Get ComponentId
-        uint16_t sparse[MaxComponents];     // sparse   : Give ComponentId     -> Get Components Index
+struct ArchetypeChunk
+{
+    std::vector&lt;void*&gt; components;
+    uint16_t densIds[MaxComponents];
+    uint16_t sparse[MaxComponents];
 
-        std::vector&lt;Entity&gt; entities;
+    std::vector&lt;Entity&gt; entities;
 
-        size_t capacity = 0;
-        size_t size = 0;
-    }
-
+    size_t capacity = 0;
+    size_t size = 0;
+}
 </code></pre>
                         </div>
                     </li>
 
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
+                            <h3 class="text-highlight">
                                 Component Structure Example
                             </h3>
                             <pre><code class="language-cpp">
-
 struct CTransform
 {
     Vect2f position = Vect2f(0, 0);
@@ -235,7 +233,7 @@ struct CTransform
 
     static constexpr const char* name = "Transform";
 
-    REGISTER_COMPONENT(CTransform); // self registers at startup
+    REGISTER_COMPONENT(CTransform);
 
     void Reset()
     {
@@ -255,7 +253,7 @@ struct CSprite
 
     static constexpr const char* name = "Sprite";
 
-    REGISTER_COMPONENT(CSprite); // self registers at startup
+    REGISTER_COMPONENT(CSprite);
 
     void Reset()
     {
@@ -271,9 +269,8 @@ struct CSprite
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Querying Entities</h3>
+                            <h3 class="text-highlight">Querying Entities</h3>
                             <pre><code class="language-cpp">
-
 // Find matching archetypes using a query
 spriteQuery = newWorldPtr->Query&lt;RequiredComponents&lt;CSprite, CTransform&gt;, ExcludedComponents&lt;CNotDrawable&gt;&gt;();
 
@@ -282,14 +279,12 @@ for (auto& archetype : spriteQuery->GetMatchingArchetypes())
 {
     for (auto& chunk : archetype->GetChunks())
     {
-        // Direct array access with no pointer chasing
         auto sprites    = chunk.GetComponentRow&lt;CSprite&gt;();
         auto transforms = chunk.GetComponentRow&lt;CTransform&gt;();
 
         for (size_t i = 0; i &lt; chunk.size; ++i)
         {
             // Process sprites[i] and transforms[i]
-            // Sequential memory reads cache friendly
         }
     }
 }
@@ -299,66 +294,52 @@ for (auto& archetype : spriteQuery->GetMatchingArchetypes())
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Custom Memory Allocators</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Custom Memory Allocators</h2>
                 <p>
                     Most programs rely on the operating system to hand out and
                     reclaim memory, a process that works well in general but has
                     measurable overhead when done thousands of times per frame.
                     IronHammer implements three purpose built allocators that
-                    pre claim large blocks of memory up front and manage them
+                    pre-claim large blocks of memory up front and manage them
                     internally, keeping allocations fast and predictable.
                 </p>
 
-                <ul class="bulletPointList">
+                <ul class="bullet-list">
                     <li>
-                        <b>Templated Slab Allocator:</b> A type safe, template
-                        driven allocator that manages a growable list of fixed
-                        size slabs on the heap. Each slab holds
+                        <b>Templated Slab Allocator:</b> A type-safe,
+                        template-driven allocator that manages a growable list
+                        of fixed-size slabs on the heap. Each slab holds
                         <code>SlabSize</code> objects of type <code>T</code> and
-                        tracks free slots using a 64 bit integer bitset, finding
-                        the next available slot reduces to a single CPU
-                        instruction (<span id="world-Highlight"
+                        tracks free slots using a 64-bit integer bitset —
+                        finding the next available slot reduces to a single CPU
+                        instruction (<span class="text-highlight"
                             >std::countr_zero</span
-                        >). Supports both single object and full array
-                        allocation. Deallocated memory is returned to its
-                        originating slab and made immediately available for
-                        reuse, keeping fragmentation minimal. When all existing
-                        slabs are full, a new one is appended automatically.
+                        >).
                     </li>
-
                     <li>
                         <b>Type Erased Slab Allocator:</b> Functionally similar
                         to the Templated Slab Allocator but operates without
-                        compile time type information. Rather than being
-                        dependent on a type, it accepts an element size at
-                        construction and allocates raw 64 byte aligned memory
-                        blocks accordingly. A linked free list is added directly
-                        into the slab slots themselves, so no external
+                        compile-time type information. A linked free list is
+                        threaded directly through the slab slots so no external
                         bookkeeping structure is needed. Typed access is
-                        restored at the call site via reinterprate casting.
+                        restored at the call site via reinterpret casting.
                     </li>
-
                     <li>
-                        <b>Type Erased Block Allocator:</b> A simpler, array
-                        only variant of the type erased approach designed
-                        specifically for archetype component storage. Rather
-                        than allocating individual objects, it hands out entire
-                        contiguous blocks of memory, one block per component
-                        array per chunk. Individual element removal is handled
-                        not by deallocation but by a swap and pop: the removed
-                        element is overwritten by the last element in the array,
-                        keeping the block fully packed at all times. Once enough
-                        removals have accumulated and a block becomes empty, it
-                        is returned to the free list and recycled for future
-                        chunks.
+                        <b>Type Erased Block Allocator:</b> A simpler,
+                        array-only variant designed specifically for archetype
+                        component storage. Rather than allocating individual
+                        objects, it hands out entire contiguous blocks of memory
+                        — one block per component array per chunk. Individual
+                        element removal is handled by a swap-and-pop, keeping
+                        the block fully packed at all times.
                     </li>
                 </ul>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
+                            <h3 class="text-highlight">
                                 Templated Slab Allocator
                             </h3>
                             <pre><code class="language-cpp">
@@ -368,26 +349,20 @@ size_t FindFirstFreeBit()
     if constexpr (wordCount == 1)
     {
         if (bitSet.single != 0)
-        {
             return std::countr_zero(bitSet.single);
-        }
-
     }
     else
     {
         for (size_t i = 0; i &lt; wordCount; ++i)
         {
             if (bitSet.multiple[i] != 0)
-            {
                 return (i * 64) + std::countr_zero(bitSet.multiple[i]);
-            }
         }
     }
 }
 
 T* Allocate()
 {
-    // Find or create a slab with space
     if (currentSlabIndex == SIZE_MAX || slabs[currentSlabIndex].freeCount == 0)
     {
         currentSlabIndex = FindFreeSlab();
@@ -418,14 +393,14 @@ void DeAllocate(T* ptr)
 
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
+                            <h3 class="text-highlight">
                                 Type Erased Slab Allocator
                             </h3>
                             <pre><code class="language-cpp">
 struct Slot
 {
-    Slot* nextFreeSlot;       // free list pointer
-    alignas(64) char data[1]; // actual object data lives here
+    Slot* nextFreeSlot;
+    alignas(64) char data[1];
 };
 
 void* InternalAllocate()
@@ -433,17 +408,16 @@ void* InternalAllocate()
     if (m_freeList == nullptr) AllocateNewSlab();
 
     Slot* slot = m_freeList;
-    m_freeList = m_freeList-&gt;nextFreeSlot; // pop from free list
+    m_freeList = m_freeList-&gt;nextFreeSlot;
     return slot-&gt;data;
 }
 
 void InternalDeallocate(void* ptr)
 {
-    // Recover the Slot header from the data pointer
     Slot* slot = reinterpret_cast&lt;Slot*&gt;(
         reinterpret_cast&lt;char*&gt;(ptr) - offsetof(Slot, data));
 
-    slot-&gt;nextFreeSlot = m_freeList;  // push back onto free list
+    slot-&gt;nextFreeSlot = m_freeList;
     m_freeList = slot;
 }
 
@@ -460,24 +434,22 @@ void Deallocate(T* obj)
     obj-&gt;~T();
     InternalDeallocate(obj);
 }
-
 </code></pre>
                         </div>
                     </li>
 
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
+                            <h3 class="text-highlight">
                                 Type Erased Block Allocator
                             </h3>
                             <pre><code class="language-cpp">
-// Allocates entire contiguous blocks, one per component array per chunk.
-// Blocks are 64 byte aligned so arrays land exactly on cache line boundaries.
+// 64-byte aligned blocks — one per component array per chunk.
 void AllocateNewBlock()
 {
     void* newBlock = operator new(
         m_dataPerBlock * m_dataSize,
-        std::align_val_t(64)    // cache line aligned
+        std::align_val_t(64)
     );
     m_allBlocks.push_back(newBlock);
     m_freeBlocks.push_back(newBlock);
@@ -502,58 +474,54 @@ void DeallocateBlock(void* ptr)
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Physics Pipeline</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Physics Pipeline</h2>
                 <p>
                     The physics system runs in three separate stages each frame.
                     Splitting it this way keeps each stage focused and
-                    independently testable. A design decision that paid off
+                    independently testable — a design decision that paid off
                     significantly during debugging.
                 </p>
 
-                <ul class="bulletPointList">
+                <ul class="bullet-list">
                     <li>
                         <b>Broad Phase Spatial Grid:</b> Checking every object
                         against every other object for collision is impractical
-                        at scale, 200 objects would mean 40,000 checks every
+                        at scale — 200 objects would mean 40,000 checks every
                         frame. Instead, the world is divided into a grid of
                         small cells. Objects only need to be checked against
-                        others that share the same cell, cutting the number of
-                        checks down dramatically.
+                        others that share the same cell.
                     </li>
                     <li>
                         <b>Narrow Phase Precise Contact:</b> The candidates from
                         the broad phase are tested exactly using an AABB
-                        collision check. A key detail here: rather than just
-                        checking the current frame's overlap, the engine also
-                        looks at
-                        <span id="world-Highlight"
+                        collision check. The engine also looks at
+                        <span class="text-highlight"
                             >where each object was last frame</span
                         >
-                        to determine the correct push direction. This prevents
-                        the jittery, incorrect collisions that occur when
-                        objects meet at a corner.
+                        to determine the correct push direction, preventing
+                        jittery collisions at corners.
                     </li>
                     <li>
                         <b>Resolution Impulse Response:</b> Confirmed collisions
-                        are resolved by applying an impulse, a velocity
+                        are resolved by applying an impulse — a velocity
                         correction proportional to each object's mass. Static
                         objects (walls, platforms) are given infinite effective
-                        mass, so they absorb nothing and never move.
+                        mass so they never move.
                     </li>
                     <li>
                         <b>Debug Visualiser:</b> The spatial grid can be
-                        visualised at runtime cells light up yellow when one
+                        visualised at runtime — cells light up yellow when one
                         object overlaps them, red when two or more do. This was
                         invaluable for verifying the broad phase worked
                         correctly.
                     </li>
                 </ul>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
+                            <h3 class="text-highlight">
                                 Broad Phase Spatial Grid Filtering
                             </h3>
                             <pre><code class="language-cpp">
@@ -565,10 +533,8 @@ for (size_t i = 0; i &lt; chunk.size; ++i)
     CCollider&  col = colliders[i];
     CTransform& tr  = transforms[i];
 
-    // Which cells does this entity's bounding box overlap?
     Vect2&lt;int&gt; topLeft  = ((tr.position + col.offset - col.halfSize) / m_cellSize).Floor();
     Vect2&lt;int&gt; botRight = ((tr.position + col.offset + col.halfSize) / m_cellSize).Ceil();
-
 
     for (size_t r = topLeft.y; r &lt; botRight.y; ++r)
     {
@@ -583,25 +549,24 @@ for (size_t i = 0; i &lt; chunk.size; ++i)
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
-                                Narrow Phase Collison Confirmation
+                            <h3 class="text-highlight">
+                                Narrow Phase Collision Confirmation
                             </h3>
                             <pre><code class="language-cpp">
-// For each two collision candidate pair (e1,e2)
+// For each two collision candidate pair (e1, e2)
 
 Vect2f e1Center = e1Transform-&gt;position + e1Collider-&gt;offset;
 Vect2f e2Center = e2Transform-&gt;position + e2Collider-&gt;offset;
 
-Vect2f distance = e2Center - e1Center;
+Vect2f distance    = e2Center - e1Center;
 Vect2f distanceAbs = distance.Abs();
 
 bool xCollide = distanceAbs.x &lt;= (e1Collider-&gt;halfSize.x + e2Collider-&gt;halfSize.x);
 bool yCollide = distanceAbs.y &lt;= (e1Collider-&gt;halfSize.y + e2Collider-&gt;halfSize.y);
 
-// Collision is confirmed
 if (xCollide &amp;&amp; yCollide)
 {
-    Vect2f overlap = (e1Collider-&gt;halfSize + e2Collider-&gt;halfSize) - distanceAbs;
+    Vect2f overlap           = (e1Collider-&gt;halfSize + e2Collider-&gt;halfSize) - distanceAbs;
     Vect2f lastFrameE1Center = e1Rb-&gt;previousPosition + e1Collider-&gt;offset;
     Vect2f lastFrameE2Center = e2Rb-&gt;previousPosition + e2Collider-&gt;offset;
     Vect2f lastFrameDistance = lastFrameE2Center - lastFrameE1Center;
@@ -610,29 +575,28 @@ if (xCollide &amp;&amp; yCollide)
     bool lastYCollide = std::abs(lastFrameDistance.y) &lt;= (e1Collider-&gt;halfSize.y + e2Collider-&gt;halfSize.y);
 
     Vect2f normal;
-    float penetration;
+    float  penetration;
 
-    // Calculate penetration amount and collision normal
     if (lastXCollide &amp;&amp; !lastYCollide)
     {
-        normal = (distance.y &lt; 0) ? Vect2f(0, -1) : Vect2f(0, 1);
+        normal      = (distance.y &lt; 0) ? Vect2f(0, -1) : Vect2f(0, 1);
         penetration = overlap.y;
     }
     else if (!lastXCollide &amp;&amp; lastYCollide)
     {
-        normal = (distance.x &lt; 0) ? Vect2f(-1, 0) : Vect2f(1, 0);
+        normal      = (distance.x &lt; 0) ? Vect2f(-1, 0) : Vect2f(1, 0);
         penetration = overlap.x;
     }
     else
     {
         if (overlap.x &lt; overlap.y)
         {
-            normal = (distance.x &lt; 0) ? Vect2f(-1, 0) : Vect2f(1, 0);
+            normal      = (distance.x &lt; 0) ? Vect2f(-1, 0) : Vect2f(1, 0);
             penetration = overlap.x;
         }
         else
         {
-            normal = (distance.y &lt; 0) ? Vect2f(0, -1) : Vect2f(0, 1);
+            normal      = (distance.y &lt; 0) ? Vect2f(0, -1) : Vect2f(0, 1);
             penetration = overlap.y;
         }
     }
@@ -643,13 +607,13 @@ if (xCollide &amp;&amp; yCollide)
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
+                            <h3 class="text-highlight">
                                 Collision Filtering Showcase
                             </h3>
-                            <h3>
-                                The yellow cells show potential of collision
-                            </h3>
-                            <h3>The red cells show confirmed collision</h3>
+                            <p>
+                                Yellow cells show potential collision. Red cells
+                                show confirmed collision.
+                            </p>
                             <video controls>
                                 <source
                                     src="./media/IronHammer/CollisionShowcase.mp4"
@@ -661,29 +625,20 @@ if (xCollide &amp;&amp; yCollide)
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Rendering System</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Rendering System</h2>
                 <p>
                     At the beginning of this project the one area where I felt
-                    most lacking was graphics programming. Although I would love
-                    to learn it from scratch, With all the other things that I
-                    had to learn and implement, I decided to go with an open
-                    source library to handle graphics. I'm already thinking
-                    about upgrading the engine to support 3D graphics at some
-                    point, that will be the time where I certainly try to make
-                    my own libraries tailored to the engine. However, that's out
-                    of scope currently. Therefore, I've decided to use SFML's
-                    graphics module which is built on top of OpenGL. This will
-                    allow simple rendering of sprites, shapes, lines and texts.
+                    most lacking was graphics programming. I decided to use
+                    SFML's graphics module, which is built on top of OpenGL, to
+                    handle simple rendering of sprites, shapes, lines, and text.
                     The key point is to ensure efficient rendering when entity
                     count grows and draw calls increase. The rendering system
-                    avoids issuing one per entity by accumulating all geometry
-                    into a single
-                    <span id="world-Highlight">vertex array</span> and flushing
-                    it in one call, or as few calls as possible. For sprites, a
-                    new flush only happens when the texture changes. For shapes
-                    and collider wireframes, flushes are triggered by a
-                    configurable vertex budget.
+                    avoids issuing one draw call per entity by accumulating all
+                    geometry into a single
+                    <span class="text-highlight">vertex array</span> and
+                    flushing it in one call, or as few calls as possible. For
+                    sprites, a new flush only happens when the texture changes.
                 </p>
                 <p>
                     Sprite geometry is computed manually per entity: rotation is
@@ -693,12 +648,11 @@ if (xCollide &amp;&amp; yCollide)
                     objects, no allocations per frame.
                 </p>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Default Rendering</h3>
-                            <h3>70,000 sprites every frame</h3>
-                            <h3>15 - 20 FPS</h3>
+                            <h3 class="text-highlight">Default Rendering</h3>
+                            <p>70,000 sprites every frame — 15&ndash;20 FPS</p>
                             <video controls>
                                 <source
                                     src="./media/IronHammer/IndividualRendingShowcase.mp4"
@@ -709,9 +663,8 @@ if (xCollide &amp;&amp; yCollide)
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Batch Rendering</h3>
-                            <h3>70,000 sprites every frame</h3>
-                            <h3>50 - 60 FPS</h3>
+                            <h3 class="text-highlight">Batch Rendering</h3>
+                            <p>70,000 sprites every frame — 50&ndash;60 FPS</p>
                             <video controls>
                                 <source
                                     src="./media/IronHammer/BatchRenderingShowcase.mp4"
@@ -722,12 +675,12 @@ if (xCollide &amp;&amp; yCollide)
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
+                            <h3 class="text-highlight">
                                 Texture Grouped Sprite Batching
                             </h3>
                             <pre><code class="language-cpp">
 // Sprites are batched together as long as they share a texture.
-// A draw call is only issued when the texture changes keeping
+// A draw call is only issued when the texture changes.
 
 const sf::Texture* currentTexture = nullptr;
 
@@ -755,49 +708,46 @@ renderTarget.draw(batch, currentTexture); // final flush
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
-                                Adding an Entity with a sprite to the current
-                                draw batch
+                            <h3 class="text-highlight">
+                                Adding a Sprite to the Draw Batch
                             </h3>
                             <pre><code class="language-cpp">
 void RenderSystem::AddSpriteToBatch(const CSprite& csprite, const CTransform& ctransform, sf::VertexArray& batch)
 {
-    float width = csprite.size.x * ctransform.scale.x;
-    float height = csprite.size.y * ctransform.scale.y;
-    float halfWidth = width / 2.0f;
+    float width      = csprite.size.x * ctransform.scale.x;
+    float height     = csprite.size.y * ctransform.scale.y;
+    float halfWidth  = width  / 2.0f;
     float halfHeight = height / 2.0f;
 
     Vect2f center = ctransform.position;
 
-    float rad = ctransform.rotation * (float) M_PI / 180.0f;
+    float rad    = ctransform.rotation * (float)M_PI / 180.0f;
     float cosRad = std::cos(rad);
     float sinRad = std::sin(rad);
 
-    // Rotate a local space offset into world space
-    auto Rotate = [&](float x, float y) { return sf::Vector2f(center.x + x * cosRad - y * sinRad, center.y + x * sinRad + y * cosRad); };
+    auto Rotate = [&](float x, float y) {
+        return sf::Vector2f(
+            center.x + x * cosRad - y * sinRad,
+            center.y + x * sinRad + y * cosRad);
+    };
 
-    sf::Vector2 topLeft = Rotate(-halfWidth, -halfHeight);
-    sf::Vector2 topRight = Rotate(halfWidth, -halfHeight);
-    sf::Vector2 bottomRight = Rotate(halfWidth, halfHeight);
-    sf::Vector2 bottomLeft = Rotate(-halfWidth, halfHeight);
+    sf::Vector2 topLeft     = Rotate(-halfWidth, -halfHeight);
+    sf::Vector2 topRight    = Rotate( halfWidth, -halfHeight);
+    sf::Vector2 bottomRight = Rotate( halfWidth,  halfHeight);
+    sf::Vector2 bottomLeft  = Rotate(-halfWidth,  halfHeight);
 
     float u1 = csprite.textureRect.position.x;
     float v1 = csprite.textureRect.position.y;
     float u2 = csprite.textureRect.position.x + csprite.textureRect.size.x;
     float v2 = csprite.textureRect.position.y + csprite.textureRect.size.y;
 
-    sf::Vector2f uvTopLeft(u1, v1);
-    sf::Vector2f uvTopRight(u2, v1);
-    sf::Vector2f uvBottomRight(u2, v2);
-    sf::Vector2f uvBottomLeft(u1, v2);
+    batch.append(sf::Vertex(topLeft,     csprite.color, sf::Vector2f(u1, v1)));
+    batch.append(sf::Vertex(topRight,    csprite.color, sf::Vector2f(u2, v1)));
+    batch.append(sf::Vertex(bottomRight, csprite.color, sf::Vector2f(u2, v2)));
 
-    batch.append(sf::Vertex(topLeft, csprite.color, uvTopLeft));
-    batch.append(sf::Vertex(topRight, csprite.color, uvTopRight));
-    batch.append(sf::Vertex(bottomRight, csprite.color, uvBottomRight));
-
-    batch.append(sf::Vertex(topLeft, csprite.color, uvTopLeft));
-    batch.append(sf::Vertex(bottomRight, csprite.color, uvBottomRight));
-    batch.append(sf::Vertex(bottomLeft, csprite.color, uvBottomLeft));
+    batch.append(sf::Vertex(topLeft,     csprite.color, sf::Vector2f(u1, v1)));
+    batch.append(sf::Vertex(bottomRight, csprite.color, sf::Vector2f(u2, v2)));
+    batch.append(sf::Vertex(bottomLeft,  csprite.color, sf::Vector2f(u1, v2)));
 }
 </code></pre>
                         </div>
@@ -805,31 +755,30 @@ void RenderSystem::AddSpriteToBatch(const CSprite& csprite, const CTransform& ct
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Multithreaded Debug Logger</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Multithreaded Debug Logger</h2>
                 <p>
                     When something goes wrong in a game, knowing exactly where
                     in the code it happened saves hours of debugging.
                     IronHammer's logger captures a full
-                    <span id="world-Highlight">stack trace</span> on every log
-                    call, a record of every function call that led to that
-                    point. The problem is that translating raw memory addresses
-                    into readable function names and file paths is exteremly
+                    <span class="text-highlight">stack trace</span> on every log
+                    call. The problem is that translating raw memory addresses
+                    into readable function names and file paths is extremely
                     slow. Doing it on the game thread would cause a noticeable
-                    frame drop on every single log.
+                    frame drop on every log.
                 </p>
                 <p>
                     The solution is to split the work across two threads. The
                     game thread captures the raw trace instantly and pushes it
                     to a queue. A dedicated
-                    <span id="world-Highlight">background thread</span> picks it
-                    up, resolves the symbols at its own pace, and places the
+                    <span class="text-highlight">background thread</span> picks
+                    it up, resolves the symbols at its own pace, and places the
                     finished result in a buffer. At the end of each frame, the
                     main thread moves everything from the buffer into the log
-                    window, with no lock held during the actual ImGui rendering.
+                    window.
                 </p>
 
-                <ul class="bulletPointList">
+                <ul class="bullet-list">
                     <li>
                         <b>Game Thread:</b> Captures the stack trace and pushes
                         a pending message. Cost is a single mutex lock and a
@@ -839,26 +788,25 @@ void RenderSystem::AddSpriteToBatch(const CSprite& csprite, const CTransform& ct
                         <b>Logger Thread:</b> Resolves symbols using
                         backwards-cpp, cleans up C++ name mangling, and writes
                         finished log entries to a double buffer. Sleeps when
-                        idle, zero CPU overhead between frames.
+                        idle — zero CPU overhead between frames.
                     </li>
                     <li>
                         <b>Main Thread:</b> Calls
-                        <span id="world-Highlight">FlushLogs()</span> once per
+                        <span class="text-highlight">FlushLogs()</span> once per
                         frame to move resolved entries into the read queue. The
                         ImGui log window then reads freely with no lock held.
                     </li>
                     <li>
-                        <b>Pre cached Strings:</b> Each log entry pre builds its
-                        display string at construction time so that the log
-                        window renders with zero string formatting work per
-                        frame.
+                        <b>Pre-cached Strings:</b> Each log entry pre-builds its
+                        display string at construction time so the log window
+                        renders with zero string formatting work per frame.
                     </li>
                 </ul>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Log Window</h3>
+                            <h3 class="text-highlight">Log Window</h3>
                             <video controls>
                                 <source
                                     src="./media/IronHammer/LogWindowShowcase.mp4"
@@ -869,7 +817,7 @@ void RenderSystem::AddSpriteToBatch(const CSprite& csprite, const CTransform& ct
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Logger Thread</h3>
+                            <h3 class="text-highlight">Logger Thread</h3>
                             <pre><code class="language-cpp">
 // The logger thread sleeps until work arrives, resolves
 // the expensive stack trace off the game thread, then
@@ -883,20 +831,20 @@ m_loggerThread = std::thread([]()
         m_cv.wait(lock, [] {
             return !m_pendingLogMesssageQueue.empty() || !m_loggerRunning; });
 
-        if (!m_loggerRunning&amp;&amp; m_pendingLogMesssageQueue.empty()) break;
+        if (!m_loggerRunning &amp;&amp; m_pendingLogMesssageQueue.empty()) break;
 
         while (!m_pendingLogMesssageQueue.empty())
         {
             PendingLogMessage msg = std::move(m_pendingLogMesssageQueue.front());
-
             m_pendingLogMesssageQueue.pop();
             lock.unlock();
 
-            // Expensive fully off the game thread
+            // Expensive — fully off the game thread
             auto traces = ResolveStackTrace(msg.stackTrace);
             {
                 std::lock_guard bufLock(m_logMessagesMutex);
-                m_logMessageQueueBuffer.emplace_back( msg.message, msg.time, traces, msg.color, msg.logType);
+                m_logMessageQueueBuffer.emplace_back(
+                    msg.message, msg.time, traces, msg.color, msg.logType);
             }
             lock.lock();
         }
@@ -907,84 +855,75 @@ m_loggerThread = std::thread([]()
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Simple Logging API</h3>
+                            <h3 class="text-highlight">Simple Logging API</h3>
                             <pre><code class="language-cpp">
-// From anywhere in the codebase with three macros,
-// each capturing a stack trace of appropriate depth.
-
-#define LOG_INFO(msg)    Debug::Log(msg, Grey,  LogType::Info);
+#define LOG_INFO(msg)    Debug::Log(msg, Grey,   LogType::Info);
 #define LOG_WARNING(msg) Debug::Log(msg, Yellow, LogType::Warning);
 #define LOG_ERROR(msg)   Debug::Log(msg, Red,    LogType::Error);
-
 
 // Usage:
 LOG_INFO("Scene loaded successfully");
 LOG_WARNING("Entity has no Transform component");
 LOG_ERROR("Failed to open file: " + path);
-
 </code></pre>
                         </div>
                     </li>
                 </ul>
             </div>
 
-            <div class="topicContainer">
-                <h2 id="world-Highlight">Editor &amp; Tooling</h2>
+            <div class="topic-container">
+                <h2 class="text-highlight">Editor &amp; Tooling</h2>
                 <p>
                     IronHammer ships with a fully integrated editor built using
-                    <span id="world-Highlight">Dear ImGui</span>. The goal was a
-                    complete authoring environment where game worlds can be
+                    <span class="text-highlight">Dear ImGui</span>. The goal was
+                    a complete authoring environment where game worlds can be
                     built, simulated, modified, and saved without leaving the
-                    application. All editor panels share a single context
-                    object. No global state, no singletons, passed by reference
-                    to every panel that needs it.
+                    application. All editor panels share a single context object
+                    — no global state, no singletons, passed by reference to
+                    every panel that needs it.
                 </p>
 
-                <ul class="bulletPointList">
+                <ul class="bullet-list">
                     <li>
                         <b>Viewport:</b> The game world renders into a texture
-                        that is displayed inside the editor window. Clicking and
+                        displayed inside the editor window. Clicking and
                         dragging within that view requires converting between
-                        three different coordinate systems world space, texture
-                        pixel space, and screen space which the
-                        <span id="world-Highlight">Viewport</span> class
+                        three different coordinate systems — world space,
+                        texture pixel space, and screen space — which the
+                        <span class="text-highlight">Viewport</span> class
                         handles.
                     </li>
                     <li>
-                        <b>Transform Gizmo:</b> Selecting an entity in the
-                        editor displays interactive handles directly over it in
-                        the viewport. Dragging the center moves the entity
-                        freely. Dragging an arrow constrains movement to a
-                        single axis. A mode toggle switches between
-                        <span id="world-Highlight">Translate</span> and
-                        <span id="world-Highlight">Scale</span>.
+                        <b>Transform Gizmo:</b> Selecting an entity displays
+                        interactive handles directly over it. Dragging the
+                        center moves it freely; dragging an arrow constrains
+                        movement to a single axis. A mode toggle switches
+                        between
+                        <span class="text-highlight">Translate</span> and
+                        <span class="text-highlight">Scale</span>.
                     </li>
                     <li>
                         <b>Component Inspector:</b> Every component exposes its
-                        fields, position, size, color, speed as editable
-                        controls in the inspector panel. A reset button and a
-                        remove button are provided for every component through a
-                        shared template, so no duplicated UI code exists across
-                        components.
+                        fields as editable controls. A reset button and a remove
+                        button are provided for every component through a shared
+                        template — no duplicated UI code across components.
                     </li>
                     <li>
                         <b>Prefab System:</b> Entities are saved as
-                        <span id="world-Highlight">JSON template files</span>.
+                        <span class="text-highlight">JSON template files</span>.
                         Dragging a template from the asset panel into the
                         viewport instantiates it at the cursor position, with
-                        optional grid snapping. The entity template can be
-                        edited and re-saved from the inspector without touching
-                        any code.
+                        optional grid snapping.
                     </li>
                     <li>
                         <b>Play / Edit Mode:</b> The engine maintains two
                         separate worlds simultaneously. The editor world is
                         never modified during play. Exiting play mode is a
-                        single pointer swap back, no rollback, no snapshot logic
-                        needed.
+                        single pointer swap back — no rollback, no snapshot
+                        logic needed.
                     </li>
                     <li>
-                        <b>Log Window:</b> The bottom panel displays real time
+                        <b>Log Window:</b> The bottom panel displays real-time
                         logs from the background logger, filterable by type
                         (info, warning, error), with expandable stack traces
                         showing the exact file and line number of every log
@@ -992,44 +931,37 @@ LOG_ERROR("Failed to open file: " + path);
                     </li>
                 </ul>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">
+                            <h3 class="text-highlight">
                                 World → Screen Coordinate Conversion
                             </h3>
                             <pre><code class="language-cpp">
 // Three coordinate systems must be bridged correctly:
 // World space (Y up), texture pixels (Y down), screen (Y down).
-// mapCoordsToPixel handles the Y flip via the SFML view.
 
 inline static ImVec2 WorldToViewportGui(const Vect2f& worldPos)
 {
     // World → texture pixel (Y flip handled by SFML view)
-    sf::Vector2i texPixel =  m_renderTexture->mapCoordsToPixel({ worldPos.x, worldPos.y });
+    sf::Vector2i texPixel = m_renderTexture->mapCoordsToPixel({ worldPos.x, worldPos.y });
 
-    // Scale from texture resolution to display size
     sf::Vector2u texSize = m_renderTexture->getSize();
     float scaleX = m_viewportImageDrawSize.x / (float)texSize.x;
     float scaleY = m_viewportImageDrawSize.y / (float)texSize.y;
 
-    // Offset to image position in screen space
     return ImVec2(
         m_viewportImagePos.x + (float)texPixel.x * scaleX,
         m_viewportImagePos.y + m_viewportImageDrawSize.y
             - (float)texPixel.y * scaleY);
 }
-
-
-
 </code></pre>
                         </div>
                     </li>
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Prefab JSON Format</h3>
+                            <h3 class="text-highlight">Prefab JSON Format</h3>
                             <pre><code class="language-cpp">
-// Each entity template is a plain JSON file.
 {
   "Transform": {
     "position": { "x": 0, "y": 0 },
@@ -1057,10 +989,10 @@ inline static ImVec2 WorldToViewportGui(const Vect2f& worldPos)
                     </li>
                 </ul>
 
-                <ul class="visualDemo">
+                <ul class="visual-demo">
                     <li>
                         <div>
-                            <h3 id="world-Highlight">Editor Demo</h3>
+                            <h3 class="text-highlight">Editor Demo</h3>
                             <video controls>
                                 <source
                                     src="./media/IronHammer/EditorShowcase.mp4"
@@ -1078,8 +1010,6 @@ inline static ImVec2 WorldToViewportGui(const Vect2f& worldPos)
             <p>I claim no rights to the assets used within my projects.</p>
         </div>
 
-        <script src="./prism/prism.js"></script>
-        <script src="./prism/components/prism-clike.min.js"></script>
-        <script src="./prism/components/prism-cpp.min.js"></script>
+        <script src="./prism/prism.js" defer></script>
     </body>
 </html>

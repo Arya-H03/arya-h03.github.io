@@ -1,167 +1,180 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Hallowfall</title>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Hallowfall</title>
+        <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+        <link href="./prism/prism.css" rel="stylesheet" />
+    </head>
 
-    <link rel="stylesheet" type="text/css" href="./css/styles.css">
-    <link href="./prism/prism.css" rel="stylesheet" />
+    <body>
+        <div class="container">
+            <header>
+                <div id="brand">
+                    <h1>Hallowfall</h1>
+                </div>
 
-    <script src="./js/main.js"></script>
+                <nav>
+                    <ul>
+                        <li class="other-pages">
+                            <a class="nav-home" href="./home.html">Home</a>
+                        </li>
+                        <li class="other-pages">
+                            <a
+                                class="nav-cv"
+                                href="./Arya-Hosseini-CV.pdf"
+                                target="_blank"
+                                >CV</a
+                            >
+                        </li>
+                        <li class="other-pages">
+                            <a href="https://github.com/Arya-H03">
+                                <img
+                                    src="./media/GithubIcon.png"
+                                    alt="GitHub"
+                                />
+                            </a>
+                        </li>
+                        <li class="other-pages">
+                            <a
+                                href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
+                            >
+                                <img
+                                    src="./media/linkedinIcon.png"
+                                    alt="LinkedIn"
+                                />
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
-</head>
-
-<body>
-
-
-
-
-    <div class="container">
-        <header>
-
-            <div id="brand">
-                <h1> Hallowfall</h1>
+            <div class="main-showcase">
+                <video
+                    autoplay
+                    controls
+                    muted
+                    loop
+                    playsinline
+                    width="100%"
+                    style="max-width: 1280px; height: auto"
+                >
+                    <source
+                        src="./media/Hallowfall/GameplayShowcase.mp4"
+                        type="video/mp4"
+                    />
+                </video>
             </div>
 
-            <nav>
+            <div class="game-btns">
                 <ul>
-                    <li class="otherPages"><a id="Ghighlight" href="./home.html">Home</a></li>
-                    <li class="otherPages"><a id="Phighlight" href="./Arya-Hosseini-CV.pdf " target="_blank">CV</a></li>
-                    <li class="otherPages"><a id="Ohighlight" href="https://github.com/Arya-H03"><img
-                                src="./media/GithubIcon.png"></a></li>
-                    <li class="otherPages"><a id="Ohighlight"
-                            href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"><img
-                                src="./media/linkedinIcon.png"></a></li>
+                    <li>
+                        <div id="play-btn">
+                            <a href="https://arya-h03.itch.io/hallowfall"
+                                >Play</a
+                            >
+                        </div>
+                    </li>
+                    <li>
+                        <div id="github-btn">
+                            <a href="https://github.com/Arya-H03/Hallowfall"
+                                >GitHub</a
+                            >
+                        </div>
+                    </li>
                 </ul>
-            </nav>
+            </div>
 
+            <div class="topic-container">
+                <h2 class="text-highlight">Introduction</h2>
+                <p>
+                    Hallowfall is my most recent Unity project, a 2D roguelike
+                    inspired by soulslike games. I chose the roguelike genre
+                    because it's well suited for a solo developer. Its reusable
+                    content and system driven design present both creative
+                    opportunities and meaningful programming challenges. This
+                    project has been the perfect opportunity to establish the
+                    groundwork for core systems. My initial goals were to refine
+                    existing mechanics, improve code maintainability, and build
+                    a scalable foundation for roguelike gameplay. From
+                    procedural world to diverse abilities and adaptive enemy AI,
+                    I'm hoping that one day the game grows into a rich and
+                    challenging experience.
+                </p>
+            </div>
 
-        </header>
+            <div class="topic-container">
+                <h2 class="text-highlight">Player Architecture</h2>
+                <p>
+                    To handle growing complexity around the player character, I
+                    designed a scalable, state driven architecture centered on a
+                    <span class="text-highlight"
+                        >Finite State Machine (FSM)</span
+                    >
+                    managed by a
+                    <span class="text-highlight">PlayerController</span>. The
+                    system emphasized clean separation of concerns and
+                    <span class="text-highlight"
+                        >event driven communication</span
+                    >, ensuring that each behavior existed in an isolated state
+                    while remaining decoupled, extensible, and responsive.
+                </p>
 
-        <div class="mainGameplayShowcase">
+                <ul class="bullet-list">
+                    <li>
+                        <b>Finite State Machine (FSM):</b> Implemented a
+                        <span class="text-highlight">FSM</span> managing states
+                        such as Idle, Run, Attack and Parry, ensuring smooth and
+                        responsive transitions. States are encapsulated in
+                        independent classes for easy extension.
+                    </li>
+                    <li>
+                        <b>Modular Components:</b> Organized the player into
+                        independent systems (Movement, Input, Ability,
+                        Animation, etc.), improving maintainability and enabling
+                        parallel development of systems.
+                    </li>
+                    <li>
+                        <b>Event Driven Communication:</b> Leveraged a
+                        centralized
+                        <span class="text-highlight">SignalHub</span>
+                        to decouple interactions between systems, reducing
+                        interdependencies and simplifying debugging.
+                    </li>
+                    <li>
+                        <b>Combat &amp; Abilities:</b> Developed extensible
+                        health, damage, and ability modules, configured via
+                        <span class="text-highlight">ScriptableObjects</span>.
+                        Special abilities can be scaled or modified without
+                        altering core systems.
+                    </li>
+                    <li>
+                        <b>Animation &amp; Feedback Integration:</b> Dedicated
+                        handlers for animations, VFX, and SFX are decoupled from
+                        gameplay logic, enabling designers and artists to
+                        iterate freely.
+                    </li>
+                    <li>
+                        <b>Extensibility &amp; Scalability:</b>
+                        <span class="text-highlight">Dependency injection</span>
+                        ensures modular initialization and reuse of components.
+                        Supports adding new states, abilities, or mechanics with
+                        minimal disruption to existing code or need to refactor.
+                    </li>
+                </ul>
 
-            <video autoplay controls muted loop playsinline width="100%" style="max-width: 1280px; height: auto;">
-                <source src="./media/Hallowfall/GameplayShowcase.mp4" type="video/mp4">
-
-            </video>
-
-        </div>
-
-        <div class="gameBtns">
-
-            <ul>
-                <li>
-                    <div id="playBtn">
-
-                        <a href="https://arya-h03.itch.io/hallowfall"> Play </a>
-
-                    </div>
-                </li>
-                <li>
-                    <div id="githubBtn">
-
-                        <a href="https://github.com/Arya-H03/Hallowfall"> GitHub </a>
-
-                    </div>
-
-                </li>
-            </ul>
-
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Introduction</h2>
-            <p> Hallowfall is my most recent Unity project, a 2D roguelike inspired by soulslike games. I chose the
-                roguelike genre because it’s well suited for a solo developer. Its reusable content and system driven
-                design present both creative opportunities and meaningful programming challenges.
-
-                This project has been the perfect opportunity to establish the groundwork for core systems. My
-                initial goals were to refine existing mechanics, improve code maintainability, and build a scalable
-                foundation for roguelike gameplay. From procedural world to diverse abilities and adaptive
-                enemy AI, I'm hoping that one day the game grows into a rich and challenging experience.</p>
-
-        </div>
-
-
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Player Architecture</h2>
-            <p>
-                To handle growing complexity around the player character, I designed a scalable, state driven
-                architecture centered on a <span id="world-Highlight">Finite State Machine (FSM)</span> managed by a
-                <span id="world-Highlight">PlayerController</span>.
-                The system emphasized clean separation of concerns and
-                <span id="world-Highlight">event driven communication</span>, ensuring
-                that each behavior existed in an isolated state while remaining decoupled, extensible,
-                and responsive.
-            </p>
-
-            <ul class="bulletPointList">
-                <li><b>Finite State Machine (FSM):</b> Implemented a
-                    <span id="world-Highlight">FSM</span> managing states such as
-                    Idle, Run,
-                    Attack and Parry,
-                    ensuring smooth and responsive transitions.
-                    States are encapsulated in independent classes for easy
-                    extension.
-                </li>
-
-                <li><b>Modular Components:</b> Organized the player into independent
-                    systems
-                    (Movement, Input,
-                    Ability, Animation, etc.),
-                    improving maintainability and enabling parallel development of systems.
-                </li>
-
-                <li><b>Event Driven Communication:</b> Leveraged a centralized
-                    <span id="world-Highlight">SignalHub</span>
-                    to decouple interactions between systems, reducing
-                    interdependencies
-                    and simplifying debugging.
-                </li>
-
-                <li><b>Combat & Abilities:</b> Developed extensible
-                    health, damage,
-                    and ability modules,
-                    configured via <span id="world-Highlight">ScriptableObjects</span>.
-                    Special abilities can be scaled or modified without altering core systems.
-                </li>
-
-                <li><b>Animation & Feedback Integration:</b> Dedicated handlers for
-                    animations, VFX,
-                    and SFX are decoupled from gameplay
-                    logic, enabling designers and artists to iterate freely.
-                </li>
-
-                <li><b>Extensibility & Scalability:</b>
-                    <span id="world-Highlight">Dependency injection</span> ensures modular initialization
-                    and reuse of components. Supports adding new
-                    states, abilities,
-                    or mechanics with minimal disruption to existing code
-                    or need to refactor.
-                </li>
-            </ul>
-
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Player State</h3>
-
-                        <pre><code class="language-csharp">
-
+                <ul class="visual-demo">
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">Player State</h3>
+                            <pre><code class="language-csharp">
 public interface IEntityState
 {
     void EnterState();
-
     void ExitState();
-
     void FrameUpdate();
-
     void PhysicsUpdate();
 }
 
@@ -182,46 +195,41 @@ public class PlayerState : IEntityState
         this.signalHub = playerController.PlayerSignalHub;
     }
 
-
     public virtual void EnterState() { }
-
     public virtual void ExitState() { }
-
     public virtual void FrameUpdate() { }
-
     public virtual void PhysicsUpdate() { }
-
 }
-
-
 </code></pre>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">State implementation example</h3>
-                        <pre><code class="language-csharp">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                State Implementation Example
+                            </h3>
+                            <pre><code class="language-csharp">
 public class PlayerParryState : PlayerState
 {
     private PlayerParryShield parryShield;
-    private AudioClip  [] parrySFX;
+    private AudioClip[] parrySFX;
     private float parryWindow;
 
     private bool isParrySuccessful = false;
     private bool canCounterParry = true;
     private bool canParryProjectiles = false;
+
     public bool CanCounterParry { get => canCounterParry; set => canCounterParry = value; }
     public bool CanParryProjectiles { get => canParryProjectiles; set => canParryProjectiles = value; }
 
-    public PlayerParryState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerConfig playerConfig, PlayerStateEnum stateEnum) : base(playerController, stateMachine, playerConfig, stateEnum)
+    public PlayerParryState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerConfig playerConfig, PlayerStateEnum stateEnum)
+        : base(playerController, stateMachine, playerConfig, stateEnum)
     {
-        this.stateEnum = PlayerStateEnum.Parry;
         parrySFX = playerConfig.parrySFX;
         parryWindow = playerConfig.parryWindow;
         parryShield = playerController.ParryShield;
 
         signalHub.OnActivatingParryShield += ActivateParryShield;
-        signalHub.OnEnemyParried += OnSuccessfulParry;
         signalHub.OnEnemyParried += OnSuccessfulParry;
         signalHub.OnParryEnd += OnParryHoldAnimEnd;
     }
@@ -241,7 +249,7 @@ public class PlayerParryState : PlayerState
     private void StartParry()
     {
         signalHub.OnTurningToMousePos?.Invoke();
-        signalHub.OnAnimBool?.Invoke("isParrying",true);
+        signalHub.OnAnimBool?.Invoke("isParrying", true);
         playerController.CoroutineRunner.RunCoroutine(StopParryCoroutine());
     }
 
@@ -276,33 +284,25 @@ public class PlayerParryState : PlayerState
         {
             isParrySuccessful = true;
             signalHub.OnAnimBool?.Invoke("isParrySuccessful", true);
-
         }
     }
 }
-
 </code></pre>
-                    </div>
-                </li>
+                        </div>
+                    </li>
 
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Player Controller</h3>
-                        <pre><code class="language-csharp">
-
-/* The section managing state initialization, dependency injection, and input callbacks,
-acting as the central hub for coordinating player systems.*/
-
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">Player Controller</h3>
+                            <pre><code class="language-csharp">
 public class PlayerController : MonoBehaviour
 {
     private void Start()
     {
         InitStats();
         InjectDependencies();
-
         stateMachine = new PlayerStateMachine(this);
         stateMachine.InitAllStates();
-
         GameManager.Instance.InitSkillsFromSkillTree();
     }
 
@@ -328,8 +328,6 @@ public class PlayerController : MonoBehaviour
         playerVFXHandler.Init(this);
     }
 
-
-    //Input Callbacks
     public void OnMoveInput(Vector2 dir)
     {
         playerMovementHandler.SetMovementInputDirection(dir);
@@ -343,39 +341,32 @@ public class PlayerController : MonoBehaviour
 
     public void OnDashInput()
     {
-        if (CanDash)
-        {
-            signalHub.OnChangeState?.Invoke(PlayerStateEnum.Dash);
-        }
+        if (CanDash) signalHub.OnChangeState?.Invoke(PlayerStateEnum.Dash);
     }
 
     public void OnParryInput()
     {
         if (!isRolling && !isParrying)
-        {
             signalHub.OnChangeState?.Invoke(PlayerStateEnum.Parry);
-        }
     }
 
     public void OnRollInput()
     {
         if (!isRolling && canRoll)
-        {
             signalHub.OnChangeState?.Invoke(PlayerStateEnum.Roll);
-        }
     }
 }
-
 </code></pre>
-                    </div>
-                </li>
+                        </div>
+                    </li>
 
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Handler Component Example</h3>
-                        <pre><code class="language-csharp">
-
-public class PlayerSFXHandler : MonoBehaviour, IInitializeable<PlayerController>
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                Handler Component Example
+                            </h3>
+                            <pre><code class="language-csharp">
+public class PlayerSFXHandler : MonoBehaviour, IInitializeable&lt;PlayerController&gt;
 {
     private AudioManager audioManager;
     private PlayerController playerController;
@@ -383,25 +374,26 @@ public class PlayerSFXHandler : MonoBehaviour, IInitializeable<PlayerController>
     private AudioClip[] groundRunSFX;
     private AudioClip[] grassRunSFX;
     private AudioClip[] stoneRunSFX;
+
     public void Init(PlayerController playerController)
     {
         this.playerController = playerController;
         audioManager = AudioManager.Instance;
 
         groundRunSFX = playerController.PlayerConfig.groundSFX;
-        grassRunSFX = playerController.PlayerConfig.grassSFX;
-        stoneRunSFX = playerController.PlayerConfig.stoneSFX;
+        grassRunSFX  = playerController.PlayerConfig.grassSFX;
+        stoneRunSFX  = playerController.PlayerConfig.stoneSFX;
 
-        playerController.PlayerSignalHub.OnPlayerStep += PlayStepSound;
-        playerController.PlayerSignalHub.OnPlaySFX += PlaySFX;
-        playerController.PlayerSignalHub.OnPlayRandomSFX += PlayRandomSFX;
+        playerController.PlayerSignalHub.OnPlayerStep     += PlayStepSound;
+        playerController.PlayerSignalHub.OnPlaySFX        += PlaySFX;
+        playerController.PlayerSignalHub.OnPlayRandomSFX  += PlayRandomSFX;
     }
 
     private void OnDisable()
     {
-        playerController.PlayerSignalHub.OnPlayerStep -= PlayStepSound;
-        playerController.PlayerSignalHub.OnPlaySFX -= PlaySFX;
-        playerController.PlayerSignalHub.OnPlayRandomSFX -= PlayRandomSFX;
+        playerController.PlayerSignalHub.OnPlayerStep     -= PlayStepSound;
+        playerController.PlayerSignalHub.OnPlaySFX        -= PlaySFX;
+        playerController.PlayerSignalHub.OnPlayRandomSFX  -= PlayRandomSFX;
     }
 
     private void PlaySFX(AudioClip audioClip, float volume)
@@ -409,150 +401,100 @@ public class PlayerSFXHandler : MonoBehaviour, IInitializeable<PlayerController>
         audioManager.PlaySFX(audioClip, playerController.GetPlayerPos(), volume);
     }
 
-    private void PlayRandomSFX(AudioClip []audioClip, float volume)
+    private void PlayRandomSFX(AudioClip[] audioClip, float volume)
     {
         audioManager.PlaySFX(audioClip, playerController.GetPlayerPos(), volume);
     }
+
     private void PlayStepSound()
     {
         switch (playerController.CurrentFloorType)
         {
-            case FloorTypeEnum.Ground:
-                PlayRandomSFX(groundRunSFX, 0.25f);
-                break;
-            case FloorTypeEnum.Grass:
-                PlayRandomSFX(grassRunSFX, 0.25f);
-                break;
-            case FloorTypeEnum.Stone:
-                PlayRandomSFX(stoneRunSFX, 0.25f);
-                break;
+            case FloorTypeEnum.Ground: PlayRandomSFX(groundRunSFX, 0.25f); break;
+            case FloorTypeEnum.Grass:  PlayRandomSFX(grassRunSFX,  0.25f); break;
+            case FloorTypeEnum.Stone:  PlayRandomSFX(stoneRunSFX,  0.25f); break;
         }
     }
 }
-
 </code></pre>
-                    </div>
-                </li>
+                        </div>
+                    </li>
 
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Simplified Architecture Diagram</h3><img
-                            src="./media/Hallowfall/PlayerController.jpg">
-                    </div>
-                </li>
-            </ul>
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                Simplified Architecture Diagram
+                            </h3>
+                            <img
+                                src="./media/Hallowfall/PlayerController.jpg"
+                                alt="Player Controller architecture diagram"
+                            />
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-        </div>
+            <div class="topic-container">
+                <h2 class="text-highlight">
+                    Procedural World Generation System
+                </h2>
+                <p>
+                    The <b>Procedural World Generation System</b> is implemented
+                    using a dynamic
+                    <span class="text-highlight">zone based architecture</span>,
+                    where the game world is divided into manageable zones that
+                    are procedurally generated, activated, and deactivated based
+                    on player proximity. Each zone is responsible for generating
+                    terrain, props, and gameplay elements according to defined
+                    profiles and procedural rules. The core idea revolves around
+                    a <span class="text-highlight">ZoneManager</span> for high
+                    level management and a
+                    <span class="text-highlight">ZoneHandler</span> for zone
+                    specific generation.
+                </p>
 
-        <div class="topicContainer">
+                <ul class="bullet-list">
+                    <li>
+                        <b class="text-highlight">Zone Based Architecture</b>:
+                        The world is split into zones, each represented as a
+                        grid of <span class="text-highlight">Cells</span>, with
+                        independent procedural generation for terrain, props,
+                        and gameplay elements. Zones are dynamically activated
+                        or deactivated based on player proximity.
+                    </li>
+                    <li>
+                        <b class="text-highlight">ZoneManager</b>: Centralized
+                        controller for managing all zones. Tracks player
+                        position and proximity to determine which zones to
+                        generate, expand, or deactivate. Implements a buffer
+                        system to pre-generate zones near the player for
+                        seamless exploration.
+                    </li>
+                    <li>
+                        <b class="text-highlight">ZoneHandler</b>: Responsible
+                        for generating the internal layout of a zone, including
+                        terrain, props, and environmental details. Integrates
+                        with a
+                        <span class="text-highlight">CellGrid</span> system and
+                        implements
+                        <span class="text-highlight"
+                            >binary space partitioning</span
+                        >
+                        for subdividing zones.
+                    </li>
+                    <li>
+                        <b class="text-highlight">Flow Field Integration</b>:
+                        Generates
+                        <span class="text-highlight">flow fields</span> for each
+                        zone to enable dynamic AI pathfinding across the world.
+                    </li>
+                </ul>
 
-            <h2 id="world-Highlight">Procedural World Generation System</h2>
-            <p>
-                The <b>Procedural World Generation System</b> is implemented using a dynamic
-                <span id="world-Highlight">zone based architecture</span>, where the game world is
-                divided into manageable zones that are procedurally generated, activated, and deactivated
-                based on player proximity. Each zone is responsible for generating terrain, props, and
-                gameplay elements according to defined profiles and procedural rules. This system was developed
-                to optimize memory usage, ensure seamless exploration, and allow for unique, replayable game
-                environments. The core idea revolves around a
-                <span id="world-Highlight">ZoneManager</span> for high level management and a
-                <span id="world-Highlight">ZoneHandler</span> for zone specific generation.
-            </p>
-
-            <ul class="bulletPointList">
-                <li><b id="world-Highlight">Zone Based Architecture</b>:
-                    <ul>
-                        <li>The world is split into zones, each represented as a grid of
-                            <span id="world-Highlight">Cells</span>, with independent procedural generation for
-                            terrain, props, and gameplay elements.
-                        </li>
-                        <li>Zones are dynamically activated or deactivated based on player proximity to
-                            optimize memory and performance.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">ZoneManager</b>:
-                    <ul>
-                        <li>Centralized controller for managing all zones in the world.</li>
-                        <li>Tracks player position and proximity to determine which zones to generate, expand,
-                            or deactivate.</li>
-                        <li>Implements a buffer system to pre generate zones near the player for seamless
-                            exploration.</li>
-                        <li>Uses a dictionary (<code>GeneratedZonesDic</code>) for efficient retrieval of zone data.
-                        </li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">ZoneHandler</b>:
-                    <ul>
-                        <li>Responsible for generating the internal layout of a zone, including terrain, props,
-                            and environmental details.</li>
-                        <li>Integrates with a <span id="world-Highlight">CellGrid</span> system to define and
-                            partition the zone into smaller logical subzones for detailed procedural content.
-                        </li>
-                        <li>Implements <span id="world-Highlight">binary space partitioning</span> for subdividing
-                            zones into smaller regions, ensuring diverse layouts and logical prop placement.
-                        </li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">Procedural Asset Placement</b>:
-                    <ul>
-                        <li>Populates zones with props (e.g., trees, structures, rocks) based on a
-                            <span id="world-Highlight">ZoneLayoutProfile</span>, which defines procedural rules and
-                            tile types.
-                        </li>
-                        <li>Uses randomization and constraints (e.g., minimum block sizes) to ensure varied and logical
-                            placement of assets.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">Dynamic Zone Expansion</b>:
-                    <ul>
-                        <li>Expands the world in all directions, including diagonals, based on player movement and
-                            proximity to zone edges.</li>
-                        <li>Zones can include custom openings and pathways to ensure connectivity.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">Tilemap Integration</b>:
-                    <ul>
-                        <li>Generates and paints multiple layers of tilemaps (e.g., ground, props, collision) for each
-                            zone.</li>
-                        <li>Custom rule tiles are used for roads, boundaries, and terrain features.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">Event Driven Updates</b>:
-                    <ul>
-                        <li>The system responds to player driven events, such as movement or interactions, to trigger
-                            zone generation or deactivation.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">Flow Field Integration</b>:
-                    <ul>
-                        <li>Generates <span id="world-Highlight">flow fields</span> for each zone to enable
-                            dynamic AI pathfinding across the world.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">Extensible Design</b>:
-                    <ul>
-                        <li>Zones are built using modular components, allowing easy addition of new terrain
-                            types, props, or gameplay mechanics without altering core systems.</li>
-                        <li>Supports custom procedural profiles for different biomes and zones.</li>
-                    </ul>
-                </li>
-            </ul>
-
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Zone Manager</h3>
-
-                        <pre><code class="language-csharp">
+                <ul class="visual-demo">
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">Zone Manager</h3>
+                            <pre><code class="language-csharp">
 [RequireComponent(typeof(CTicker))]
 public class ZoneManager : MonoBehaviour
 {
@@ -570,60 +512,24 @@ public class ZoneManager : MonoBehaviour
     private int halfZoneSize;
     private CTicker cTicker;
 
-
     public Tilemap ZoneConnectingGround => zoneConnectingGround;
-    public Dictionary<Vector2Int, ZoneData> GeneratedZonesDic { get => generatedZonesDic;}
-    private Dictionary<Vector2Int, ZoneData> generatedZonesDic = new();
-
-    private void OnValidate()
-    {
-        // Validate required serialized fields
-        MyUtils.ValidateFields(this, zonePrefab, nameof(zonePrefab));
-        MyUtils.ValidateFields(this, mainGrid, nameof(mainGrid));
-        MyUtils.ValidateFields(this, zoneConnectingGround, nameof(zoneConnectingGround));
-    }
+    public Dictionary&lt;Vector2Int, ZoneData&gt; GeneratedZonesDic { get =&gt; generatedZonesDic; }
+    private Dictionary&lt;Vector2Int, ZoneData&gt; generatedZonesDic = new();
 
     private void Awake()
     {
-
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
+        if (Instance != null &amp;&amp; Instance != this) { Destroy(gameObject); return; }
         Instance = this;
-
-        cTicker = GetComponent<CTicker>();
-
+        cTicker = GetComponent&lt;CTicker&gt;();
         halfZoneSize = zoneSize / 2;
     }
 
     private void Start()
     {
         player = GameManager.Instance.Player;
-
         cTicker.CanTick = true;
-
         TryGenerateZone(Vector2Int.zero, DirectionEnum.None);
-
         cTicker.OnTickEvent += CheckForPlayerEdgeProximity;
-    }
-
-    public ZoneData FindZoneDataFromWorldPos(Vector3 worldPos)
-    {
-        Vector2Int zoneCoord = new Vector2Int(Mathf.RoundToInt(worldPos.x / zoneSize), Mathf.RoundToInt(worldPos.y / zoneSize));
-        if (generatedZonesDic.TryGetValue(zoneCoord, out ZoneData zoneData)) return zoneData;
-
-        return null;
-    }
-
-    public Cell FindCurrentCellFromWorldPos(Vector3 worldPos)
-    {
-        ZoneData zoneData = FindZoneDataFromWorldPos(worldPos);
-        if(zoneData == null) return null;
-        Cell result = zoneData.ZoneHandler.CellGrid.GetCellFromWorldPos(worldPos);
-        return result;
     }
 
     private void TryGenerateZone(Vector2Int centerCoord, DirectionEnum expansionDir)
@@ -636,974 +542,122 @@ public class ZoneManager : MonoBehaviour
         var zoneData = new ZoneData(zoneCellSize, zoneSize, zoneSize, centerCoord, newZoneWorldPos, newZoneGO, expansionDir, zoneLayoutProfile);
         generatedZonesDic.Add(centerCoord, zoneData);
 
-        var zoneHandler = newZoneGO.GetComponent<ZoneHandler>();
+        var zoneHandler = newZoneGO.GetComponent&lt;ZoneHandler&gt;();
         zoneHandler.Init(zoneData);
     }
-
-    private Vector2Int GetCurrentZoneCenterCoord()
-    {
-        Vector3 pos = player.transform.position;
-        return new Vector2Int(
-            Mathf.FloorToInt((pos.x + halfZoneSize) / zoneSize),
-            Mathf.FloorToInt((pos.y + halfZoneSize) / zoneSize)
-        );
-    }
-
-    public ZoneHandler GetCurrentZoneHandler()
-    {
-        return generatedZonesDic[GetCurrentZoneCenterCoord()].ZoneHandler;
-    }
-
-    private Vector3Int FindZoneCenterPosition(Vector2Int centerCoord)
-    {
-        return new Vector3Int(centerCoord.x * zoneSize, centerCoord.y * zoneSize, 0);
-    }
-
-    private void CheckForPlayerEdgeProximity()
-    {
-        Vector3 playerPos = player.transform.position;
-        Vector3Int currentZoneCenter = FindZoneCenterPosition(GetCurrentZoneCenterCoord());
-
-        Vector2Int[] allDirections = MyUtils.GetAllDirectionsVectorArray();
-        Dictionary<Vector2Int, DirectionEnum> directionDic = MyUtils.GetDirectionDicWithVectorKey();
-
-        foreach (Vector2Int dir in allDirections)
-        {
-            Vector2Int nextCoord = GetCurrentZoneCenterCoord() + dir;
-            Vector3Int nextZonePos = currentZoneCenter + ((Vector3Int)dir * halfZoneSize);
-            float distSqr = (nextZonePos - playerPos).sqrMagnitude;
-            bool withinBuffer = distSqr < zoneBuffer * zoneBuffer;
-
-            if (!generatedZonesDic.ContainsKey(nextCoord))
-            {
-                if (withinBuffer && directionDic.TryGetValue(dir, out DirectionEnum dirEnum))
-                {
-                    ExpandZones(dirEnum);
-                }
-            }
-            else
-            {
-                var zone = generatedZonesDic[nextCoord];
-
-                if (!withinBuffer && zone.IsZoneFullyGenerated)
-                {
-                    zone.zoneGO.SetActive(false);
-                }
-                else
-                {
-                    zone.zoneGO.SetActive(true);
-                }
-            }
-        }
-    }
-    private void ExpandZones(DirectionEnum dirEnum)
-    {
-        Vector2Int currentCoord = GetCurrentZoneCenterCoord();
-
-        switch (dirEnum)
-        {
-            case DirectionEnum.Right:
-                TryGenerateZone(currentCoord + Vector2Int.right, DirectionEnum.Left);
-                break;
-            case DirectionEnum.Left:
-                TryGenerateZone(currentCoord + Vector2Int.left, DirectionEnum.Right);
-                break;
-            case DirectionEnum.Up:
-                TryGenerateZone(currentCoord + Vector2Int.up, DirectionEnum.Down);
-                break;
-            case DirectionEnum.Down:
-                TryGenerateZone(currentCoord + Vector2Int.down, DirectionEnum.Up);
-                break;
-            case DirectionEnum.UpRight:
-                TryGenerateZone(currentCoord + Vector2Int.up, DirectionEnum.DownLeft);
-                TryGenerateZone(currentCoord + new Vector2Int(1, 1), DirectionEnum.DownLeft);
-                break;
-            case DirectionEnum.UpLeft:
-                TryGenerateZone(currentCoord + Vector2Int.up, DirectionEnum.DownRight);
-                TryGenerateZone(currentCoord + new Vector2Int(-1, 1), DirectionEnum.DownRight);
-                break;
-            case DirectionEnum.DownRight:
-                TryGenerateZone(currentCoord + Vector2Int.down, DirectionEnum.UpLeft);
-                TryGenerateZone(currentCoord + new Vector2Int(1, -1), DirectionEnum.UpLeft);
-                break;
-            case DirectionEnum.DownLeft:
-                TryGenerateZone(currentCoord + Vector2Int.down, DirectionEnum.UpRight);
-                TryGenerateZone(currentCoord + new Vector2Int(-1, -1), DirectionEnum.UpRight);
-                break;
-        }
-    }
 }
 </code></pre>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Zone Handler</h3>
-                        <pre><code class="language-csharp">
-public class ZoneHandler : MonoBehaviour
-{
-    private ZoneData zoneData;
-    private ZoneLayoutProfile zoneLayoutProfile;
-    private int cellSize;
-    private int zoneWidth;
-    private int zoneHeight;
-
-    private CellGrid cellGrid;
-    private readonly List<BoundsInt> listOfSubzoneBounds = new();
-    private List<BoundsInt> listOfPartitionedSubzoneBounds = new();
-    private Dictionary<DirectionEnum, Vector2Int[]> zoneOpenings = new();
-
-    private Tilemap groundZeroTilemap;
-    private Tilemap groundOneTilemap;
-    private Tilemap groundTwoTilemap;
-    private Tilemap boundsTilemap;
-    private Tilemap propsWithCollisionTilemap;
-    private Tilemap propsNoCollisionTilemap;
-    [SerializeField] private Tilemap treeTilemap;
-
-    public Tilemap GroundZeroTilemap => groundZeroTilemap;
-    public Tilemap GroundOneTilemap => groundOneTilemap;
-    public Tilemap GroundTwoTilemap => groundTwoTilemap;
-    public Tilemap PropsWithCollisionTilemap => propsWithCollisionTilemap;
-    public Tilemap PropsNoCollisionTilemap => propsNoCollisionTilemap;
-    public Tilemap BoundsTilemap => boundsTilemap;
-    public Tilemap TreeTilemap => treeTilemap;
-
-    public ZoneData ZoneData { get => zoneData; set => zoneData = value; }
-    public ZoneLayoutProfile ZoneLayoutProfile { get => zoneLayoutProfile; set => zoneLayoutProfile = value; }
-    public CellGrid CellGrid { get => cellGrid; }
-
-    private void OnValidate()
-    {
-        MyUtils.ValidateFields(this, propsWithCollisionTilemap, nameof(propsWithCollisionTilemap));
-        MyUtils.ValidateFields(this, propsNoCollisionTilemap, nameof(propsNoCollisionTilemap));
-        MyUtils.ValidateFields(this, groundZeroTilemap, nameof(groundZeroTilemap));
-        MyUtils.ValidateFields(this, groundOneTilemap, nameof(groundZeroTilemap));
-        MyUtils.ValidateFields(this, groundZeroTilemap, nameof(groundZeroTilemap));
-        MyUtils.ValidateFields(this, boundsTilemap, nameof(boundsTilemap));
-        MyUtils.ValidateFields(this, TreeTilemap, nameof(TreeTilemap));
-    }
-
-    public void Init(ZoneData zoneData)
-    {
-        this.zoneData = zoneData;
-        this.zoneLayoutProfile = this.zoneData.zoneLayoutProfile;
-        this.zoneWidth = this.zoneData.zoneWidth;
-        this.zoneHeight = this.zoneData.zoneHeight;
-        this.cellSize = this.zoneData.cellSize;
-
-        cellGrid = new CellGrid(this.cellSize, this.zoneWidth, this.zoneHeight);
-        cellGrid.InitializeGridCells(this.zoneData.centerPos);
-
-        StartCoroutine(GenerateZoneCoroutine());
-    }
-    private IEnumerator GenerateZoneCoroutine()
-    {
-        PopulateZoneWithPropBlocks(CellGrid, zoneLayoutProfile);
-        AddDefaultGroundTileForZone(zoneLayoutProfile);
-        yield return null;
-        yield return StartCoroutine(CellGrid.PaintAllBlocksCoroutine());
-        yield return StartCoroutine(CellGrid.PaintAllCellsCoroutine());
-
-        FlowFieldManager.Instance.UpdateFlowFieldFromZone(zoneData);
-
-        zoneData.IsZoneFullyGenerated = true;
-    }
-
-    private void PopulateZoneWithPropBlocks(CellGrid cellGrid, ZoneLayoutProfile zoneLayoutProfile)
-    {
-        Cell startCell = cellGrid.FindNextUnpartitionedCell(new Vector2Int(0, 0));
-        CreateAllSubZoneBounds(cellGrid, startCell);
-
-        //Turns big subZones to smalle blocks
-        listOfPartitionedSubzoneBounds = MyUtils.PerformeBinarySpacePartitioning(listOfSubzoneBounds, 8, 8);
-
-        InstantiatePropsBlocks(listOfPartitionedSubzoneBounds, zoneLayoutProfile);
-    }
-    private void CreateAllSubZoneBounds(CellGrid cellGrid, Cell startCell)
-    {
-        //Check along left edge
-        int h1 = 1;
-        for (int i = 1; i + startCell.GlobalCellCoord.y < cellGrid.CellPerCol; i++)
-        {
-            if (cellGrid.Cells[startCell.GlobalCellCoord.x, startCell.GlobalCellCoord.y + i].IsPartitioned)
-                break;
-            h1++;
-        }
-        //Check along bottom edge
-        int w1 = 1;
-        for (int i = 1; i + startCell.GlobalCellCoord.x < cellGrid.CellPerRow; i++)
-        {
-            if (cellGrid.Cells[startCell.GlobalCellCoord.x + i, startCell.GlobalCellCoord.y].IsPartitioned)
-                break;
-            w1++;
-        }
-        //Check along top edge
-        int w2 = 1;
-        for (int i = 1; i + startCell.GlobalCellCoord.x < cellGrid.CellPerRow; i++)
-        {
-            if (cellGrid.Cells[startCell.GlobalCellCoord.x + i, startCell.GlobalCellCoord.y + h1 - 1].IsPartitioned)
-                break;
-            w2++;
-        }
-
-        int width = Mathf.Min(w1, w2);
-        //Check along right edge
-        int h2 = 1;
-        for (int i = 1; i + startCell.GlobalCellCoord.y < cellGrid.CellPerCol; i++)
-        {
-            if (cellGrid.Cells[startCell.GlobalCellCoord.x + width - 1, startCell.GlobalCellCoord.y + i].IsPartitioned)
-                break;
-            h2++;
-        }
-
-        int height = Mathf.Min(h1, h2);
-
-        listOfSubzoneBounds.Add(new BoundsInt(new Vector3Int((int)startCell.GlobalCellPos.x, (int)startCell.GlobalCellPos.y, 0), new Vector3Int(width, height, 0)));
-
-
-        for (int x = startCell.GlobalCellCoord.x; x < startCell.GlobalCellCoord.x + width; x++)
-        {
-            for (int y = startCell.GlobalCellCoord.y; y < startCell.GlobalCellCoord.y + height; y++)
-            {
-                if (x >= 0 && x < cellGrid.CellPerRow && y >= 0 && y < cellGrid.CellPerCol)
-                    cellGrid.Cells[x, y].MarkAsPartitioned();
-            }
-        }
-
-        Cell nextStartCell = cellGrid.FindNextUnpartitionedCell(new Vector2Int(startCell.GlobalCellCoord.x + width, startCell.GlobalCellCoord.y));
-        if (nextStartCell != null)
-        {
-            CreateAllSubZoneBounds(cellGrid, nextStartCell);
-        }
-    }
-
-    private void InstantiatePropsBlocks(List<BoundsInt> listOfPartitionedSubzoneBounds, ZoneLayoutProfile zoneLayoutProfile)
-    {
-        foreach (BoundsInt zoneBounds in listOfPartitionedSubzoneBounds)
-        {
-            PropsBlockEnum propsBlockEnum = GetPropsBlockTypeEnum(zoneLayoutProfile, zoneBounds);
-            if (propsBlockEnum != PropsBlockEnum.none)
-            {
-                GameObject go = Instantiate(zoneLayoutProfile.spawnablePropsBlock, zoneBounds.position, Quaternion.identity);
-                go.transform.parent = this.transform;
-                PropsBlock propsBlock = AddBlockComponent(go, propsBlockEnum);
-                propsBlock.Init(this, CellGrid, zoneBounds.position, zoneBounds, zoneLayoutProfile);
-
-            }
-            else
-            {
-                GameObject go = Instantiate(zoneLayoutProfile.spawnablePropsBlock, zoneBounds.position, Quaternion.identity);
-                go.transform.parent = this.transform;
-            }
-
-        }
-    }
-    private PropsBlockEnum GetPropsBlockTypeEnum(ZoneLayoutProfile zoneLayoutProfile, BoundsInt blockBounds)
-    {
-        if (zoneLayoutProfile.propsBlocksStructList.Count < 1) return PropsBlockEnum.none;
-
-        PropsBlockEnum propsBlockEnum = PropsBlockEnum.none;
-        int maxAttempts = 100;
-        int attempts = 0;
-
-        while (propsBlockEnum == PropsBlockEnum.none && attempts < maxAttempts)
-        {
-            PropsBlockStruct propsBlock = zoneLayoutProfile.propsBlocksStructList[
-                Random.Range(1, zoneLayoutProfile.propsBlocksStructList.Count)];
-
-            if (blockBounds.size.x >= propsBlock.minBlockSize.x &&
-                blockBounds.size.y >= propsBlock.minBlockSize.y &&
-                propsBlock.propsBlockEnum != PropsBlockEnum.none)
-            {
-                propsBlockEnum = propsBlock.propsBlockEnum;
-            }
-
-            attempts++;
-        }
-        return propsBlockEnum;
-    }
-    private PropsBlock AddBlockComponent(GameObject propsBlockGO, PropsBlockEnum propsBlockEnum)
-    {
-        switch (propsBlockEnum)
-        {
-            case PropsBlockEnum.cryptCluster:
-                return propsBlockGO.AddComponent<CryptClusterBlock>();
-
-            case PropsBlockEnum.graveCluster:
-                return propsBlockGO.AddComponent<GraveClusterBlock>();
-
-            case PropsBlockEnum.treeCluster:
-                return propsBlockGO.AddComponent<TreeClusterBlock>();
-
-            case PropsBlockEnum.ritualCluster:
-                return propsBlockGO.AddComponent<RitualClusterBlock>();
-
-            default:
-                return null;
-        }
-    }
-    private void AddDefaultGroundTileForZone(ZoneLayoutProfile zoneLayoutProfile)
-    {
-
-        CellPaint tilePaint = new CellPaint { tilemap = this.GroundZeroTilemap, tileBase = zoneLayoutProfile.defaultGroundTile };
-        CellGrid.LoopOverGrid((i, j) =>
-        {
-            CellGrid.Cells[i, j].AddToCellPaint(tilePaint);
-        });
-    }
-    private void DrawStraightLineOfTiles(Vector2Int beginningCellCoord, Vector2Int endCellCoord, CellPaint[] tilePaints)
-    {
-        Vector2Int delta = endCellCoord - beginningCellCoord;
-
-        if (delta.x == 0) // Vertical road
-        {
-
-            int yMin = Mathf.Min(beginningCellCoord.y, endCellCoord.y);
-            int yMax = Mathf.Max(beginningCellCoord.y, endCellCoord.y);
-
-            for (int y = yMin; y < yMax + 1; y++)
-            {
-                Vector3Int pos = TurnCellCoordToTilePos(beginningCellCoord.x, y);
-                //tilemap.SetTile(pos, tileBase);
-                CellGrid.Cells[beginningCellCoord.x, y].MarkAsOccupied();
-                CellGrid.Cells[beginningCellCoord.x, y].MarkAsPartitioned();
-                CellGrid.Cells[beginningCellCoord.x, y].AddToCellPaint(tilePaints);
-            }
-        }
-        else if (delta.y == 0) // Horizontal road
-        {
-            int xMin = Mathf.Min(beginningCellCoord.x, endCellCoord.x);
-            int xMax = Mathf.Max(beginningCellCoord.x, endCellCoord.x);
-
-            for (int x = xMin; x < xMax + 1; x++)
-            {
-
-                Vector3Int pos = TurnCellCoordToTilePos(x, beginningCellCoord.y);
-                //tilemap.SetTile(pos, tileBase);
-                CellGrid.Cells[x, beginningCellCoord.y].MarkAsOccupied();
-                CellGrid.Cells[x, beginningCellCoord.y].MarkAsPartitioned();
-                CellGrid.Cells[x, beginningCellCoord.y].AddToCellPaint(tilePaints);
-            }
-        }
-    }
-
-    private Vector3Int TurnCellCoordToTilePos(int x, int y)
-    {
-        return (Vector3Int)CellGrid.Cells[x, y].GlobalCellPos;
-    }
-    private void GenerateBoundsForTilemap()
-    {
-        Tilemap boundsTilemap = this.BoundsTilemap;
-
-        CellPaint[] tilePaints = { new CellPaint {tilemap = this.GroundOneTilemap, tileBase = zoneLayoutProfile.grassRuletile }, new CellPaint {ilemap = this.BoundsTilemap, tileBase = zoneLayoutProfile.fenceRuleTile } };
-
-        //Down
-        DrawStraightLineOfTiles(new Vector2Int(0, 0), new Vector2Int(CellGrid.CellPerRow - 1, 0), tilePaints);
-        //Up
-        DrawStraightLineOfTiles(new Vector2Int(0, CellGrid.CellPerCol - 1), new Vector2Int(CellGrid.CellPerRow - 1, CellGrid.CellPerCol - 1), tilePaints);
-        //Left
-        DrawStraightLineOfTiles(new Vector2Int(0, 0), new Vector2Int(0, CellGrid.CellPerCol - 1), tilePaints);
-        //Right
-        DrawStraightLineOfTiles(new Vector2Int(CellGrid.CellPerRow - 1, 0), new Vector2Int(CellGrid.CellPerRow - 1, CellGrid.CellPerCol - 1), tilePaints);
-
-
-        List<DirectionEnum> dirs = MyUtils.GetAllDirectionEnumList();
-        int openingCount = Random.Range(2, 3);
-        // Always one horizontal + one vertical + one random
-        List<DirectionEnum> openingDir = new List<DirectionEnum>();
-        DirectionEnum horizontal = MyUtils.GetRandomHorizontalDirectionEnum();
-        DirectionEnum vertical = MyUtils.GetRandomVerticalDirectionEnum();
-        openingDir.Add(horizontal);
-        openingDir.Add(vertical);
-        dirs.Remove(horizontal);
-        dirs.Remove(vertical);
-        openingDir.Add(dirs[Random.Range(0, dirs.Count)]);
-
-        zoneOpenings = CreateOpeningsInZone(openingDir, CellGrid, boundsTilemap);
-    }
-    private Dictionary<DirectionEnum, Vector2Int[]> CreateOpeningsInZone(List<DirectionEnum> openingDir, CellGrid cellGrid, Tilemap tilemap)
-    {
-        Dictionary<DirectionEnum, Vector2Int[]> zoneOpenings = new Dictionary<DirectionEnum, Vector2Int[]>();
-        // Openings for each selected side
-        foreach (DirectionEnum dir in openingDir)
-        {
-            int[] openingIndices = GenerateRandomOpeningCells();
-            Vector2Int[] openings = new Vector2Int[openingIndices.Length];
-            zoneOpenings.Add(dir, openings);
-
-            for (int i = 0; i < openingIndices.Length; i++)
-            {
-                Vector2Int cellCoord = Vector2Int.zero;
-
-                switch (dir)
-                {
-                    case DirectionEnum.Down:
-                        cellCoord = new Vector2Int(openingIndices[i], 0);
-                        break;
-                    case DirectionEnum.Up:
-                        cellCoord = new Vector2Int(openingIndices[i], cellGrid.CellPerCol - 1);
-                        break;
-                    case DirectionEnum.Left:
-                        cellCoord = new Vector2Int(0, openingIndices[i]);
-                        break;
-                    case DirectionEnum.Right:
-                        cellCoord = new Vector2Int(cellGrid.CellPerRow - 1, openingIndices[i]);
-                        break;
-                }
-
-                Vector3Int pos = TurnCellCoordToTilePos(cellCoord.x, cellCoord.y);
-                zoneOpenings[dir][i] = cellCoord;
-                cellGrid.Cells[cellCoord.x, cellCoord.y].MarkAsOccupied();
-                cellGrid.Cells[cellCoord.x, cellCoord.y].RemoveCellPaints();
-            }
-        }
-
-        return zoneOpenings;
-    }
-    private void GenerateRoads()
-    {
-        var opening1 = zoneOpenings.ElementAt(0);
-        var opening2 = zoneOpenings.ElementAt(1);
-
-        ConnectAllCenterJunctionPoints(opening1.Value, opening2.Value);
-
-        // Handle third direction if it exists
-        if (zoneOpenings.Count == 3)
-        {
-            var opening3 = zoneOpenings.ElementAt(2);
-            DirectionEnum thirdDir = opening3.Key;
-
-            if (thirdDir == DirectionEnum.Up || thirdDir == DirectionEnum.Down)
-            {
-                if (zoneOpenings.ContainsKey(DirectionEnum.Left))
-                    ConnectAllCenterJunctionPoints(zoneOpenings[DirectionEnum.Left], opening3.Value);
-
-                if (zoneOpenings.ContainsKey(DirectionEnum.Right))
-                    ConnectAllCenterJunctionPoints(zoneOpenings[DirectionEnum.Right], opening3.Value);
-            }
-
-            if (thirdDir == DirectionEnum.Left || thirdDir == DirectionEnum.Right)
-            {
-                if (zoneOpenings.ContainsKey(DirectionEnum.Up))
-                    ConnectAllCenterJunctionPoints(zoneOpenings[DirectionEnum.Up], opening3.Value);
-
-                if (zoneOpenings.ContainsKey(DirectionEnum.Down))
-                    ConnectAllCenterJunctionPoints(zoneOpenings[DirectionEnum.Down], opening3.Value);
-            }
-        }
-    }
-    private void ConnectAllCenterJunctionPoints(Vector2Int[] from, Vector2Int[] to)
-    {
-        //Tilemap stoneTilemap = ZoneManager.Instance.GroundOneTilemap;
-        Tilemap stoneTilemap = GroundOneTilemap;
-        int size = from.Length;
-        for (int i = 0; i < size; i++)
-        {
-            ConnectTwoJunctionPoints(stoneTilemap, from[i], to[i]);         // Matching index
-            ConnectTwoJunctionPoints(stoneTilemap, from[i], to[2 - i]);     // Flipped index
-        }
-    }
-    private void ConnectTwoJunctionPoints(Tilemap stoneTilemap, Vector2Int p1, Vector2Int p2)
-    {
-        Vector2Int junction = GetOpeningJunctionPoint(p1, p2);
-        CellPaint[] tilePaint = { new CellPaint {/* tilemap = ZoneManager.Instance.GroundOneTilemap*/  tilemap = this.GroundOneTilemap, tileBase = zoneLayoutProfile.stoneRoadRuleTile } };
-        DrawStraightLineOfTiles(p1, junction, tilePaint);
-        DrawStraightLineOfTiles(p2, junction, tilePaint);
-    }
-    private Vector2Int GetOpeningJunctionPoint(Vector2Int p1, Vector2Int p2)
-    {
-        Vector2Int result = new Vector2Int(p1.x, p2.y);
-        if (result.x == 0 || result.y == 0 || result.x >= 39 || result.y >= 39) return new Vector2Int(p2.x, p1.y);
-        return result;
-    }
-    private int[] GenerateRandomOpeningCells()
-    {
-        int rand = Random.Range(5, 35);
-        return new int[] { rand - 1, rand, rand + 1 };
-    }
-}
-</code></pre>
-                    </div>
-                </li>
-
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">CellGrid</h3>
-                        <pre><code class="language-csharp">
-public class CellGrid
-{
-    protected int cellSize;
-    protected int gridWidth;
-    protected int gridHeight;
-
-    protected int cellPerRow;
-    protected int cellPerCol;
-
-    protected Cell[,] cells;
-    protected List<BlockPaint> blockPaintList = new();
-
-    public Cell[,] Cells => cells;
-    public int CellPerCol => cellPerCol;
-    public int CellPerRow => cellPerRow;
-    public int CellSize => cellSize;
-    public int GridWidth => gridWidth;
-    public int GridHeight => gridHeight;
-    public List<BlockPaint> BlockPaintList => blockPaintList;
-
-    public CellGrid(int cellSize, int gridWidth, int gridHeight)
-    {
-        this.cellSize = cellSize;
-        this.gridWidth = gridWidth;
-        this.gridHeight = gridHeight;
-
-        cellPerRow = Mathf.FloorToInt(gridWidth / cellSize);
-        cellPerCol = Mathf.FloorToInt(gridHeight / cellSize);
-
-        cells = new Cell[cellPerRow, cellPerCol];
-    }
-
-    public void InitializeGridCells(Vector3Int gridCenterWorldPos)
-    {
-        Vector3Int originWorldPos = gridCenterWorldPos - new Vector3Int(gridWidth / 2, gridHeight / 2, 0);
-
-        for (int i = 0; i < cellPerRow; i++)
-        {
-            for (int j = 0; j < cellPerCol; j++)
-            {
-                Vector2Int cellCoord = new(i, j);
-                cells[i, j] = new Cell(this, cellCoord, originWorldPos, cellSize);
-            }
-        }
-    }
-
-    public Cell FindNextUnpartitionedCell(Vector2Int startCellID)
-    {
-        for (int y = startCellID.y; y < cellPerCol; y++)
-        {
-            int xStart = (y == startCellID.y) ? startCellID.x : 0;
-            for (int x = xStart; x < cellPerRow; x++)
-            {
-                if (!cells[x, y].IsPartitioned)
-                    return cells[x, y];
-            }
-        }
-        return null;
-    }
-
-    public Cell GetCellFromWorldPos(Vector3 worldPos)
-    {
-        Vector3Int cellPosOnGrid = new Vector3Int(Mathf.FloorToInt(worldPos.x), Mathf.FloorToInt(worldPos.y), 0);
-        Vector3Int cellCoord = cellPosOnGrid - cells[0,0].GlobalCellPos;
-        return cells[cellCoord.x, cellCoord.y];
-    }
-
-    public Cell GetCenterCellOfGrid() =>
-        cells[cellPerRow / 2, cellPerCol / 2];
-
-    public void AddToBlockPaints(Tilemap tilemap, TileBase tileBase, SubCellGrid cellGrid, CellGrid parentGrid)
-    {
-        BoundsInt blockBounds = new BoundsInt(
-            (Vector3Int)cellGrid.Cells[0, 0].GlobalCellCoord - new Vector3Int(parentGrid.CellPerRow / 2, parentGrid.CellPerCol / 2, 0),
-            new Vector3Int(cellGrid.CellPerRow, cellGrid.CellPerCol, 1)
-        );
-
-        BlockPaint blockPaint = new BlockPaint
-        {
-            tilemap = tilemap,
-            tileBase = tileBase,
-            blockBounds = blockBounds
-        };
-
-        parentGrid.BlockPaintList.Add(blockPaint);
-    }
-
-    private void PaintBlock(BlockPaint blockPaint)
-    {
-        if (blockPaint.tileBase == null || blockPaint.tilemap == null)
-            return;
-
-        BoundsInt bounds = blockPaint.blockBounds;
-        int width = bounds.size.x;
-        int height = bounds.size.y;
-
-        TileBase[] tiles = new TileBase[width * height];
-        for (int i = 0; i < tiles.Length; i++)
-            tiles[i] = blockPaint.tileBase;
-
-        blockPaint.tilemap.SetTilesBlock(bounds, tiles);
-    }
-
-    public IEnumerator PaintAllBlocksCoroutine()
-    {
-        int count = 0;
-        foreach (var block in BlockPaintList)
-        {
-            PaintBlock(block);
-            count++;
-            if (count >= 5)
-            {
-                count = 0;
-                yield return null;
-
-            }
-        }
-    }
-
-    public IEnumerator PaintAllCellsCoroutine()
-    {
-        int count = 0;
-        for (int j = 0; j < cellPerCol; j++)
-        {
-            for (int i = 0; i < cellPerRow; i++)
-            {
-                cells[i, j].PaintCell(this);
-                count++;
-                if (count >= 200)
-                {
-                    count = 0;
-                    yield return null;
-                }
-            }
-        }
-    }
-
-    public void PaintAllCells()
-    {
-        LoopOverGrid((i, j) => cells[i, j].PaintCell(this));
-    }
-
-    public GameObject TryInstantiatePermanentGameobjectOnTile(GameObject prefab, Vector2Int localCellCoord, Quaternion rotation, bool markOccupied, Transform parent = null)
-    {
-        if (!MyUtils.IsWithinArrayBounds(cellPerRow, cellPerCol, localCellCoord)) return null;
-
-        Cell cell = cells[localCellCoord.x, localCellCoord.y];
-        if (cell.IsOccupied) return null;
-
-        Vector3 pos = (Vector3)cell.GlobalCellPos + new Vector3(0.5f, 0.5f, 0);
-        GameObject go = UnityEngine.Object.Instantiate(prefab, pos, rotation);
-        if (parent != null) go.transform.parent = parent;
-        if (markOccupied) cell.MarkAsOccupied();
-
-        return go;
-    }
-
-    public GameObject TryInstantiateTempGameobjectOnTile(GameObject prefab, Vector2Int localCellCoord, Quaternion rotation, Transform parent = null)
-    {
-        if (!MyUtils.IsWithinArrayBounds(cellPerRow, cellPerCol, localCellCoord)) return null;
-
-        Vector3 pos = (Vector3)cells[localCellCoord.x, localCellCoord.y].GlobalCellPos + new Vector3(0.5f, 0.5f, 0);
-        GameObject go = UnityEngine.Object.Instantiate(prefab, pos, rotation);
-        if (parent != null) go.transform.parent = parent;
-        return go;
-    }
-
-    public void LoopOverGrid(Action<int, int> action)
-    {
-        for (int j = 0; j < cellPerCol; j++)
-        {
-            for (int i = 0; i < cellPerRow; i++)
-            {
-                action(i, j);
-            }
-        }
-    }
-
-}
-
-</code></pre>
-                    </div>
-                </li>
-
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Cell</h3>
-                        <pre><code class="language-csharp">
-public class Cell
-{
-    private CellGrid parentGrid;
-    private CellFlowData cellFlowData;
-
-    private bool isOccupied = false;
-    private bool isPartitioned = false;
-
-    private float cellSize;
-    private Vector3Int globalCellPos = Vector3Int.zero;
-    private Vector2Int globalCellCoord = Vector2Int.zero;
-    private Vector2Int localCellCoord = Vector2Int.zero;
-
-    private HashSet<CellPaint> cellPaintHashSet = new();
-
-    public bool IsOccupied => isOccupied;
-    public bool IsPartitioned => isPartitioned;
-    public bool IsWalkable => cellFlowData.isWalkable;
-
-    public float CellSize => cellSize;
-    public Vector2Int GlobalCellCoord => globalCellCoord;
-    public Vector3Int GlobalCellPos => globalCellPos;
-    public Vector2Int LocalCellCoord { get => localCellCoord; set => localCellCoord = value; }
-    public HashSet<CellPaint> TilePaints => cellPaintHashSet;
-    public CellGrid ParentGrid => parentGrid;
-
-    public Vector2 FlowVect { get => cellFlowData.flowVector; set => cellFlowData.flowVector = value; }
-    public DirectionEnum FlowDir
-    {
-        get => cellFlowData.flowDirection;
-        set
-        {
-            cellFlowData.flowDirection = value;
-            cellFlowData.flowVector = MyUtils.GetVectorFromDir(value);
-        }
-    }
-
-    public int TotalCost => cellFlowData.totalCost;
-    public int DynamicCost { get => cellFlowData.dynamicCost; set => cellFlowData.dynamicCost = value; }
-    public int BaseCost { get => cellFlowData.baseCost; set => cellFlowData.baseCost = value; }
-    public bool HasEnemy => cellFlowData.hasEnemy;
-
-    public Cell(CellGrid parentGrid, Vector2Int globalCellCoord, Vector3Int gridPos, int cellSize)
-    {
-        this.parentGrid = parentGrid;
-        this.globalCellCoord = globalCellCoord;
-        this.cellSize = cellSize;
-        this.globalCellPos = gridPos + new Vector3Int(globalCellCoord.x * cellSize, globalCellCoord.y * cellSize, 0);
-        this.LocalCellCoord = globalCellCoord;
-        this.cellFlowData = new CellFlowData(true, false, DirectionEnum.None, Vector2.zero, 1, 0);
-    }
-
-    public void MarkAsOccupied() => isOccupied = true;
-    public void MarkAsUnoccupied() => isOccupied = false;
-    public void MarkAsPartitioned() => isPartitioned = true;
-
-    public void MarkAsUnwalkable() => cellFlowData.isWalkable = false;
-    public void MarkAsWalkable() => cellFlowData.isWalkable = true;
-
-    public void MarkOccupiedByEnemy()
-    {
-        if (!cellFlowData.hasEnemy)
-        {
-            cellFlowData.hasEnemy = true;
-            cellFlowData.dynamicCost += (int)CellFlowCost.hasEnemy;
-        }
-
-    }
-
-    public void MarkClearByEnemy()
-    {
-        if(cellFlowData.hasEnemy)
-        {
-            cellFlowData.hasEnemy = false;
-            cellFlowData.dynamicCost -= (int)CellFlowCost.hasEnemy;
-        }
-
-    }
-    public void AddToCellPaint(CellPaint[] tilePaints)
-    {
-        foreach (var tilePaint in tilePaints)
-            cellPaintHashSet.Add(tilePaint);
-    }
-    public void AddToCellPaint(CellPaint tilePaint)
-    {
-        cellPaintHashSet.Add(tilePaint);
-    }
-
-    public bool HasOccupiedNeighbor(CellGrid cellGrid)
-    {
-        foreach (var dir in MyUtils.GetAllDirectionsVectorArray())
-        {
-            Vector2Int neighborID = GlobalCellCoord + dir;
-            if (MyUtils.IsWithinArrayBounds(cellGrid.CellPerRow, cellGrid.CellPerCol, neighborID))
-            {
-                if (cellGrid.Cells[neighborID.x, neighborID.y].IsOccupied)
-                    return true;
-            }
-        }
-        return false;
-    }
-    public bool HasOccupiedCardinalNeighbor(CellGrid cellGrid)
-    {
-        foreach (var dir in MyUtils.GetCardinalDirectionsVectorArray())
-        {
-            Vector2Int neighborID = GlobalCellCoord + dir;
-            if (MyUtils.IsWithinArrayBounds(cellGrid.CellPerRow, cellGrid.CellPerCol, neighborID))
-            {
-                if (cellGrid.Cells[neighborID.x, neighborID.y].IsOccupied)
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    public void PaintCell(CellGrid parentGrid)
-    {
-        foreach (var tilePaint in cellPaintHashSet)
-        {
-            if (!tilePaint.isOnGlobalTile)
-            {
-                Vector3Int offset = new Vector3Int(parentGrid.CellPerRow / 2, parentGrid.CellPerCol / 2, 0);
-                tilePaint.tilemap.SetTile((Vector3Int)GlobalCellCoord - offset, tilePaint.tileBase);
-            }
-            else
-            {
-                tilePaint.tilemap.SetTile(globalCellPos, tilePaint.tileBase);
-            }
-        }
-    }
-    public void PaintCell(Tilemap tilemap, TileBase tileBase, CellGrid parentGrid)
-    {
-        Vector3Int offset = new Vector3Int(parentGrid.CellPerRow / 2, parentGrid.CellPerCol / 2, 0);
-        Vector3Int tilePos = (Vector3Int)GlobalCellCoord - offset;
-        tilemap.SetTile(tilePos, tileBase);
-    }
-
-    public void RemoveCellPaints()
-    {
-        cellPaintHashSet.Clear();
-    }
-
-    public List<Cell> GetAllNeighborCells()
-    {
-        List<Cell> result = new();
-
-        foreach (var vect in MyUtils.GetAllDirectionsVectorList())
-        {
-            Vector2Int neighborCoord = globalCellCoord + vect;
-            if (MyUtils.IsWithinArrayBounds(parentGrid.Cells, neighborCoord))
-                result.Add(parentGrid.Cells[neighborCoord.x, neighborCoord.y]);
-        }
-
-        return result;
-    }
-
-    public List<Cell> GetCardinalNeighborCells()
-    {
-        List<Cell> result = new();
-
-
-        foreach (var vect in MyUtils.GetCardinalDirectionsVectorList())
-        {
-            Vector2Int neighborCoord = globalCellCoord + vect;
-            if (MyUtils.IsWithinArrayBounds(parentGrid.Cells, neighborCoord))
-                result.Add(parentGrid.Cells[neighborCoord.x, neighborCoord.y]);
-        }
-
-        return result;
-    }
-}
-</code></pre>
-                    </div>
-                </li>
-
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Realtime World Generation Demo</h3>
-                        <video controls>
-                            <source src="./media/Hallowfall/WorldShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </li>
-            </ul>
-
-        </div>
-
-        <div class="topicContainer">
-
-            <h2 id="world-Highlight">Enemy AI System</h2>
-            <p>
-                The Enemy AI System mirrors the
-                Player Architecture in its overall design, built on a foundation of
-                <span id="world-Highlight">Finite State Machine (FSM)</span> control,
-                event driven communication,
-                modular components, and isolated systems.
-                The key difference is in the way state transitions happen: enemies react to
-                real time data such as player proximity, health thresholds, or
-                environmental conditions,
-                rather than relying on direct input handlers like the player.
-                This makes enemy behavior responsive and adaptive.
-            </p>
-
-            <ul class="bulletPointList">
-                <li><b id="world-Highlight">Finite State Machine (FSM):</b> Implemented an
-                    <span id="world-Highlight">FSM</span> managing states such as
-                    Idle, Patrol, Chase, Attack, and Death.
-                    Transitions are driven by state specific triggers
-                    (e.g., player detection, low health, line of sight checks),
-                    enabling smooth and adaptive responses.
-                </li>
-
-                <li><b id="world-Highlight">Event Driven Communication:</b> Similar to the player system, signals
-                    decouple enemy logic from
-                    external systems.
-                    Combat resolution, spawning, and environmental triggers are handled via events,
-                    reducing dependencies and improving maintainability.
-                </li>
-
-                <li><b id="world-Highlight">Configuration via ScriptableObjects:</b> Enemy abilities, stats, and
-                    behaviors are defined
-                    through
-                    <span id="world-Highlight">ScriptableObjects</span>,
-                    allowing flexible configuration of combat styles and AI patterns.
-                    This makes it easy to create varied enemy types without modifying the core FSM logic.
-                </li>
-
-                <li><b id="world-Highlight">Pathfinding with Flow Fields:</b> Enemies navigate procedurally generated
-                    zones using
-                    <span id="world-Highlight">flow field pathfinding</span>,
-                    coordinated by the <span id="world-Highlight">MovementHandler</span> Component.
-                    This allows enemies to efficiently recalculate paths and move in groups,
-                    adapting seamlessly to dynamic environments.
-                </li>
-
-                <li><b id="world-Highlight">Strategy Pattern for State Variations:</b> Enemies can be assigned different
-                    <span id="world-Highlight">state functionalities</span> of the same type
-                    (e.g., multiple attack strategies), enabling highly varied and customizable AI behaviors
-                    while reusing the same state framework.
-                </li>
-
-                <li><b id="world-Highlight">Scalability:</b> Supports simple enemy with basic AI as well as bosses with
-                    more complex
-                    behaviors.
-                    New enemy types can be created by reusing existing states and composing them with new strategies.
-                </li>
-            </ul>
-
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Enemy Attack State</h3>
-                        <pre><code class="language-csharp">
-
-// State Manages Attacks/Abilities that are assigned to the abilityList
-
+                        </div>
+                    </li>
+
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                Realtime World Generation Demo
+                            </h3>
+                            <video controls>
+                                <source
+                                    src="./media/Hallowfall/WorldShowcase.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">Enemy AI System</h2>
+                <p>
+                    The Enemy AI System mirrors the Player Architecture in its
+                    overall design, built on a foundation of
+                    <span class="text-highlight"
+                        >Finite State Machine (FSM)</span
+                    >
+                    control, event driven communication, modular components, and
+                    isolated systems. The key difference is in the way state
+                    transitions happen: enemies react to real time data such as
+                    player proximity, health thresholds, or environmental
+                    conditions, rather than relying on direct input handlers
+                    like the player.
+                </p>
+
+                <ul class="bullet-list">
+                    <li>
+                        <b class="text-highlight"
+                            >Finite State Machine (FSM):</b
+                        >
+                        Implemented an
+                        <span class="text-highlight">FSM</span> managing states
+                        such as Idle, Patrol, Chase, Attack, and Death.
+                        Transitions are driven by state specific triggers (e.g.,
+                        player detection, low health, line of sight checks),
+                        enabling smooth and adaptive responses.
+                    </li>
+                    <li>
+                        <b class="text-highlight"
+                            >Configuration via ScriptableObjects:</b
+                        >
+                        Enemy abilities, stats, and behaviors are defined
+                        through
+                        <span class="text-highlight">ScriptableObjects</span>,
+                        allowing flexible configuration of combat styles and AI
+                        patterns without modifying the core FSM logic.
+                    </li>
+                    <li>
+                        <b class="text-highlight"
+                            >Pathfinding with Flow Fields:</b
+                        >
+                        Enemies navigate procedurally generated zones using
+                        <span class="text-highlight"
+                            >flow field pathfinding</span
+                        >, coordinated by the
+                        <span class="text-highlight">MovementHandler</span>
+                        component.
+                    </li>
+                    <li>
+                        <b class="text-highlight"
+                            >Strategy Pattern for State Variations:</b
+                        >
+                        Enemies can be assigned different
+                        <span class="text-highlight"
+                            >state functionalities</span
+                        >
+                        of the same type (e.g., multiple attack strategies),
+                        enabling highly varied AI behaviors while reusing the
+                        same state framework.
+                    </li>
+                </ul>
+
+                <ul class="visual-demo">
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">Enemy Attack State</h3>
+                            <pre><code class="language-csharp">
 public class EnemyAttackState : EnemyState
 {
     private EnemySignalHub signalHub;
     private float attackDelay;
 
-    private List<BaseEnemyAbilitySO> abilityList;
-    private List<BaseEnemyAbilitySO> availaleAbilityList;
+    private List&lt;BaseEnemyAbilitySO&gt; abilityList;
+    private List&lt;BaseEnemyAbilitySO&gt; availaleAbilityList;
     private BaseEnemyAbilitySO currentAbility;
 
-    public EnemyAttackState(EnemyController enemyController, EnemyStateMachine stateMachine, EnemyStateEnum stateEnum) : base(enemyController, stateMachine, stateEnum)
+    public EnemyAttackState(EnemyController enemyController, EnemyStateMachine stateMachine, EnemyStateEnum stateEnum)
+        : base(enemyController, stateMachine, stateEnum)
     {
-        this.enemyController = enemyController;
-        this.enemyConfig = enemyController.EnemyConfig;
         signalHub = enemyController.SignalHub;
-
-
         abilityList = enemyController.GetListOfAllAbilities();
-        availaleAbilityList = new List<BaseEnemyAbilitySO>(abilityList);
-        currentAbility = MyUtils.GetRandomRef<BaseEnemyAbilitySO>(availaleAbilityList);
+        availaleAbilityList = new List&lt;BaseEnemyAbilitySO&gt;(abilityList);
+        currentAbility = MyUtils.GetRandomRef&lt;BaseEnemyAbilitySO&gt;(availaleAbilityList);
 
-        signalHub.OnAbilityFinished += (value) => { EndAttack(); };
+        signalHub.OnAbilityFinished += (value) =&gt; { EndAttack(); };
         signalHub.OnAbilityStart += SetupNextAbility;
     }
 
     public override void EnterState()
     {
-
-        if (enemyController.IsAttackDelayOver && availaleAbilityList.Count > 0)
+        if (enemyController.IsAttackDelayOver &amp;&amp; availaleAbilityList.Count &gt; 0)
         {
             enemyController.CanMove = false;
             enemyController.CanAttack = false;
@@ -1619,83 +673,23 @@ public class EnemyAttackState : EnemyState
         enemyController.CanMove = true;
         enemyController.CanAttack = true;
         enemyController.IsAttacking = false;
-
         currentAbility?.EndAbility(enemyController);
-    }
-    public void EndAttack()
-    {
-        signalHub.OnAbilityAnimFrame -= currentAbility.ActionOnAnimFrame;
-        signalHub.OnAbilityFinished -= currentAbility.EndAbility;
-        currentAbility = null;
-        TrySetcurrentAbiliy();
-        enemyController.CoroutineRunner.RunCoroutine(AttackDelayCoroutine());
-        stateMachine.ChangeState(EnemyStateEnum.Idle);
-    }
-
-    private void SetupNextAbility(BaseEnemyAbilitySO ability)
-    {
-        signalHub.OnAbilityAnimFrame += ability.ActionOnAnimFrame;
-        signalHub.OnAbilityFinished += ability.EndAbility;
-        ability.ExecuteAbility(enemyController);
-    }
-
-    private IEnumerator PutAbilityOnCooldownCoroutine(BaseEnemyAbilitySO ability)
-    {
-        availaleAbilityList.Remove(ability);
-        yield return new WaitForSeconds(ability.cooldown);
-        availaleAbilityList.Add(ability);
-        TrySetcurrentAbiliy();
-    }
-    private IEnumerator AttackDelayCoroutine()
-    {
-        attackDelay = Random.Range(enemyConfig.minAttackDelay, enemyConfig.maxAttackDelay + 0.1f);
-        enemyController.IsAttackDelayOver = false;
-        yield return new WaitForSeconds(attackDelay);
-        enemyController.IsAttackDelayOver = true;
-    }
-
-    private void TrySetcurrentAbiliy()
-    {
-        if (availaleAbilityList.Count > 0)
-        {
-            BaseEnemyAbilitySO abilityWithBiggestRange =  null;
-            foreach (var ability in availaleAbilityList)
-            {
-                if(abilityWithBiggestRange == null ) abilityWithBiggestRange = ability;
-                else if (ability.range > abilityWithBiggestRange.range ) abilityWithBiggestRange = ability;
-            }
-            currentAbility = abilityWithBiggestRange;
-        }
-    }
-    private bool IsEnemyInAttackRange()
-    {
-        return Vector2.Distance(enemyController.PlayerController.GetPlayerPos(), enemyController.GetEnemyPos()) <= currentAbility.range;
-    }
-
-    private bool IsEnemyAbleToAttack()
-    {
-        return (enemyController.CanAttack && !enemyController.IsAttacking && enemyController.IsAttackDelayOver);
     }
 
     public bool CanChangeToAttackState()
     {
-        return IsEnemyInAttackRange() && IsEnemyAbleToAttack() && currentAbility != null;
-    }
-
-    public bool CanChasePlayerToAttack()
-    {
-        return IsEnemyAbleToAttack() && currentAbility != null;
+        return IsEnemyInAttackRange() &amp;&amp; IsEnemyAbleToAttack() &amp;&amp; currentAbility != null;
     }
 }
-
 </code></pre>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Enemy Ability Example</h3>
-                        <pre><code class="language-csharp">
-
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                Enemy Ability Example
+                            </h3>
+                            <pre><code class="language-csharp">
 public class EnemyMeleeStrike : BaseEnemyAbilitySO
 {
     public EnemyAttackZone attackZonePrefab;
@@ -1707,8 +701,8 @@ public class EnemyMeleeStrike : BaseEnemyAbilitySO
     public override void ExecuteAbility(EnemyController enemy)
     {
         enemy.SignalHub.OnAnimBool?.Invoke(animCondition, true);
-        attackZone = Instantiate(attackZonePrefab,enemy.GetEnemyPos(),Quaternion.identity);
-        SetupAttackZone(attackZone.gameObject,enemy);
+        attackZone = Instantiate(attackZonePrefab, enemy.GetEnemyPos(), Quaternion.identity);
+        SetupAttackZone(attackZone.gameObject, enemy);
         attackZone.Init(new EnemyMeleeStrikeData { owner = enemy, strikeDamage = this.strikeDamage, parryDamage = this.parryDamage });
         enemy.SignalHub.OnPlayRandomSFX?.Invoke(abilitySFX, 0.075f);
     }
@@ -1726,993 +720,192 @@ public class EnemyMeleeStrike : BaseEnemyAbilitySO
     {
         enemy.SignalHub.OnAnimBool?.Invoke(animCondition, false);
     }
-
-    private void SetupAttackZone(GameObject attackZoneGO, EnemyController enemyController)
-    {
-        attackZoneGO.transform.parent = enemyController.transform;
-        Vector3 dir = (enemyController.PlayerController.GetPlayerPos() - enemyController.GetEnemyPos()).normalized;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        attackZoneGO.transform.SetPositionAndRotation(enemyController.GetEnemyPos() + (dir / 2), Quaternion.Euler(0, 0, angle + 180));
-    }
-}
-
-public struct EnemyMeleeStrikeData
-{
-    public EnemyController owner;
-    public int strikeDamage;
-    public int parryDamage;
 }
 </code></pre>
-                    </div>
-                </li>
-            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-        </div>
+            <div class="topic-container">
+                <h2 class="text-highlight">Enemy Pathfinding</h2>
+                <p>
+                    The Enemy Pathfinding has evolved with the game. Initially,
+                    I used the built in
+                    <span class="text-highlight">Unity NavMesh</span> to handle
+                    enemy pathfinding. However, after completing the first
+                    iteration of the
+                    <span class="text-highlight">World Generation System</span>,
+                    I realized that NavMesh would need to be baked at runtime
+                    dynamically, causing noticeable performance issues. After
+                    exploring some workarounds, I developed a custom pathfinding
+                    system using
+                    <span class="text-highlight">Flow Field Pathfinding</span>.
+                    By modifying my
+                    <span class="text-highlight">CellGrid</span> system from the
+                    World Generation section, I successfully integrated the new
+                    pathfinding solution.
+                </p>
 
-        <div class="topicContainer">
+                <ul class="bullet-list">
+                    <li>
+                        <b class="text-highlight"
+                            >Flow Field Pathfinding Algorithm:</b
+                        >
+                        <ul>
+                            <li>
+                                <b>Cost Fields</b>: Calculates movement costs
+                                for each cell based on terrain, obstacles, and
+                                proximity to the target.
+                            </li>
+                            <li>
+                                <b>Integration Fields</b>: Computes cumulative
+                                costs to determine the shortest path
+                                efficiently.
+                            </li>
+                            <li>
+                                <b>Flow Vectors</b>: Assigns direction vectors
+                                to each cell, guiding AI agents toward their
+                                destination.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <b class="text-highlight">AI Agent Usage:</b>
+                        <ul>
+                            <li>
+                                AI queries flow vectors from the flow field to
+                                determine movement direction.
+                            </li>
+                            <li>
+                                A
+                                <span class="text-highlight"
+                                    >repulsion force</span
+                                >
+                                is calculated to prevent enemies from clumping
+                                or overlapping, avoiding the use of colliders
+                                which could cause performance overhead.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 
-            <h2 id="world-Highlight">Enemy Pathfinding</h2>
-            <p>
-                The Enemy Pathfinding has evolved with the game. I felt it deserved
-                a dedicated section to explain my thoughts and efforts behind it. Initially, I used the built in <span
-                    id="world-Highlight">Unity NavMesh</span> to handle enemy pathfinding. However, after completing
-                the first iteration of the <span id="world-Highlight">World Generation System</span>, I realized that
-                NavMesh would need to be baked at runtime dynamically, causing noticeable performance issues. After
-                exploring some workarounds, I developed a custom pathfinding system using <span
-                    id="world-Highlight">Flow Field Pathfinding</span>. By modifying my <span
-                    id="world-Highlight">CellGrid</span> system from the World Generation section, I successfully
-                integrated the new pathfinding solution.
-            </p>
-
-            <ul class="bulletPointList">
-                <li><b id="world-Highlight">Integration with Procedural World:</b>
-                    <ul>
-                        <li>Leverages the <span id="world-Highlight">ZoneManager</span> and its generated zones to
-                            calculate flow fields for procedurally created areas.</li>
-                        <li>Dynamically updates flow fields based on the player's position and target zones.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">Flow Field Pathfinding Algorithm:</b>
-                    <ul>
-                        <li><b>Cost Fields</b>: Calculates movement costs for each cell based on terrain, obstacles, and
-                            proximity to the target.</li>
-                        <li><b>Integration Fields</b>: Computes cumulative costs to determine the shortest path
-                            efficiently.</li>
-                        <li><b>Flow Vectors</b>: Assigns direction vectors to each cell, guiding AI agents toward their
-                            destination.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">Dynamic Updates with Procedural Zones:</b>
-                    <ul>
-                        <li>Recalculates flow fields when the player moves to a new zone or when a new target position
-                            is set.</li>
-                        <li>Updates flow fields across all relevant zones to ensure accurate navigation in a
-                            procedurally expanding environment.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">AI Agent Usage:</b>
-                    <ul>
-                        <li>AI queries flow vectors from the flow field to determine movement direction.</li>
-                        <li>Occupancy and dynamic cell costs allow collision avoidance and realistic movement.</li>
-                        <li>A <span id="world-Highlight">repulsion force</span> is calculated to prevent enemies from
-                            clumping or overlapping, avoiding the use of colliders which could cause performance
-                            overhead.</li>
-                    </ul>
-                </li>
-
-                <li><b id="world-Highlight">Scalability and Performance Optimization:</b>
-                    <ul>
-                        <li>Flow fields are recalculated selectively, focusing only on affected zones.</li>
-                        <li>Designed to handle multiple AI agents querying the flow field simultaneously without
-                            performance degradation.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Flow Field Generator</h3>
-                        <pre><code class="language-csharp">
+                <ul class="visual-demo">
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">Flow Field Generator</h3>
+                            <pre><code class="language-csharp">
 public class FlowFieldGenerator
 {
-    private const int COST_UNVISITED = (int)CellFlowCost.unVisited;
+    private const int COST_UNVISITED  = (int)CellFlowCost.unVisited;
     private const int COST_UNWALKABLE = (int)CellFlowCost.unWalkable;
-    private const int COST_TARGET = (int)CellFlowCost.target;
+    private const int COST_TARGET     = (int)CellFlowCost.target;
 
     public void GenerateFlowFieldOnTargetZone(CellGrid cellGrid, Vector3 targetPos)
     {
-        Queue<Cell> flowFieldCellQueue = new();
-
+        Queue&lt;Cell&gt; flowFieldCellQueue = new();
         Cell currentFieldTargetCell = cellGrid.GetCellFromWorldPos(targetPos);
-
         SetInitialBaseFlowCosts(cellGrid, currentFieldTargetCell, flowFieldCellQueue);
-
         ApplyCostsForPlayerZone(flowFieldCellQueue, currentFieldTargetCell);
-
         AssignFlowAllDirectionsOnPlayerZone(cellGrid);
-
     }
 
-    public void GenerateFlowFieldOnNonePlayerZone(CellGrid cellGrid, DirectionEnum dirToPlayerZone)
+    private void SetInitialBaseFlowCosts(CellGrid cellGrid, Cell targetCell, Queue&lt;Cell&gt; flowFieldCellQueue)
     {
-        Queue<Cell> flowFieldCellQueue = new();
-
-        FindAllEdgeCells(cellGrid, flowFieldCellQueue, dirToPlayerZone);
-
-        ApplyCostsForNonePlayerZone(flowFieldCellQueue);
-
-        AssignFlowAllDirectionsOnNonePlayerZone(cellGrid, dirToPlayerZone);
-    }
-
-
-    private void FindAllEdgeCells(CellGrid cellGrid, Queue<Cell> flowFieldCellQueue, DirectionEnum dirToPlayerZone)
-    {
-
-        cellGrid.LoopOverGrid((i, j) =>
+        cellGrid.LoopOverGrid((i, j) =&gt;
         {
             Cell currentCell = cellGrid.Cells[i, j];
-            if (!currentCell.IsWalkable)
-            {
-                currentCell.BaseCost = COST_UNWALKABLE;
-            }
-            else currentCell.BaseCost = COST_UNVISITED;
+            currentCell.BaseCost = currentCell.IsWalkable ? COST_UNVISITED : COST_UNWALKABLE;
         });
-
-
-        switch (dirToPlayerZone)
-        {
-            case DirectionEnum.Right:
-                FindRightEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                break;
-            case DirectionEnum.Left:
-                FindLeftEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                break;
-            case DirectionEnum.Up:
-                FindTopEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                break;
-            case DirectionEnum.Down:
-                FindBottomEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                break;
-            case DirectionEnum.UpRight:
-                FindTopEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                FindRightEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                break;
-            case DirectionEnum.UpLeft:
-                FindTopEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                FindLeftEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                break;
-            case DirectionEnum.DownRight:
-                FindBottomEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                FindRightEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                break;
-            case DirectionEnum.DownLeft:
-                FindBottomEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                FindLeftEdgeTargetCells(cellGrid, flowFieldCellQueue);
-                break;
-        }
-    }
-
-
-    private void SetInitialBaseFlowCosts(CellGrid cellGrid, Cell targetCell, Queue<Cell> flowFieldCellQueue)
-    {
-        cellGrid.LoopOverGrid((i, j) =>
-        {
-            Cell currentCell = cellGrid.Cells[i, j];
-
-            if (!currentCell.IsWalkable)
-            {
-                currentCell.BaseCost = COST_UNWALKABLE;
-            }
-            else
-            {
-                currentCell.BaseCost = COST_UNVISITED;
-
-            }
-        }
-        );
 
         targetCell.BaseCost = COST_TARGET;
         flowFieldCellQueue.Enqueue(targetCell);
     }
-
-    private void ApplyCostsForPlayerZone(Queue<Cell> flowFieldCellQueue, Cell targetCell)
-    {
-        List<Cell> neighborList = new(8);
-
-        while (flowFieldCellQueue.Count > 0)
-        {
-            Cell currentCell = flowFieldCellQueue.Dequeue();
-            neighborList.Clear();
-            neighborList.AddRange(currentCell.GetAllNeighborCells());
-            foreach (Cell neighbor in neighborList)
-            {
-                if (neighbor.IsWalkable && neighbor.BaseCost == COST_UNVISITED)
-                {
-                    Vector2 toNeighbor = (Vector3)(neighbor.GlobalCellPos - targetCell.GlobalCellPos);
-                    float angle = Mathf.Atan2(toNeighbor.y, toNeighbor.x);
-
-                    float snapped = Mathf.Round(angle / (Mathf.PI / 2)) * (Mathf.PI / 2);
-
-                    if (Mathf.Abs(angle - snapped) > Mathf.PI / 12f)
-                    {
-                        neighbor.BaseCost = currentCell.BaseCost + 2;
-                    }
-                    else
-                    {
-                        neighbor.BaseCost = currentCell.BaseCost + 1;
-                    }
-
-                    flowFieldCellQueue.Enqueue(neighbor);
-
-                }
-            }
-        }
-    }
-
-    private void ApplyCostsForNonePlayerZone(Queue<Cell> flowFieldCellQueue)
-    {
-        List<Cell> neighborList = new(4);
-
-        while (flowFieldCellQueue.Count > 0)
-        {
-            Cell currentCell = flowFieldCellQueue.Dequeue();
-            neighborList.Clear();
-            neighborList.AddRange(currentCell.GetAllNeighborCells());
-            foreach (Cell neighbor in neighborList)
-            {
-                if (neighbor.IsWalkable && neighbor.BaseCost == COST_UNVISITED)
-                {
-                    neighbor.BaseCost = currentCell.BaseCost + 1;
-                    flowFieldCellQueue.Enqueue(neighbor);
-                }
-            }
-        }
-    }
-    private void AssignFlowAllDirectionsOnPlayerZone(CellGrid cellGrid)
-    {
-        cellGrid.LoopOverGrid((i, j) =>
-        {
-            cellGrid.Cells[i, j].FlowDir = FindFlowForPlayerDirection(cellGrid.Cells[i, j]);
-        }
-        );
-    }
-
-    private void AssignFlowAllDirectionsOnNonePlayerZone(CellGrid cellGrid, DirectionEnum directionEnum)
-    {
-        cellGrid.LoopOverGrid((i, j) =>
-        {
-            cellGrid.Cells[i, j].FlowDir = FindFlowDirectionForNonePlayerZone(cellGrid.Cells[i, j], directionEnum);
-
-        }
-        );
-    }
-
-    private DirectionEnum FindFlowForPlayerDirection(Cell currentCell)
-    {
-        if (currentCell.TotalCost == COST_TARGET) return DirectionEnum.None;
-
-        List<Cell> cheapestNeighbors = new();
-        int minCost = int.MaxValue;
-
-        foreach (Cell neighbor in currentCell.GetAllNeighborCells())
-        {
-            if (!neighbor.IsWalkable) continue;
-            if (neighbor.TotalCost < minCost)
-            {
-                cheapestNeighbors.Clear();
-                minCost = neighbor.TotalCost;
-                cheapestNeighbors.Add(neighbor);
-            }
-            else if (neighbor.TotalCost == minCost)
-            {
-                cheapestNeighbors.Add(neighbor);
-            }
-        }
-
-        List<Cell> validNeighborsWithEnemy = cheapestNeighbors.Where(cell => !cell.HasEnemy).ToList();
-
-        if (cheapestNeighbors.Count == 0) return DirectionEnum.None;
-
-        Cell selected = cheapestNeighbors[/*Random.Range(0, validNeighborsWithEnemy.Count)*/ 0];
-        Vector2Int dir = selected.GlobalCellCoord - currentCell.GlobalCellCoord;
-        return MyUtils.GetDirFromVector(dir);
-    }
-
-    private DirectionEnum FindFlowDirectionForNonePlayerZone(Cell currentCell, DirectionEnum directionEnum)
-    {
-        if (currentCell.TotalCost == COST_TARGET) return directionEnum;
-
-        List<Cell> cheapestNeighbors = new();
-        int minCost = int.MaxValue;
-
-        foreach (Cell neighbor in currentCell.GetAllNeighborCells())
-        {
-            if (!neighbor.IsWalkable) continue;
-            if (neighbor.TotalCost < minCost)
-            {
-                cheapestNeighbors.Clear();
-                minCost = neighbor.TotalCost;
-                cheapestNeighbors.Add(neighbor);
-            }
-            else if (neighbor.TotalCost == minCost)
-            {
-                cheapestNeighbors.Add(neighbor);
-            }
-        }
-
-        List<Cell> validNeighborsWithEnemy = cheapestNeighbors.Where(cell => !cell.HasEnemy).ToList();
-
-        if (validNeighborsWithEnemy.Count == 0) return DirectionEnum.None;
-
-        Cell selected = validNeighborsWithEnemy[Random.Range(0, validNeighborsWithEnemy.Count)];
-        Vector2Int dir = selected.GlobalCellCoord - currentCell.GlobalCellCoord;
-        return MyUtils.GetDirFromVector(dir);
-    }
-
-    private void FindRightEdgeTargetCells(CellGrid grid, Queue<Cell> flowFieldCellQueue)
-    {
-        int x = grid.CellPerRow - 1;
-        for (int y = 0; y < grid.CellPerCol; y++)
-        {
-            if (!grid.Cells[x, y].IsWalkable) continue;
-
-            grid.Cells[x, y].BaseCost = COST_TARGET;
-            flowFieldCellQueue.Enqueue(grid.Cells[x, y]);
-        }
-    }
-    private void FindLeftEdgeTargetCells(CellGrid grid, Queue<Cell> flowFieldCellQueue)
-    {
-        int x = 0;
-        for (int y = 0; y < grid.CellPerCol; y++)
-        {
-            if (!grid.Cells[x, y].IsWalkable) continue;
-
-            grid.Cells[x, y].BaseCost = COST_TARGET;
-            flowFieldCellQueue.Enqueue(grid.Cells[x, y]);
-        }
-    }
-    private void FindTopEdgeTargetCells(CellGrid grid, Queue<Cell> flowFieldCellQueue)
-    {
-        int y = grid.CellPerCol - 1;
-        for (int x = 0; x < grid.CellPerRow; x++)
-        {
-            if (!grid.Cells[x, y].IsWalkable) continue;
-
-            grid.Cells[x, y].BaseCost = COST_TARGET;
-            flowFieldCellQueue.Enqueue(grid.Cells[x, y]);
-        }
-    }
-    private void FindBottomEdgeTargetCells(CellGrid grid, Queue<Cell> flowFieldCellQueue)
-    {
-        int y = 0;
-        for (int x = 0; x < grid.CellPerRow; x++)
-        {
-            if (!grid.Cells[x, y].IsWalkable) continue;
-
-            grid.Cells[x, y].BaseCost = COST_TARGET;
-            flowFieldCellQueue.Enqueue(grid.Cells[x, y]);
-        }
-    }
 }
 </code></pre>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Flow Field Manager</h3>
-                        <pre><code class="language-csharp">
-public class FlowFieldManager : MonoBehaviour
+                        </div>
+                    </li>
+
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                Using the Flow Field Direction
+                            </h3>
+                            <pre><code class="language-csharp">
+private void FindNextMovementDirection()
 {
-    private static FlowFieldManager instance;
-    public static FlowFieldManager Instance { get { return instance; } }
-
-    private ZoneManager zoneManager;
-    private FlowFieldGenerator flowFieldGenerator;
-    private ZoneData currentTargetZoneData;
-    private ZoneHandler currentTargetZoneHandler;
-
-    private bool canVisualizeFlowField = false;
-
-    private readonly HashSet<Cell> cellsOccupiedByEnemy = new();
-
-    private void Awake()
+    flowRequestTimer += Time.deltaTime;
+    if (flowRequestTimer &gt;= flowRequestDelay || hasNotBeenOnFlow)
     {
-        if (instance != null && instance != this)
+        lastCell    = zoneManager.FindCurrentCellFromWorldPos(lastPos);
+        currentCell = zoneManager.FindCurrentCellFromWorldPos(enemyController.transform.position);
+
+        Vector2 newDir = (flowFieldManager.RequestNewFlowDir(currentCell, lastCell)
+                         + CalculateRepulsionForce()).normalized;
+
+        if (newDir != Vector2.zero)
         {
-            Destroy(instance.gameObject);
-        }
-        instance = this;
-    }
-
-    private void Start()
-    {
-        flowFieldGenerator = new FlowFieldGenerator();
-        zoneManager = ZoneManager.Instance;
-    }
-    public Vector2 RequestNewFlowDir(Cell currentCell, Cell lastCell)
-    {
-        if (lastCell != currentCell)
-        {
-            if (cellsOccupiedByEnemy.Contains(lastCell))
-            {W
-                cellsOccupiedByEnemy.Remove(lastCell);
-            }
-        }
-        if (!cellsOccupiedByEnemy.Contains(currentCell))
-        {
-            cellsOccupiedByEnemy.Add(currentCell);
-        }
-
-
-        return currentCell.FlowVect.normalized;
-    }
-
-
-    public void UpdateFlowField(Vector3 targetPos)
-    {
-        ZoneData zoneData = zoneManager.FindZoneDataFromWorldPos(targetPos);
-        if (zoneData == null) return;
-
-        if (currentTargetZoneData != zoneData)
-        {
-            currentTargetZoneData = zoneData;
-            currentTargetZoneHandler = currentTargetZoneData.ZoneHandler;
-
-            foreach (KeyValuePair<Vector2Int, ZoneData> pair in zoneManager.GeneratedZonesDic)
-            {
-                if (pair.Value != currentTargetZoneData) UpdateFlowFieldFromZone(pair.Value);
-            }
-        }
-        flowFieldGenerator.GenerateFlowFieldOnTargetZone(currentTargetZoneHandler.CellGrid, targetPos);
-
-        if (canVisualizeFlowField) GridSystemDebugger.Instance.VisualizeCellFlowDirection(currentTargetZoneHandler.CellGrid, currentTargetZoneData.centerCoord);
-    }
-
-    public void UpdateFlowFieldFromZone(ZoneData zoneData)
-    {
-        if (currentTargetZoneData != null)
-        {
-            DirectionEnum direEnumToPlayer = MyUtils.FindDirectionEnumBetweenTwoPoints(new Vector2Int(zoneData.centerPos.x, zoneData.centerPos.y), new Vector2Int(currentTargetZoneData.centerPos.x, currentTargetZoneData.centerPos.y));
-            ZoneHandler zoneHandler = zoneData.ZoneHandler;
-            flowFieldGenerator.GenerateFlowFieldOnNonePlayerZone(zoneHandler.CellGrid, direEnumToPlayer);
-
-            if (canVisualizeFlowField) GridSystemDebugger.Instance.VisualizeCellFlowDirection(zoneHandler.CellGrid, zoneData.centerCoord);
-
+            nextMoveDir = newDir;
+            lastPos = enemyTransform.position;
+            hasNotBeenOnFlow = false;
+            flowRequestTimer = 0;
         }
     }
-    public void ToggleCellDebuger()
-    {
-        if (canVisualizeFlowField)
-        {
-            canVisualizeFlowField = false;
-            GridSystemDebugger.Instance.DisableAllVisuals();
-        }
-        else if (!canVisualizeFlowField)
-        {
-            canVisualizeFlowField = true;
-            GridSystemDebugger.Instance.EnableAllVisuals();
-        }
-    }
-
 }
 </code></pre>
-                    </div>
-                </li>
+                        </div>
+                    </li>
 
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Using the Flow Field Direction</h3>
-                        <pre><code class="language-csharp">
-
-// This function calculates the movement direction vector for enemy
- private void FindNextMovementDirection()
- {
-     flowRequestTimer += Time.deltaTime;
-     if (flowRequestTimer >= flowRequestDelay || hasNotBeenOnFlow)
-     {
-         lastCell = zoneManager.FindCurrentCellFromWorldPos(lastPos);
-         currentCell = zoneManager.FindCurrentCellFromWorldPos(enemyController.transform.position);
-
-         Vector2 newDir = (flowFieldManager.RequestNewFlowDir(currentCell, lastCell) + CalculateRepulsionForce()) .normalized;
-
-
-         if (newDir != Vector2.zero)
-         {
-             nextMoveDir = newDir;
-             lastPos = enemyTransform.position;
-             hasNotBeenOnFlow = false;
-             flowRequestTimer = 0;
-         }
-
-     }
- }
-
- //Later on this function is used to move the enemy using the calculated direction vector
- public void Move(Vector2 movementDirection, float speed)
-{
-    Vector2 targetPos = Rb.position + (speed * Time.deltaTime * movementDirection);
-    Vector2 smoothPos = Vector2.Lerp(Rb.position, targetPos, 1f);
-    Rb.MovePosition(smoothPos);
-}
-
-</code></pre>
-                    </div>
-                </li>
-
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Repulsion Force</h3>
-                        <pre><code class="language-csharp">
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">Repulsion Force</h3>
+                            <pre><code class="language-csharp">
 private Vector2 CalculateRepulsionForce()
 {
     Vector2 repulsion = Vector2.zero;
     float repulsionStrength = 0.2f;
-    float detectionRadius = 1.0f;
+    float detectionRadius   = 1.0f;
 
-    foreach (EnemyController otherEnemy in enemyController.Detector.DetectNearbyGenericTargetsOnParent<EnemyController>("EnemyCollider", enemyController.GetEnemyPos(), layerMask, detectionRadius))
+    foreach (EnemyController otherEnemy in enemyController.Detector.DetectNearbyGenericTargetsOnParent&lt;EnemyController&gt;(
+        "EnemyCollider", enemyController.GetEnemyPos(), layerMask, detectionRadius))
     {
         if (otherEnemy == enemyController) continue;
-        Vector2 diff = (Vector2)(transform.position - otherEnemy.transform.position);
-        float distance = diff.magnitude;
 
-        if(distance < detectionRadius && distance >0.01f)
-        {
+        Vector2 diff     = (Vector2)(transform.position - otherEnemy.transform.position);
+        float   distance = diff.magnitude;
+
+        if (distance &lt; detectionRadius &amp;&amp; distance &gt; 0.01f)
             repulsion += diff.normalized / distance;
-        }
     }
 
     return repulsion * repulsionStrength;
 }
 </code></pre>
-                    </div>
-                </li>
+                        </div>
+                    </li>
 
-                <li>
-                    <div>
-                        <h3 id="world-Highlight">Enemy Pathfinding Showcase</h3>
-                        <video controls>
-                            <source src="./media/Hallowfall/EnemyPathFinding.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </li>
-
-            </ul>
-
-        </div>
-        <!--
-        <div class="topicContainer">
-
-            <h2>Player Ability System</h2>
-            <p>
-            <ul class="bulletPointList">
-                <li>Designed a modular, data-driven ability system using Unity’s ScriptableObject
-                    for scalability and easy content iteration.</li>
-                <li>Implements a weighted random selection algorithm to offer players randomized upgrade
-                    choices upon level up.</li>
-                <li>Supports both unlocking new abilities and upgrading existing ones, using inheritance and
-                    polymorphism to streamline behavior modifications.</li>
-                <li>Encapsulates ability data (name, description, visuals, logic) and upgrade tiers
-                    within ScriptableObject assets.</li>
-                <li>Ensures separation of data and logic, allowing to balance abilities
-                    without modifying code.</li>
-                <li>Integrates with UI and player progression systems to provide real-time feedback and
-                    seamless selection flow.</li>
-                <li>Built for extensibility, allowing new abilities, effects, and upgrade logic to be added
-                    without altering existing systems.</li>
-            </ul>
-            </p>
-
-
-            <ul class="visualDemo">
-                <li>
-                    <div>
-                        <h3>Code for Player Ability</h3>
-                        <pre><code class="language-csharp">
-public class BaseAbility : ScriptableObject
-{
-    public string abilityName;
-    public string description;
-    public Sprite icon;
-    public bool canLevel;
-
-    public virtual void CallAbility()
-    {
-        UIManager.Instance.AddAbilitySlot(this);
-    }
-}
-
-public class ActiveAbility : BaseAbility
-{
-    public GameObject handlerPrefab;
-
-    public PassiveAbility[] supportAbilities;
-
-    public override void CallAbility()
-    {
-        GameObject handlerGO = Instantiate(handlerPrefab, GameManager.Instance.Player.transform.Find("AbilityHolder"));
-        ActiveAbilityHandler handler = handlerGO.GetComponent<ActiveAbilityHandler>();
-        foreach (PassiveAbility ability in supportAbilities)
-        {
-            LevelupManager.Instance.abilities.Add(ability);
-        }
-        LevelupManager.Instance.abilities.Remove(this);
-
-        base.CallAbility();
-    }
-}
-
-public class PassiveAbility : BaseAbility
-{
-    public float modifier;
-    public delegate void PassiveAbilityEvent();
-    public event PassiveAbilityEvent passiveAbilityEvent;
-
-    public override void CallAbility()
-    {
-        passiveAbilityEvent?.Invoke();
-        base.CallAbility();
-    }
-}
-
-
-</code></pre>
-                    </div>
-                </li>
-                <li>
-                    <h3>Ability Slection Example</h3>
-                    <video controls>
-                        <source src="./media/Hallowfall/PlayerAbilityShowcase.mp4" type="video/mp4">
-                    </video>
-                </li>
-
-            </ul>
-
+                    <li>
+                        <div>
+                            <h3 class="text-highlight">
+                                Enemy Pathfinding Showcase
+                            </h3>
+                            <video controls>
+                                <source
+                                    src="./media/Hallowfall/EnemyPathFinding.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <div class="topicContainer">
-
-            <h2>Skill tree</h2>
-            <p>
-            <ul class="bulletPointList">
-                <li>Developed a skill tree system using ScriptableObject based nodes to
-                    define upgrade data, prerequisites, and logic.</li>
-                <li>Supports both active and passive
-                    upgrades through event-driven architecture.</li>
-                <li>Implements node dependencies and unlock paths to guide progression while allowing
-                    branching
-                    and non-linear choices.</li>
-                <li>Each skill node encapsulates it's data (name, description, cost, etc.), and
-                    effect callbacks for clean separation of data and logic.</li>
-                <li>Integrated with the game’s UI using Unity’s UI Toolkit / Canvas system for dynamic node
-                    highlighting, unlock effects, and tooltips.</li>
-                <li>Designed with scalability in mind, new skills and branches can be added by creating new
-                    node prefabs without code changes.</li>
-
-            </ul>
-
-            <ul class="visualDemo">
-
-                <li>
-                    <div>
-                        <h3>Skill Tree Showcase</h3>
-                        <video controls>
-                            <source src="./media/Hallowfall/SkillTreeShowcase.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3>Skill Logic Implementation</h3>
-                        <pre><code class="language-csharp">
-                            public class SkillSO : ScriptableObject
-{
-    public string skillName;
-    public string skillDescription;
-    public Sprite icon;
-    public int skillCost;
-    public int id;
-
-    public virtual void ApplySkill(PlayerController playerController)
-    {
-       //Call Event From SkillEvents
-    }
-
-
-}
-
-public static class SkillEvents
-{
-    //
-    public static event Action OnDoubleDashSkillUnlocked;
-    public static void UnlockDoubleDash() => OnDoubleDashSkillUnlocked?.Invoke();
-    //
-
-    //
-    public static event Action OnCounterSkillUnlocked;
-    public static void UnlockCounter() => OnCounterSkillUnlocked?.Invoke();
-    //
-
-    //
-    public static event Action OnPerfectTimingSkillUnlocked;
-    public static void UnlockPerfectTiming() => OnPerfectTimingSkillUnlocked?.Invoke();
-    //
-
-    //
-    public static event Action OnEchoingSteelSkillUnlocked;
-    public static void UnlockEchoingSteel() => OnEchoingSteelSkillUnlocked?.Invoke();
-    //
-
-    //
-    public static event Action OnMomentumShiftSkillUnlocked;
-    public static void UnlockMomentumShift() => OnMomentumShiftSkillUnlocked?.Invoke();
-    //
-
-    //
-    public static event Action OnCounterSurgeSkillUnlocked;
-    public static void UnlockCounterSurge() => OnCounterSurgeSkillUnlocked?.Invoke();
-    //
-
-    //
-    public static event Action OnBladeReflectionSkillUnlocked;
-    public static void UnlockBladeReflection() => OnBladeReflectionSkillUnlocked?.Invoke();
-    //
-
-}
-
-
-</code></pre>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3>Skill Tree Implementation</h3>
-                        <pre><code class="language-csharp">
-public class SkillNode : MonoBehaviour
-{
-    [Header("Node Dependencies")]
-    [SerializeField] private SkillNode[] previousNodes;
-    [SerializeField] private SkillNode[] nextNodes;
-
-    [SerializeField] private SkillSO skillSO;
-    private SkillTreeManager skillManager;
-
-    [Header("Visuals")]
-    [SerializeField] private Image outlineImage;
-    [SerializeField] private Transform linkHolder;
-    [SerializeField] private Image skillImage;
-
-    private List<Image> links = new List<Image>();
-
-    private bool isUnlocked = false;
-    private bool canBeUnlocked = false;
-
-    public bool IsUnlocked { get => isUnlocked; private set => isUnlocked = value; }
-
-    private void Awake()
-    {
-        skillManager = GetComponentInParent<SkillTreeManager>();
-
-        foreach (Transform child in linkHolder)
-        {
-            Image image = child.GetComponent<Image>();
-            if (image != null)
-            {
-                links.Add(image);
-            }
-        }
-    }
-
-    private void Start()
-    {
-        CheckPreviousNodes();
-        skillImage.sprite = skillSO.icon;
-    }
-
-    public void CheckPreviousNodes()
-    {
-        bool allUnlocked = true;
-
-        foreach (var node in previousNodes)
-        {
-            if (!node.IsUnlocked)
-            {
-                allUnlocked = false;
-                break;
-            }
-        }
-
-        canBeUnlocked = allUnlocked && !isUnlocked;
-        UpdateNodeVisuals();
-    }
-
-    public void Unlock()
-    {
-        IsUnlocked = true;
-        canBeUnlocked = false;
-
-        foreach (var node in nextNodes)
-        {
-            node.CheckPreviousNodes();
-        }
-
-        UpdateLinkColors(true);
-        skillManager.UpdateSkullsText();
-        UpdateNodeVisuals();
-    }
-
-    private void UpdateLinkColors(bool shouldHighlight)
-    {
-        Color targetColor = shouldHighlight ? new Color(1f, 0.5f, 0f) : Color.white;
-
-        foreach (var link in links)
-        {
-            link.color = targetColor;
-        }
-    }
-
-    private void UpdateNodeVisuals()
-    {
-        if (isUnlocked)
-        {
-            skillImage.color = Color.white;
-            outlineImage.color = Color.green;
-        }
-        else if (canBeUnlocked)
-        {
-            skillImage.color = new Color(1, 1, 1, 0.7f);
-            outlineImage.color = Color.yellow;
-        }
-        else
-        {
-            skillImage.color = new Color(1, 1, 1, 0.1f);
-            outlineImage.color = Color.red;
-        }
-    }
-
-    public void OnNodeClicked()
-    {
-        if (!canBeUnlocked || isUnlocked) return;
-
-        int newSkullCount = skillManager.LoadSkullCount() - skillSO.skillCost;
-        if (newSkullCount < 0) return;
-
-        Unlock();
-        SaveSystem.UpdatePlayerSkulls(newSkullCount);
-        skillManager.UpdateSkullsText();
-        SaveSystem.UpdateSkillTree(skillSO.id, true);
-    }
-
-    public void OnSkillHover()
-    {
-        skillManager.ShowDescriptionFrame(transform.position, skillSO.skillName, skillSO.skillDescription, skillSO.skillCost);
-    }
-
-    public void OnSkillHoverClear()
-    {
-        skillManager.HideDescriptionFrame();
-    }
-
-    public void ResetSkill()
-    {
-        isUnlocked = false;
-        canBeUnlocked = false;
-        UpdateLinkColors(false);
-        CheckPreviousNodes();
-        SaveSystem.UpdateSkillTree(skillSO.id, false);
-    }
-
-    public void UnlockBasedOfSkillTreeData(int[] skillTreeNodesData)
-    {
-        if (skillSO.id >= 0 && skillSO.id < skillTreeNodesData.Length && skillTreeNodesData[skillSO.id] == 1)
-        {
-            Unlock();
-        }
-    }
-
-}
-
-public class SkillTreeManager : MonoBehaviour
-{
-    [Header("UI Dependencies")]
-
-    [SerializeField] GameObject skillDescriptionFrame;
-    [SerializeField] TextMeshProUGUI descriptionText;
-    [SerializeField] TextMeshProUGUI nameText;
-    [SerializeField] TextMeshProUGUI costText;
-    [SerializeField] TextMeshProUGUI resetCostText;
-    [SerializeField] TextMeshProUGUI skullText;
-
-    private SkillNode[] skillNodes;
-
-    [SerializeField] private int resetCost = 100;
-
-    public SkillNode[] SkillNodes { get => skillNodes; }
-
-    private void Awake()
-    {
-        skillNodes = GetComponentsInChildren<SkillNode>();
-    }
-    private void Start()
-    {
-        resetCostText.text = resetCost.ToString();
-
-    }
-    public void ShowDescriptionFrame(Vector3 pos, string name, string description, int cost)
-    {
-
-        skillDescriptionFrame.transform.position = pos + new Vector3(130, 70, 0);
-        nameText.text = name;
-        descriptionText.text = description;
-        costText.text = cost.ToString();
-
-        skillDescriptionFrame.SetActive(true);
-    }
-
-    public void HideDescriptionFrame()
-    {
-        skillDescriptionFrame.SetActive(false);
-    }
-
-    public void ResetAllSkills()
-    {
-        int temp = LoadSkullCount() - resetCost;
-        if (temp >= 0)
-        {
-            foreach (SkillNode skillNode in SkillNodes)
-            {
-                skillNode.ResetSkill();
-            }
-            SaveSystem.UpdatePlayerSkulls(temp);
-            UpdateSkullsText();
-        }
-
-    }
-
-    public int LoadSkullCount()
-    {
-        GameData gameData = SaveSystem.LoadGameData();
-        if (gameData != null)
-        {
-            return gameData.skullCount;
-        }
-        else return 0;
-    }
-
-
-    public void UpdateSkullsText()
-    {
-        skullText.text = LoadSkullCount().ToString();
-    }
-
-    public void ApplySavedSkillTree(int[] savedData)
-    {
-        foreach (var node in SkillNodes)
-        {
-            node.UnlockBasedOfSkillTreeData(savedData);
-        }
-    }
-}
-</code></pre>
-                    </div>
-                </li>
-            </ul>
-
+        <div class="footer">
+            <p>&copy; BY Arya Hosseini.</p>
+            <p>I claim no rights to the assets used within my projects.</p>
         </div>
-        -->
-    </div>
 
-    <div class="footer">
-        <p> &copy; BY Arya Hosseini.</p>
-        <p> I claim no rights to the assets used within my projects.</p>
-    </div>
-
-    <script src="./prism/prism.js"></script>
-
-</body>
-
-
+        <script src="./prism/prism.js" defer></script>
+    </body>
 </html>
