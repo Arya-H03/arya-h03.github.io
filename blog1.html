@@ -120,6 +120,7 @@
                 <ul class="blog-visual-demo">
                     <li>
                         <div class="blog-code">
+                            <h3 class="text-highlight">Component Example</h3>
                             <pre><code class="language-cpp">
 struct CTransform
 {
@@ -127,19 +128,16 @@ struct CTransform
     Vect2f scale    = Vect2f(1, 1);
     float  rotation = 45.f;
 };
+
                             </code></pre>
                         </div>
                     </li>
-                </ul>
 
-                <p>
-                    If we want to serialize this component into a JSON object,
-                    we expect a structure like:
-                </p>
-
-                <ul class="blog-visual-demo">
                     <li>
                         <div class="blog-code">
+                            <h3 class="text-highlight">
+                                Expected JSON Structure
+                            </h3>
                             <pre><code class="language-cpp">
 {
     "Transform": {
@@ -154,8 +152,8 @@ struct CTransform
                 </ul>
 
                 <p>
-                    To produce this output, we need to associate each field with
-                    its name and value. In other words, we need a way to:
+                    To produce the JSON output, we need to associate each field
+                    with its name and value. In other words, we need a way to:
                 </p>
 
                 <ul class="bullet-list">
@@ -214,8 +212,8 @@ struct CTransform
                     <li>
                         <div class="blog-code">
                             <pre><code class="language-cpp">
-for (auto field : reflect&lt;CTransform&gt;()) {
-    json[field.name] = field.get(transform);
+for (auto member : reflect&lt;CTransform&gt;()) {
+    json[member.name] = member.value;
 }
                             </code></pre>
                         </div>
@@ -249,8 +247,7 @@ for (auto field : reflect&lt;CTransform&gt;()) {
                     <li>
                         <div class="blog-code">
                             <pre><code class="language-cpp">
-inline void to_json(Json& json, const CTransform& c)
-{
+inline void to_json(Json& json, const CTransform& c) {
     json = {
         {"position", {{"x", c.position.x}, {"y", c.position.y}}},
         {"scale",    {{"x", c.scale.x},    {"y", c.scale.y}}},
@@ -263,8 +260,7 @@ inline void to_json(Json& json, const CTransform& c)
                     <li>
                         <div class="blog-code">
                             <pre><code class="language-cpp">
-inline void from_json(const Json& json, CTransform& c)
-{
+inline void from_json(const Json& json, CTransform& c) {
     c.position.x = json["position"].value("x", 0.f);
     c.position.y = json["position"].value("y", 0.f);
     c.scale.x    = json["scale"].value("x", 1.f);
@@ -352,14 +348,14 @@ struct Reflect&lt;CTransform&gt;  // Every component must have its own Reflect s
                     <li>
                         <div class="blog-code">
                             <h3 class="text-highlight">
-                                A quick overview of member pointers
+                                Overview of Member Pointers
                             </h3>
                             <br />
                             <pre><code class="language-cpp">
 // CTransform memory layout (Vect2f: 2 floats = 8 bytes, float = 4 bytes)
 
 [  position (8 bytes)  |  scale (8 bytes)  |  rotation (4 bytes) ]  // 20 bytes total
-^offset 0              ^offset 8            ^offset 16
+^offset 0              ^offset 8           ^offset 16
 
 CTransform playerTransform;
 // &playerTransform is a regular pointer to a specific instance, e.g: 0x00007FFD3A2C1B40
@@ -376,14 +372,16 @@ playerTransform.*(&CTransform::rotation)   // 0x00007FFD3A2C1B40 + 16 = 0x00007F
                         </div>
                     </li>
                 </ul>
-                <p>To traverse the reflected pairs, I use a generic visitor:</p>
+                <p>
+                    To traverse the reflected pairs, a generic visitor can be
+                    used:
+                </p>
                 <ul class="blog-visual-demo">
                     <li>
                         <div class="blog-code">
                             <pre><code class="language-cpp">
 template &lt;typename Component, typename Visitor&gt;
-void ReflectVisit(Component& component, Visitor& visitor)
-{
+void ReflectVisit(Component& component, Visitor& visitor) {
     // std::apply unpacks the tuple elements and passes each pair as a separate argument.
     // The fold expression (expr, ...) then calls visitor.Field() once per pair,
     // forwarding the field name and the actual field value from the component instance.
@@ -438,7 +436,7 @@ struct SerializeVisitor
                     <li>
                         <div class="blog-code">
                             <pre><code class="language-cpp">
-struct DeSerializeVisitor
+struct DeserializeVisitor
 {
     const Json& json;
 
@@ -477,12 +475,16 @@ struct DeSerializeVisitor
                     <li>
                         <div class="blog-code">
                             <pre><code class="language-cpp">
-void SerializeComponent(Json& entityJson, Component& component) {
-    Json& componentJson = entityJson[Component::name];
+Json SerializeComponent(Component& component) {
+    Json componentJson;
     SerializeVisitor visitor{componentJson};
     ReflectVisit(component, visitor);
+
+    return componentJson;
 }
-                            </code></pre>
+
+
+</code></pre>
                         </div>
                     </li>
                     <li>
@@ -652,7 +654,7 @@ struct CRigidBody
         }
     }
 
-    void OnAfterDeserialize(){
+    void OnAfterDeserialize() {
         if (isStatic) {
             mass = 0;
             inverseMass = 0.f;
@@ -690,11 +692,9 @@ Json SerializeEntity(Entity entity) {
 
 newComponentInfo.SerializeComponent = [](Json& entityJson, void* ptr) {
 
-    const Component* component =
-        reinterpret_cast&lt;Component*&gt;(ptr);
+    const Component* component = reinterpret_cast&lt;Component*&gt;(ptr);
 
-    Json& componentJson = entityJson[Component::name];
-
+    Json&  componentJson = entityJson[Component::name];
     SerializeVisitor visitor{componentJson};
     ReflectVisit(*component, visitor);
 };
@@ -752,12 +752,12 @@ struct SerializeVisitor
     Json& json;
 
     template &lt;typename T&gt;
-    void Field(const char* name, const T& value){
+    void Field(const char* name, const T& value) {
         json[name] = value;
     }
 
     template &lt;typename T&gt;
-    void Field(const char* name, const Vect2&lt;T&gt;& value){
+    void Field(const char* name, const Vect2&lt;T&gt;& value) {
         json[name] = {{"x", value.x}, {"y", value.y}};
     }
 };
@@ -796,20 +796,20 @@ struct SerializeVisitor
                     we can simulate it by describing type structure and building
                     generic algorithms on top of that description. While this
                     isn't true reflection, it still provides a way to overcome
-                    this restriction without the use of macros, which I find
-                    intimidating and hard to debug as a much less experienced
-                    programmer.
+                    this restriction without the use of macros, which I often
+                    find intimidating and hard to debug as a much less
+                    experienced programmer.
                 </p>
 
                 <p>
                     There is always room for improvements when it comes to
-                    programming. From my time programming, I've come to realize
-                    that the ideal state will never be achieved, and over
-                    engineering and pursuing extra features before they are
-                    needed only slows you down. That being said, I should
+                    making software. From my time programming, I've come to
+                    realize that the ideal will never be achieved since what's
+                    ideal is never fully known. That being said, I should
                     mention that I have a nice improvement in mind that I have
                     yet to implement. The core idea is using a struct instead of
-                    a <code class="blog-keyword">std::pair</code> to contain the
+                    a
+                    <code class="blog-keyword">std::pair</code> to contain the
                     structural metadata, which would allow visitors to receive
                     richer per field information. Some pseudocode might look
                     like:
@@ -854,10 +854,10 @@ struct Reflect&lt;Component&gt;
                 <p>
                     With C++26 on the horizon, we can expect a standardized
                     reflection capability. In this last part I wanted to
-                    showcase how reflection will look in C++26 and how much it
-                    would simplify the design presented in this blog. Based on
-                    the published proposals at the time of writing, here is what
-                    we can expect:
+                    showcase how reflection is expected to look like in C++26
+                    and how much it would simplify the design presented in this
+                    blog. Based on the published proposals at the time of
+                    writing, here is what we can expect:
                 </p>
 
                 <ul class="blog-visual-demo">
@@ -867,9 +867,8 @@ struct Reflect&lt;Component&gt;
 template &lt;typename Component&gt;
 void Serialize(const Component& component, Json& json) {
     // ^^ is the reflection operator, it gives the compiler's metadata for Component.
-
     // template for is a compile time loop, fully unrolled by the compiler.
-    template for (constexpr auto member : std::meta::nonstatic_data_members_of(^^Component)){
+    template for (constexpr auto member : std::meta::nonstatic_data_members_of(^^Component)) {
         json[std::meta::name_of(member)] = component.[:member:];
         //   ^ gives the field name as a string    ^ splices member back to access the value
     }
@@ -882,7 +881,7 @@ void Serialize(const Component& component, Json& json) {
                             <pre><code class="language-cpp">
 template &lt;typename Component&gt;
 void Deserialize(const Json& json, Component& component) {
-    template for (constexpr auto member : std::meta::nonstatic_data_members_of(^^Component)){
+    template for (constexpr auto member : std::meta::nonstatic_data_members_of(^^Component)) {
         auto name = std::meta::name_of(member);
         if (!json.contains(name)) continue;
 
@@ -897,11 +896,10 @@ void Deserialize(const Json& json, Component& component) {
                 </ul>
 
                 <p>
-                    Thank you for coming here and reading this blog. This is my
-                    first professional technical blog, so I hope you found it
-                    informative and relevant. I'm still navigating the maze of
-                    C++, but I hope the ideas presented in this blog were
-                    informative and correct. If you would like to have a
+                    Thank you for coming here and reading this blog. I hope you
+                    found it informative and relevant. I'm still navigating the
+                    maze of C++, but I hope the ideas presented in this blog
+                    were interesting and valid. If you would like to have a
                     discussion with me or offer your insight, my contact can be
                     found at the top right corner of the page. Please don't
                     hesitate to reach out.
