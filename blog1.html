@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Simulating Reflection in C++</title>
+
+        <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+        <link href="./prism/prism.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="container">
+            <header>
+                <div id="brand">
+                    <h1>Arya Hosseini</h1>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li class="other-pages">
+                            <a class="nav-blogs" href="./home.html#blogs"
+                                >Blogs</a
+                            >
+                        </li>
+                        <li class="other-pages">
+                            <a class="nav-home" href="./home.html">Home</a>
+                        </li>
+                        <li class="other-pages">
+                            <a
+                                class="nav-cv"
+                                href="./Arya-Hosseini-CV.pdf"
+                                target="_blank"
+                                >CV</a
+                            >
+                        </li>
+                        <li class="other-pages">
+                            <a href="https://github.com/Arya-H03">
+                                <img
+                                    src="./media/GithubIcon.png"
+                                    alt="GitHub"
+                                />
+                            </a>
+                        </li>
+                        <li class="other-pages">
+                            <a
+                                href="https://www.linkedin.com/in/arya-hosseini-aa27b22ab/"
+                            >
+                                <img
+                                    src="./media/linkedinIcon.png"
+                                    alt="LinkedIn"
+                                />
+                            </a>
+                        </li>
+                        <li class="other-pages">
+                            <a href="https://x.com/arya_h_" target="_blank">
+                                <img src="./media/XIcon.png" alt="X" />
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+
+            <h2 id="blog-title">
+                Simulating Reflection in C++: A Practical ECS Serialization
+                System
+            </h2>
+
+            <div class="topic-container">
+                <p>
+                    It is no surprise that C++ has been the dominant programming
+                    language in game development for decades. The games industry
+                    has embraced it for good reasons: it offers control over
+                    hardware while still providing powerful abstraction tools.
+                    Nowadays pretty much all games have an element of C++ in
+                    them, even though some popular engines offer alternatives
+                    with scripting languages such as C# or Lua, or visual
+                    programming systems such as blueprints, the core of most
+                    game engines is written in C++.
+                </p>
+                <p>
+                    As a junior programmer, C++26 is the first new standard
+                    released since I started learning the language. It
+                    introduces several major features which make me excited and
+                    terrified at the same time since there is still much to
+                    learn from the previous version. Over the past days I've
+                    come across multiple posts of people discussing the new
+                    compile time reflection coming in C++26. This has
+                    historically been a missing piece in C++, and its absence
+                    has forced developers to build their own workarounds using
+                    templates, metaprogramming, macros, and even dedicated
+                    libraries focusing solely on this issue.
+                </p>
+                <p>
+                    Recently, while working on my own ECS based game engine, I
+                    ran into this exact limitation. I needed a way to serialize
+                    component data into JSON, something that, in other
+                    languages, often relies directly on reflection. In C++,
+                    however, there is no built in way to iterate over the
+                    members of a type or retrieve their names. This blog post is
+                    a technical breakdown of the system I built to work around
+                    that limitation and integrating it into an ECS. It explores
+                    how to simulate reflection in modern C++, the design
+                    decisions involved, and how such a system can be used to
+                    power features like ECS serialization.
+                </p>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">The problem</h2>
+                <p>Let's start with the problem that led me here.</p>
+                <p>
+                    In a typical data oriented game engine, different aspects of
+                    an entity are stored in small structs called components. For
+                    example, a
+                    <code class="blog-keyword">Transform</code> component might
+                    store the position, scale, and rotation of an entity:
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+struct CTransform
+{
+    Vect2f position = Vect2f(100, 200);
+    Vect2f scale    = Vect2f(1, 1);
+    float  rotation = 45.f;
+};
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+
+                <p>
+                    If we want to serialize this component into a JSON object,
+                    we expect a structure like:
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+{
+    "Transform": {
+        "position": { "x": 100, "y": 200 },
+        "scale":    { "x": 1, "y": 1 },
+        "rotation": 45
+    }
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+
+                <p>
+                    To produce this output, we need to associate each field with
+                    its name and value. In other words, we need a way to:
+                </p>
+
+                <ul class="bullet-list">
+                    <li>
+                        Access each member of the component (<code
+                            class="blog-keyword"
+                            >position</code
+                        >, <code class="blog-keyword">scale</code>,
+                        <code class="blog-keyword">rotation</code>)
+                    </li>
+                    <li>
+                        Retrieve its name as a string (<code
+                            class="blog-keyword"
+                            >"position"</code
+                        >, <code class="blog-keyword">"scale"</code>,
+                        <code class="blog-keyword">"rotation"</code>)
+                    </li>
+                    <li>Extract its value and write it into a JSON object</li>
+                </ul>
+
+                <p>
+                    The challenge is that C++ provides no built in way to
+                    iterate over the members of a type or retrieve their names.
+                </p>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">
+                    What is reflection and how can it help?
+                </h2>
+                <p>
+                    Reflection is the ability of a program to inspect its own
+                    types and their members.
+                </p>
+                <p>In practice, this means being able to:</p>
+
+                <ul class="bullet-list">
+                    <li>
+                        Access a members by name (e.g.
+                        <code class="blog-keyword"
+                            >transform.get("position")</code
+                        >)
+                    </li>
+                    <li>Iterate over all members of a type</li>
+                    <li>
+                        Query metadata about a type at runtime or compile time
+                    </li>
+                </ul>
+
+                <p>
+                    If C++ supported reflection natively, we could imagine
+                    writing something like:
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+for (auto field : reflect&lt;CTransform&gt;()) {
+    json[field.name] = field.get(transform);
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+
+                <p>
+                    This would allow us to automatically serialize any component
+                    without manually specifying its members. However, C++ does
+                    not provide this capability (at least prior to C++26), which
+                    means we need to take a detour.
+                </p>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">Initial workaround</h2>
+                <p>
+                    My initial approach to this limitation was to rely on the
+                    <code class="blog-keyword">adl_serializer</code> mechanism
+                    provided by nlohmann/json. This uses ADL (Argument Dependent
+                    Lookup) to find
+                    <code class="blog-keyword">to_json</code> and
+                    <code class="blog-keyword">from_json</code> functions for
+                    user defined types. In practice, this meant writing
+                    serialization logic manually for each component.
+                </p>
+
+                <p>For example, with our Transform component we could write:</p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+inline void to_json(Json& json, const CTransform& c)
+{
+    json = {
+        {"position", {{"x", c.position.x}, {"y", c.position.y}}},
+        {"scale",    {{"x", c.scale.x},    {"y", c.scale.y}}},
+        {"rotation", c.rotation}
+    };
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+inline void from_json(const Json& json, CTransform& c)
+{
+    c.position.x = json["position"].value("x", 0.f);
+    c.position.y = json["position"].value("y", 0.f);
+    c.scale.x    = json["scale"].value("x", 1.f);
+    c.scale.y    = json["scale"].value("y", 1.f);
+    c.rotation   = json["rotation"];
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+
+                <p>
+                    While this approach is straightforward, it quickly becomes
+                    difficult to maintain as the number of components grows.
+                    Each new component requires its own pair of functions, and
+                    even small mistakes, such as typos, missing fields, or
+                    incorrect nesting, can lead to subtle and annoying bugs.
+                </p>
+                <p>
+                    More importantly, serialization was not the only system that
+                    needed this information. Other engine features, such as an
+                    entity inspector, also required access to component fields
+                    in a generic way. With this approach, every system would
+                    need to duplicate similar logic per type, which does not
+                    scale well.
+                </p>
+                <p>
+                    At this point, it became clear to me that I needed a more
+                    general solution, something closer to reflection.
+                </p>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">
+                    Simulating reflection with templates, tuples and member
+                    pointers
+                </h2>
+                <p>
+                    While working on this problem, I recalled a pattern I had
+                    seen before when reading about zero cost abstractions in ECS
+                    design. The idea was to describe a type's structure manually
+                    using templates and std::tuple, then traverse it
+                    generically.
+                </p>
+
+                <p>The core of the system looks like this:</p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+template&lt;typename Component&gt;
+struct Reflect;  // No body, using Reflect on an unregistered type will lead to compile error
+
+template &lt;&gt;
+struct Reflect&lt;CTransform&gt;  // Every component must have its own Reflect specialization
+{
+    static constexpr auto fields = std::make_tuple(
+        std::pair{"position", &CTransform::position},
+        std::pair{"scale",    &CTransform::scale},
+        std::pair{"rotation", &CTransform::rotation}
+    );
+};
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+                <p>Each field is represented as a pair of:</p>
+
+                <ul class="bullet-list">
+                    <li>a string name</li>
+                    <li>a pointer to member</li>
+                </ul>
+
+                <p>
+                    This effectively creates a lightweight, compile time
+                    description of the component.
+                </p>
+                <p>
+                    This is possible because C++ provides access to member
+                    pointers. These pointers store the memory offset of a member
+                    within a type, independent of any specific instance.
+                </p>
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <h3 class="text-highlight">
+                                A quick overview of member pointers
+                            </h3>
+                            <br />
+                            <pre><code class="language-cpp">
+// CTransform memory layout (Vect2f: 2 floats = 8 bytes, float = 4 bytes)
+
+[  position (8 bytes)  |  scale (8 bytes)  |  rotation (4 bytes) ]  // 20 bytes total
+^offset 0              ^offset 8            ^offset 16
+
+CTransform playerTransform;
+// &playerTransform is a regular pointer to a specific instance, e.g: 0x00007FFD3A2C1B40
+
+&CTransform::position  // Member pointer of position: stores offset 0,  no address yet
+&CTransform::scale     // Member pointer of scale:    stores offset 8,  no address yet
+&CTransform::rotation  // Member pointer of rotation: stores offset 16, no address yet
+
+// Combining an instance with a member pointer gives the actual address of that field
+playerTransform.*(&CTransform::position)   // 0x00007FFD3A2C1B40 + 0  = 0x00007FFD3A2C1B40
+playerTransform.*(&CTransform::scale)      // 0x00007FFD3A2C1B40 + 8  = 0x00007FFD3A2C1B48
+playerTransform.*(&CTransform::rotation)   // 0x00007FFD3A2C1B40 + 16 = 0x00007FFD3A2C1B50
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+                <p>To traverse the reflected pairs, I use a generic visitor:</p>
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+template &lt;typename Component, typename Visitor&gt;
+void ReflectVisit(Component& component, Visitor& visitor)
+{
+    // std::apply unpacks the tuple elements and passes each pair as a separate argument.
+    // The fold expression (expr, ...) then calls visitor.Field() once per pair,
+    // forwarding the field name and the actual field value from the component instance.
+    std::apply([&](auto... pair) {
+        (visitor.Field(pair.first, component.*pair.second), ...);
+        //                                  ^ combines the instance with the member pointer
+        //                                    to access the actual field value
+    }, Reflect&lt;Component&gt;::fields);
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">
+                    Visitors: Serialization and Deserialization
+                </h2>
+
+                <p>
+                    The key point in visitors is to utilize function
+                    overloading. As seen above, the tuple of pairs is unpacked
+                    into function arguments, and those function arguments are
+                    used to pick the correct overload in the visitor at compile
+                    time, avoiding any runtime overhead.
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+struct SerializeVisitor
+{
+    Json& json;
+
+    // Catch all for primitives (float, bool, int, ...)
+    template &lt;typename T&gt;
+    void Field(const char* name, const T& value) {
+        json[name] = value;
+    }
+
+    // Overload for Vect2, produces {"x": ..., "y": ...}
+    template &lt;typename T&gt;
+    void Field(const char* name, const Vect2&lt;T&gt;& value) {
+        json[name] = {{"x", value.x}, {"y", value.y}};
+    }
+};
+                            </code></pre>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+struct DeSerializeVisitor
+{
+    const Json& json;
+
+    // Catch all for primitives
+    template &lt;typename T&gt;
+    void Field(const char* name, T& value) {
+        if (!json.contains(name)) return;
+
+        value = json[name].get&lt;T&gt;();
+    }
+
+    // Overload for Vect2, reads {"x": ..., "y": ...}
+    template &lt;typename T&gt;
+    void Field(const char* name, Vect2&lt;T&gt;& value) {
+        if (!json.contains(name)) return;
+
+        value.x = json[name].value("x", 0);
+        value.y = json[name].value("y", 0);
+    }
+};
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">ECS integration</h2>
+
+                <p>
+                    The following is pseudocode for how this reflection system
+                    could be integrated into an ECS design.
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+void SerializeComponent(Json& entityJson, Component& component) {
+    Json& componentJson = entityJson[Component::name];
+    SerializeVisitor visitor{componentJson};
+    ReflectVisit(component, visitor);
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+Component* DeserializeComponent(Json& entityJson) {
+    Component component{};
+    Json& componentJson = entityJson[Component::name];
+    DeSerializeVisitor visitor{componentJson};
+    ReflectVisit(component, visitor);
+
+    return new Component(std::move(component));
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+
+                <p>
+                    As a side note, when I ended up integrating this system into
+                    my ECS, I came across an issue when deserializing
+                    components. Depending on how fine grained the component
+                    design is, you might come across a situation where a
+                    component has a member whose value is derived from another
+                    member. Take a look at the Collider component:
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+struct CCollider
+{
+    Vect2f   size      = Vect2f(32, 32);
+    Vect2f   halfSize  = Vect2f(16, 16); // halfSize is derived from size. We calculate it once
+    Vect2f   offset    = Vect2f(0, 0);   // during construction and reuse it to avoid recalculating every time.
+    Layer    layer     = Layer::Default;
+    uint32_t mask      = ~0u;
+    bool     isTrigger = false;
+
+    CCollider() = default;
+    CCollider(const Vect2f& sz, const Vect2f& off, Layer lyr = Layer::Default, uint32_t msk = ~0u, bool trigger = false)
+        : size(sz), halfSize(sz.x * 0.5f, sz.y * 0.5f), offset(off), layer(lyr), mask(msk), isTrigger(trigger)
+    {
+    }
+};
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+                <p>
+                    Components like Collider will need special attention when
+                    deserializing their JSON since we won't be storing
+                    <code class="blog-keyword">halfSize</code>, it gets
+                    reconstructed from <code class="blog-keyword">size</code>.
+                    Instead, we add an additional method to the component,
+                    giving us:
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+struct CCollider
+{
+    Vect2f   size      = Vect2f(32, 32);
+    Vect2f   halfSize  = Vect2f(16, 16);
+    Vect2f   offset    = Vect2f(0, 0);
+    Layer    layer     = Layer::Default;
+    uint32_t mask      = ~0u;
+    bool     isTrigger = false;
+
+    // Added this ////////
+    void OnAfterDeserialize() { halfSize = Vect2f{size.x * 0.5f, size.y * 0.5f}; }
+    /////////////////////
+
+    CCollider() = default;
+    CCollider(const Vect2f& sz, const Vect2f& off, Layer lyr = Layer::Default, uint32_t msk = ~0u, bool trigger = false)
+        : size(sz), halfSize(sz.x * 0.5f, sz.y * 0.5f), offset(off), layer(lyr), mask(msk), isTrigger(trigger)
+    {
+    }
+};
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+
+                <p>
+                    <code class="blog-keyword">OnAfterDeserialize()</code> can
+                    then be called from within
+                    <code class="blog-keyword">DeserializeComponent()</code>:
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+Component* DeserializeComponent(Json& entityJson) {
+    Component component{};
+    Json& componentJson = entityJson[Component::name];
+    DeSerializeVisitor visitor{componentJson};
+    ReflectVisit(component, visitor);
+
+    // Compile time check, only calls OnAfterDeserialize() if the component defines it.
+    // Components that don't need it simply don't define the method.
+    if constexpr (requires { component.OnAfterDeserialize(); }) {
+        component.OnAfterDeserialize();
+    }
+
+    return new Component(std::move(component));
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+                <p>
+                    This allows handling the exception without introducing extra
+                    layers of abstraction, while still maintaining compile time
+                    inlining.
+                </p>
+                <p>
+                    If you are curious about the implementation in my own
+                    project, here is a breakdown of serializing an Entity in a
+                    type erased ECS design.
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+// Step 1: Define Components
+
+struct CTransform
+{
+    static constexpr const char* name = "Transform";
+
+    Vect2f position = Vect2f(0, 0);
+    Vect2f scale    = Vect2f(1, 1);
+    float  rotation = 0.f;
+
+    CTransform() = default;
+    CTransform(const Vect2f& pos, const Vect2f& scl, float rot)
+        : position(pos), scale(scl), rotation(rot) {}
+};
+
+struct CRigidBody
+{
+    static constexpr const char* name = "RigidBody";
+
+    Vect2f velocity         = Vect2f(0, 0);
+    Vect2f previousPosition = Vect2f(0, 0);
+    float  mass             = 1.f;
+    float  inverseMass      = 1.f;
+    float  bounciness       = 0.5f;
+    bool   isStatic         = false;
+
+    CRigidBody() = default;
+
+    CRigidBody(const Vect2f& vel, float m, float bounce, bool stat)
+        : velocity(vel), mass(m), bounciness(bounce), isStatic(stat)
+    {
+        if (isStatic) {
+            mass = 0;
+            inverseMass = 0;
+        } else {
+            inverseMass = 1.0f / mass;
+        }
+    }
+
+    void OnAfterDeserialize(){
+        if (isStatic) {
+            mass = 0;
+            inverseMass = 0.f;
+        } else {
+            inverseMass = 1.f / mass;
+        }
+    }
+};
+
+// Step 2: Create and Serialize an Entity
+
+Entity player = world.CreateEntity(
+    CTransform{{10.15f}, {1,1}, 0},
+    CRigidBody({5,10}, 10, 0.5f, false)
+);
+
+Json playerJson = world.SerializeEntity(player);
+
+// Step 3: World Layer (type erased iteration)
+
+Json SerializeEntity(Entity entity) {
+    Json entityJson;
+
+    archetype.ForEachComponent(entityLocations[entity.id],
+        [&](ComponentId id, void* ptr)
+    {
+        const ComponentInfo& info = ComponentRegistry::GetComponentInfoById(id);
+        info.SerializeComponent(entityJson, ptr);
+    });
+
+    return entityJson;
+}
+
+// Step 4: Component Registry (type recovery)
+
+newComponentInfo.SerializeComponent = [](Json& entityJson, void* ptr) {
+
+    const Component* component =
+        reinterpret_cast&lt;Component*&gt;(ptr);
+
+    Json& componentJson = entityJson[Component::name];
+
+    SerializeVisitor visitor{componentJson};
+    ReflectVisit(*component, visitor);
+};
+
+// Step 5: Reflection Metadata
+
+template &lt;&gt;
+struct Reflect&lt;CTransform&gt;
+{
+    static constexpr auto fields = std::make_tuple(
+        std::pair{"position", &CTransform::position},
+        std::pair{"scale",    &CTransform::scale},
+        std::pair{"rotation", &CTransform::rotation}
+    );
+};
+
+template &lt;&gt;
+struct Reflect&lt;CRigidBody&gt;
+{
+    static constexpr auto fields = std::make_tuple(
+        std::pair{"velocity",   &CRigidBody::velocity},
+        std::pair{"mass",       &CRigidBody::mass},
+        std::pair{"bounciness", &CRigidBody::bounciness},
+        std::pair{"isStatic",   &CRigidBody::isStatic}
+    );
+};
+
+// Step 6: Reflection Traversal
+
+template &lt;typename Component, typename Visitor&gt;
+void ReflectVisit(Component& component, Visitor& visitor)
+{
+    std::apply([&](auto... pair) {
+        (visitor.Field(pair.first, component.*pair.second), ...);
+    }, Reflect&lt;Component&gt;::fields);
+}
+
+
+// Expands to:
+//
+// visitor.Field("position", transform.position);
+// visitor.Field("scale",    transform.scale);
+// visitor.Field("rotation", transform.rotation);
+//
+// visitor.Field("velocity",   rigidBody.velocity);
+// visitor.Field("mass",       rigidBody.mass);
+// visitor.Field("bounciness", rigidBody.bounciness);
+// visitor.Field("isStatic",   rigidBody.isStatic);
+
+
+// Step 7: Visitor
+
+struct SerializeVisitor
+{
+    Json& json;
+
+    template &lt;typename T&gt;
+    void Field(const char* name, const T& value){
+        json[name] = value;
+    }
+
+    template &lt;typename T&gt;
+    void Field(const char* name, const Vect2&lt;T&gt;& value){
+        json[name] = {{"x", value.x}, {"y", value.y}};
+    }
+};
+
+
+// Final JSON Output
+//
+// {
+//   "Transform": {
+//     "position": { "x": 100.0, "y": 200.0 },
+//     "scale":    { "x": 1.0,   "y": 1.0   },
+//     "rotation": 45.0
+//   },
+//   "RigidBody": {
+//     "velocity":   { "x": 0.0, "y": 0.0 },
+//     "mass":       10.0,
+//     "bounciness": 0.5,
+//     "isStatic":   false
+//   }
+// }
+</code></pre>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">Result</h2>
+
+                <p>
+                    This approach replaces per type serialization functions with
+                    a data driven, generic system. Instead of writing
+                    serialization logic for every component, we define the
+                    structure once and reuse it across multiple systems. In
+                    other words, while C++ does not provide reflection natively,
+                    we can simulate it by describing type structure and building
+                    generic algorithms on top of that description. While this
+                    isn't true reflection, it still provides a way to overcome
+                    this restriction without the use of macros, which I find
+                    intimidating and hard to debug as a much less experienced
+                    programmer.
+                </p>
+
+                <p>
+                    There is always room for improvements when it comes to
+                    programming. From my time programming, I've come to realize
+                    that the ideal state will never be achieved, and over
+                    engineering and pursuing extra features before they are
+                    needed only slows you down. That being said, I should
+                    mention that I have a nice improvement in mind that I have
+                    yet to implement. The core idea is using a struct instead of
+                    a <code class="blog-keyword">std::pair</code> to contain the
+                    structural metadata, which would allow visitors to receive
+                    richer per field information. Some pseudocode might look
+                    like:
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+template&lt;typename Owner, typename Field&gt;
+struct Descriptor
+{
+    const char*    name;
+    Field Owner::* ptr;
+    Option         option1;
+    Option         option2;
+    // ...
+};
+
+template &lt;&gt;
+struct Reflect&lt;Component&gt;
+{
+    static constexpr auto fields = std::make_tuple(
+        Descriptor{"name1", &Component::member1, option1, option2},
+        Descriptor{"name2", &Component::member2, option1, option2},
+        Descriptor{"name3", &Component::member3, option1, option2}
+    );
+};
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+                <p>
+                    This could allow more possibilities for customization and
+                    richer visitor overloads, but at the time of writing I
+                    haven't written a concrete implementation.
+                </p>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">Ending Thoughts</h2>
+                <p>
+                    With C++26 on the horizon, we can expect a standardized
+                    reflection capability. In this last part I wanted to
+                    showcase how reflection will look in C++26 and how much it
+                    would simplify the design presented in this blog. Based on
+                    the published proposals at the time of writing, here is what
+                    we can expect:
+                </p>
+
+                <ul class="blog-visual-demo">
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+template &lt;typename Component&gt;
+void Serialize(const Component& component, Json& json) {
+    // ^^ is the reflection operator, it gives the compiler's metadata for Component.
+
+    // template for is a compile time loop, fully unrolled by the compiler.
+    template for (constexpr auto member : std::meta::nonstatic_data_members_of(^^Component)){
+        json[std::meta::name_of(member)] = component.[:member:];
+        //   ^ gives the field name as a string    ^ splices member back to access the value
+    }
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="blog-code">
+                            <pre><code class="language-cpp">
+template &lt;typename Component&gt;
+void Deserialize(const Json& json, Component& component) {
+    template for (constexpr auto member : std::meta::nonstatic_data_members_of(^^Component)){
+        auto name = std::meta::name_of(member);
+        if (!json.contains(name)) continue;
+
+        // [: std::meta::type_of(member) :] splices the members's type
+        // so it can be used as a template argument for get&lt;&gt;()
+        component.[:member:] = json[name].get&lt;typename [: std::meta::type_of(member) :]&gt;();
+    }
+}
+                            </code></pre>
+                        </div>
+                    </li>
+                </ul>
+
+                <p>
+                    Thank you for coming here and reading this blog. This is my
+                    first professional technical blog, so I hope you found it
+                    informative and relevant. I'm still navigating the maze of
+                    C++, but I hope the ideas presented in this blog were
+                    informative and correct. If you would like to have a
+                    discussion with me or offer your insight, my contact can be
+                    found at the top right corner of the page. Please don't
+                    hesitate to reach out.
+                </p>
+                <br /><br />
+                <p>Arya Hosseini</p>
+                <p>Thursday, April 2, 2026</p>
+            </div>
+
+            <div class="topic-container">
+                <h2 class="text-highlight">References</h2>
+                <ul class="bullet-list">
+                    <li>
+                        <a
+                            class="nav-cv"
+                            href="https://www.amazon.com/Mastering-ECS-Design-Patterns-Architecture/dp/B0FJ84F2JR"
+                            target="_blank"
+                            >Mastering ECS: Design Patterns for Modern Game
+                            Architecture</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="nav-cv"
+                            href="https://en.cppreference.com/w/cpp/26.html"
+                            target="_blank"
+                            >C++26</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="nav-cv"
+                            href="https://isocpp.org/files/papers/P2996R13.html"
+                            target="_blank"
+                            >Reflection for C++26</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="nav-cv"
+                            href="https://json.nlohmann.me/api/adl_serializer/"
+                            target="_blank"
+                            >json.nlohmann</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="nav-cv"
+                            href="https://lemire.me/blog/2025/06/22/c26-will-include-compile-time-reflection-why-should-you-care/"
+                            target="_blank"
+                            >Discover C++26's compile time reflection</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; BY Arya Hosseini.</p>
+        </div>
+
+        <script src="./prism/prism.js" defer></script>
+    </body>
+</html>
